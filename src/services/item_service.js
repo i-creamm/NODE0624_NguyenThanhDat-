@@ -4,8 +4,14 @@ const ItemModel = require('../models/item_model')
 
 class ItemService {
 
-    getAllItems = async (search) =>{
-        const query = search ? { name: new RegExp(search, 'i') } : {};
+    getAllItems = async (status , search) =>{
+        const query = {};
+        if (status) {
+            query.status = status;
+        }
+        if (search) {
+            query.name = new RegExp(search, 'ig');
+        }
         return await ItemModel.find(query);
     }
 
@@ -29,7 +35,7 @@ class ItemService {
         return await ItemModel.findById(id)
     }
 
-    editById = async ({id}, updateItem) => {
+    editById = async (id , updateItem) => {
         return await ItemModel.findByIdAndUpdate(id, updateItem) 
     }
 

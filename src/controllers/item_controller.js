@@ -5,34 +5,35 @@ const ItemModel = require('../models/item_model');
 class ItemController {
 
     getAll = async (req, res, next) => {
-        const {status = 'all', search = ''} = req.query
+        const {status , search } = req.query
         const countStatus = [
             {
                 name : "All",
                 count: await ItemService.countItemWithStatus(),
                 value: "all",
-                class: "default"
+                class: "default",
+                link : '/admin/item',
+                active: status != 'inactive' && status != 'active',
             },
             {
                 name : "Active",
                 count: await ItemService.countItemWithStatus('active'),
                 value: "active",
-                class: "default"
+                class: "default",
+                link : '/admin/item?status=active',
+                active: status == 'active',
             },
             {
                 name : "Inactive",
                 count: await ItemService.countItemWithStatus('inactive'),
                 value: "inactive",
-                class: "default"
+                class: "default",
+                link : '/admin/item?status=inactive',
+                active: status == 'inactive',
             }
         ]
 
-        let items;
-        if (status !== 'all') {
-            items = await ItemService.getItemsByStatusAndSearch(status, search);
-        } else {
-            items = await ItemService.getAllItems(search);
-        }
+        let items = await ItemService.getAllItems(status ,search);
         return res.render('admin/pages/item/list', { items, countStatus, status, search });
     }
 
@@ -45,13 +46,13 @@ class ItemController {
 
     //save info form (Add or Edit)
     saveForm = async (req, res, next) => {
-        const item = req.params.id 
-        if (!item){
+        const { id } = req.params 
+        if (!id){
             await ItemService.save(req.body)
         } else {
             const {name, ordering, status} = req.body
             const updateItem = {name, ordering, status}
-            await ItemService.editById(req.params, updateItem)
+            await ItemService.editById(id, updateItem)
         }
         res.redirect('/admin/item')
     }

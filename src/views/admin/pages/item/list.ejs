@@ -1,3 +1,4 @@
+<%- include('../../helpers/render_status.ejs') %>
 
 <% linkPrefix = 'admin' %>
 
@@ -18,8 +19,8 @@
 			<div class="mb-1">
 				<div class="btn-search">
 					<% countStatus.forEach(e => { %>
-						<a href="/admin/item/?status=<%= e.value %>">
-							<button type="button" class="btn btn-<%= status === e.value ? 'success' : e.class %>">
+						<a href="<%= e.link %>">
+							<button type="button" class="btn btn-<%= e.active ? 'success' : 'default' %>">
 								<%= e.name %> (<span><%= e.count %></span>)
 							</button>
 						</a>
@@ -104,15 +105,7 @@
 
 							<td class="text-center"><span><%= row.name  %></span></td>
 
-							<td class="text-center position-relative">
-								<a href="#" class="rounded-circle btn btn-sm btn-success">
-									<% if (row.status !== 'active') { %>
-										<i class="fas fa-times"></i>
-									<% } else { %>
-										<i class="fas fa-check"></i>
-									<% } %>
-								</a>
-							</td>
+							<%- renderStatus(row.status) %>
 
 	
 							<td class="text-center position-relative" >
