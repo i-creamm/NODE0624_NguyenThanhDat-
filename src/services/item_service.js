@@ -1,10 +1,9 @@
-// const { readFile} = require("../utils/helper");
-// const { writeFile} = require("../utils/helper");
 const ItemModel = require('../models/item_model')
+
 
 class ItemService {
 
-    getAllItems = async (status , search) =>{
+    getAllItems = async (status , search, pageSkip, pageLimit) =>{
         const query = {};
         if (status) {
             query.status = status;
@@ -12,23 +11,19 @@ class ItemService {
         if (search) {
             query.name = new RegExp(search, 'ig');
         }
-        return await ItemModel.find(query);
+        return await ItemModel.find(query).skip(pageSkip).limit(pageLimit)
     }
 
-    getItemsByStatus = async (status) => {
-        return await ItemModel.find({status})
-    }
-
-    getItemsByStatusAndSearch = async (status, search) => {
-        const query = { status };
-        if (search) {
-            query.name = new RegExp(search, 'i');
+    getAllItemsByStatus = async(status) =>{
+        const params = {};
+        if (status) {
+            params.status = status;
         }
-        return await ItemModel.find(query);
+        return await ItemModel.find(params)
     }
 
-    save = async ({name, ordering, status}) => {
-        return await ItemModel.create({name, ordering, status})
+    save = async ({name, ordering, status, image}) => {
+        return await ItemModel.create({name, ordering, status, image})
     }
 
     findId = async ({id}) => {
@@ -47,6 +42,10 @@ class ItemService {
         let status = {}
         if(name != "") status = {status: name}
         return await ItemModel.countDocuments(status)
+    }
+
+    countAllItems = async () => {
+        return await ItemModel.countDocuments()
     }
 }
 

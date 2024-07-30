@@ -14,6 +14,9 @@ const itemSchema = new Schema({
     type: Number,
     min : 0,
     max : 100
+  },
+  image : {
+    type: String
   }
 }, {
     collection : ConnectionDocument, timestamps: true

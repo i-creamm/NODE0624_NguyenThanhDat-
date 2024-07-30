@@ -1,17 +1,18 @@
 const ItemService = require("../services/item_service");
-const ItemModel = require('../models/item_model');
-
+const {ItemValidate} = require('../validation/item_validates')
+const {validationResult} = require('express-validator')
+const updateItem = require('../utils/upload')
+const uploadImage = updateItem.upload('image')
 
 class ItemController {
 
     getAll = async (req, res, next) => {
-        const {status , search } = req.query
+        const {status , search, page = 1} = req.query
         const countStatus = [
             {
                 name : "All",
                 count: await ItemService.countItemWithStatus(),
                 value: "all",
-                class: "default",
                 link : '/admin/item',
                 active: status != 'inactive' && status != 'active',
             },
@@ -19,7 +20,6 @@ class ItemController {
                 name : "Active",
                 count: await ItemService.countItemWithStatus('active'),
                 value: "active",
-                class: "default",
                 link : '/admin/item?status=active',
                 active: status == 'active',
             },
@@ -27,16 +27,27 @@ class ItemController {
                 name : "Inactive",
                 count: await ItemService.countItemWithStatus('inactive'),
                 value: "inactive",
-                class: "default",
                 link : '/admin/item?status=inactive',
                 active: status == 'inactive',
             }
         ]
 
-        let items = await ItemService.getAllItems(status ,search);
-        return res.render('admin/pages/item/list', { items, countStatus, status, search });
+        
+        const pageLimit = 3
+        const pageRanges = 3
+        let allItems = await ItemService.getAllItemsByStatus(status)
+        const totalItems = allItems.length
+        const pagination = {
+            pageLimit: pageLimit,
+            totalItems: totalItems,
+            totalPages : Math.ceil(totalItems / pageLimit),
+            currentPage :  parseInt(page),
+            pageRanges : pageRanges
+        }
+        const pageSkip = (pagination.currentPage - 1) * pageLimit
+        let items = await ItemService.getAllItems(status ,search, pageSkip, pageLimit) 
+        return res.render('admin/pages/item/list', { items, countStatus, status, search, pagination })
     }
-
 
     //direct form put in
     getForm = async (req, res, next) => {
@@ -45,17 +56,24 @@ class ItemController {
     }
 
     //save info form (Add or Edit)
-    saveForm = async (req, res, next) => {
-        const { id } = req.params 
+    saveForm = [ uploadImage, async (req, res, next) => {
+        await ItemValidate(req)
+        const result = req.validationResult()
+
+
+        if(req.file){
+            req.body.image = req.file.filename
+        }
+        const { id } = req.params
         if (!id){
             await ItemService.save(req.body)
         } else {
-            const {name, ordering, status} = req.body
-            const updateItem = {name, ordering, status}
+            const {name, ordering, status, image} = req.body
+            const updateItem = {name, ordering, status, image}
             await ItemService.editById(id, updateItem)
         }
         res.redirect('/admin/item')
-    }
+    }]
 
     //delete item
     deleteItem = async (req, res, next) => {

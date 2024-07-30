@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var expressLayouts = require('express-ejs-layouts');
 var MainDB = require('./src/apps/database/init_main_db');
 
+
 MainDB.connection();
 
 var app = express();
@@ -15,6 +16,8 @@ app.set('view engine', 'ejs');
 app.set('layout', 'admin')
 
 app.use(expressLayouts);
+
+app.use('/uploads', express.static(path.join(__dirname, './src/uploads')));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
