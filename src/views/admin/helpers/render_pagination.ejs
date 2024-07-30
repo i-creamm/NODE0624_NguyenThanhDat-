@@ -1,5 +1,6 @@
 <%
-    renderPagination = (pagination) => {
+    renderPagination = (pagination, status) => {
+        let statusN = status == undefined ? '' : `&status=${status}`
         let totalPages = pagination.totalPages
         let currentPage = pagination.currentPage
         let pageLimit = pagination.pageLimit
@@ -12,10 +13,10 @@
             let xHtmlPrevious = '', xHtmlNext = '', xHtmlPages = ''
             
             if (currentPage > 1) {
-                xHtmlPrevious = `<li class="page-item"><a class="page-link" href="${link}=${currentPage - 1}">Previous</a></li>`
+                xHtmlPrevious = `<li class="page-item"><a class="page-link" href="${link}=${currentPage - 1}${statusN}">Previous</a></li>`
             }
             if (currentPage < totalPages) {
-                xHtmlNext = `<li class="page-item"><a class="page-link" href="${link}=${currentPage + 1}">Next</a></li>`
+                xHtmlNext = `<li class="page-item"><a class="page-link" href="${link}=${currentPage + 1}${statusN}">Next</a></li>`
             }
 
             let middle = Math.ceil(pageRanges/2)
@@ -35,7 +36,7 @@
                 if(i === currentPage){
                     xHtmlPages += `<li class="page-item active"><a class="page-link">${i}</a></li>`
                 } else {
-                    xHtmlPages += `<li class="page-item"><a class="page-link" href="${link}=${i}">${i}</a></li>`
+                    xHtmlPages += `<li class="page-item"><a class="page-link" href="${link}=${i}${statusN}">${i}</a></li>`
                 }  
             }
 

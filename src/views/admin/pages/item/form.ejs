@@ -3,11 +3,7 @@
         <form action="/admin/item/form/<%= item._id %>" method="POST" class="mb-0" enctype="multipart/form-data">
             <div class="card-body">
                 <h1>
-                    <% if (!item._id) { %>
-                        Add - Form
-                    <% } else { %> 
-                        Edit - Form - <%= item.name %>
-                    <% } %>
+                    <%= title %>
                 </h1>
                 <div class="form-group row">
                     <label for="name" class="col-sm-2 col-form-label text-sm-right required">Name</label>
