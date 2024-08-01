@@ -5,6 +5,8 @@ const ItemController = require('../../controllers/item_controller')
     router.get('/', ItemController.getAll)
 
     router.get('/form/:id?', ItemController.getForm)
+
+    router.get('/changeStatus/:id/:status', ItemController.changeStatus)
     
     router.post('/form/:id?', ItemController.saveForm)
 

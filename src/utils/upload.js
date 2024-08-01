@@ -4,7 +4,7 @@ const multer = require("multer");
 
 let uploadFile = (
   field,
-  folderDes = "src/uploads",
+  folderDes = __pathImage,
   fileNameLength = 10,
   fileSizeMb = 20,
   fileExtension = "jpeg|jpg|png|gif"

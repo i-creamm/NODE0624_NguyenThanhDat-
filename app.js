@@ -16,7 +16,7 @@ app.set('view engine', 'ejs');
 app.set('layout', 'admin')
 
 app.use(expressLayouts);
-
+__pathImage = __dirname + '/public/uploads'
 app.use('/uploads', express.static(path.join(__dirname, './src/uploads')));
 
 app.use(express.json());

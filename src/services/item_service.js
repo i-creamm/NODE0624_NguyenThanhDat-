@@ -14,16 +14,12 @@ class ItemService {
         return await ItemModel.find(query).skip(pageSkip).limit(pageLimit)
     }
 
-    getAllItemsByStatus = async(status) =>{
-        const params = {};
-        if (status) {
-            params.status = status;
-        }
-        return await ItemModel.find(params)
-    }
-
     save = async ({name, ordering, status, image}) => {
         return await ItemModel.create({name, ordering, status, image})
+    }
+
+    changeStatusById = async (id, status) => {
+        return await ItemModel.findByIdAndUpdate(id, {status})
     }
 
     findId = async ({id}) => {

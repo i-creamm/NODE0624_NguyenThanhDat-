@@ -33,8 +33,7 @@ class ItemController {
 
     const pageLimit = 3;
     const pageRanges = 3;
-    let allItems = await ItemService.getAllItemsByStatus(status);
-    const totalItems = allItems.length;
+    let totalItems = await await ItemService.countItemWithStatus(status);
     const pagination = {
       pageLimit: pageLimit,
       totalItems: totalItems,
@@ -65,6 +64,12 @@ class ItemController {
     if (req.params.id) title = "Edit - Form";
     res.render("admin/pages/item/form", { item, title });
   };
+
+  changeStatus = async (req, res, next) => {
+    let {id, status} = req.params
+    await ItemService.changeStatusById(id, status)
+    res.redirect("/admin/item");
+  }
 
   //save info form (Add or Edit)
   saveForm = [
