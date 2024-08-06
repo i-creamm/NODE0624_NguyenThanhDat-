@@ -6,7 +6,7 @@ let uploadFile = (
   field,
   folderDes = __pathImage,
   fileNameLength = 10,
-  fileSizeMb = 20,
+  fileSizeMb = 1,
   fileExtension = "jpeg|jpg|png|gif"
 ) => {
   const storage = multer.diskStorage({
@@ -36,7 +36,7 @@ let uploadFile = (
       if (mimetype && extname) {
         return cb(null, true);
       } else {
-        return cb(new Error("Sai định dạng ảnh"));
+        return cb("Sai định dạng ảnh");
       }
     },
   }).single(field);

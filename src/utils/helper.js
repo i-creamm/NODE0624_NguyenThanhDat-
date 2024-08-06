@@ -1,4 +1,6 @@
-const fs = require("node:fs/promises");
+const fs = require("node:fs/promises")
+const ItemService = require('../services/item_service')
+
 
 const readFile = async () => {
   try {
@@ -18,6 +20,7 @@ const writeFile = async (data) => {
     console.log("That bai");
   }
 };
+
 
   module.exports = {
     readFile,

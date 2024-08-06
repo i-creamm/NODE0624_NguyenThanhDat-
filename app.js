@@ -13,11 +13,12 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, './src/views'));
 app.set('view engine', 'ejs');
-app.set('layout', 'admin')
+
+app.set('layout', 'admin', 'frontend')
 
 app.use(expressLayouts);
 __pathImage = __dirname + '/public/uploads'
-app.use('/uploads', express.static(path.join(__dirname, './src/uploads')));
+app.use('/uploads', express.static(path.join(__dirname, '/public/uploads')));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

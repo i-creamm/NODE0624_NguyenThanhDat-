@@ -11,7 +11,7 @@ class ItemService {
         if (search) {
             query.name = new RegExp(search, 'ig');
         }
-        return await ItemModel.find(query).skip(pageSkip).limit(pageLimit)
+        return await ItemModel.find(query).skip(pageSkip).limit(pageLimit).sort({'createdAt': -1, 'updatedAt': -1})
     }
 
     save = async ({name, ordering, status, image}) => {
@@ -22,7 +22,7 @@ class ItemService {
         return await ItemModel.findByIdAndUpdate(id, {status})
     }
 
-    findId = async ({id}) => {
+    findId = async (id) => {
         return await ItemModel.findById(id)
     }
 
@@ -30,7 +30,7 @@ class ItemService {
         return await ItemModel.findByIdAndUpdate(id, updateItem) 
     }
 
-    deleteById = async ({id}) => {
+    deleteById = async (id) => {
         return await ItemModel.findByIdAndDelete(id)
     }
 

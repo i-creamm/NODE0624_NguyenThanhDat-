@@ -7,9 +7,11 @@ const ItemController = require('../../controllers/item_controller')
     router.get('/form/:id?', ItemController.getForm)
 
     router.get('/changeStatus/:id/:status', ItemController.changeStatus)
+
+    router.get('/changeOrdering/:id/:ordering', ItemController.changeOrdering)
     
     router.post('/form/:id?', ItemController.saveForm)
 
     router.get('/delete/:id', ItemController.deleteItem)
-
+    
 module.exports = router;

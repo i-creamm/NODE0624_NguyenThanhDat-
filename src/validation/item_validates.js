@@ -1,4 +1,7 @@
 const { checkSchema } = require("express-validator");
+// const updateItem = require("../utils/upload");
+// const uploadImage = updateItem.upload("image");
+
 
 const ItemValidate = async (req) => {
   await checkSchema({
@@ -20,6 +23,22 @@ const ItemValidate = async (req) => {
         errorMessage: "Trạng thái phải là 'active' hoặc 'inactive'.",
       },
     },
+    // image: {
+    //   custom: {
+    //     options: (value, { req }) => {
+    //       return new Promise((resolve, reject) => {
+    //         uploadImage(req, null, (err) => {
+    //           err ? reject(err.errorMessage = "Hình đưa vào phải thuộc định dạng (jpeg | jpg | png | gif) và không để trống") : resolve(true)
+    //           // if (err) {
+    //           //   reject(err.errorMessage = "Hình đưa vào phải thuộc định dạng (jpeg | jpg | png | gif) và không để trống");
+    //           // } else {
+    //           //   resolve(true);
+    //           // }
+    //         });
+    //       });
+    //     },
+    //   },
+    // },
   }).run(req);
 };
 
