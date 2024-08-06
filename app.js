@@ -14,7 +14,7 @@ var app = express();
 app.set('views', path.join(__dirname, './src/views'));
 app.set('view engine', 'ejs');
 
-app.set('layout', 'admin', 'frontend')
+app.set('layout', 'admin' , 'frontend')
 
 app.use(expressLayouts);
 __pathImage = __dirname + '/public/uploads'

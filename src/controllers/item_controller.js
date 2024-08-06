@@ -71,8 +71,8 @@ class ItemController {
   }
 
   //save info form (Add or Edit)
-  saveForm = [uploadImage, async (req, res, next) => {
-
+  saveForm = [uploadImage , 
+    async (req, res, next) => {
     const { id } = req.params;
     await ItemValidate(req);
     const errors = validationResult(req);
