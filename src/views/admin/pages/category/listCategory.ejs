@@ -1,21 +1,13 @@
-<%- include('../../helpers/render_status.ejs') %>
-<%- include('../../helpers/render_pagination.ejs') %>
 
 <% linkPrefix = 'admin' %>
 
+<%- include('../../helpers/render_status.ejs') %>
+
 <div class="row mb-2">
     <div class="col-sm-6">
-        <h1 class="m-0">Danh mục sản phẩm</h1>
+        <h1 class="m-0">Danh mục</h1>
     </div>
 </div>
-
-<!-- <% if (message) { %>
-	<div class="alert alert-dismissible fade show alert-<%= message.type%>" role="alert">
-		<button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
-		<strong><%= message.message %></strong>
-	</div>
-<% } %> -->
-
 <div class="card card-info card-outline">
 	<div class="card-header">
 		<h6 class="card-title">Search & Filter</h6>
@@ -35,14 +27,15 @@
 						</a>
 					<% }) %>
 				</div>
+				
 			</div>
+			
 			<div class="mb-1">
-				<form action="/admin/item/" method="get">
-					<input type="hidden" name="status" value="<%= status %>">
+				<form action="#" method="get">
 					<div class="input-group">
-						<input type="text" class="form-control form-control-sm" name="search" value="<%= search %>" placeholder="Search for..." style="min-width: 300px">
+						<input type="text" class="form-control form-control-sm" name="keyword" value="" placeholder="Search for..." style="min-width: 300px">
 						<div class="input-group-append">
-							<a type="button" class="btn btn-sm btn-danger"  href="/admin/item">Clear</a>
+							<a type="button" class="btn btn-sm btn-danger"  href="#">Clear</a>
 							<button type="submit" class="btn btn-sm btn-info" id="btn-search">Search</button>
 						</div>
 					</div>
@@ -53,16 +46,14 @@
 </div>
 
 
-
 <!-- Content -->
-<form action="/admin/category/multipleAction" method="post" name="multipleForm" id = "multiForm">
+<form action="/admin/category/" method="post" name="multipleForm" id = "multiForm">
 <div class="card card-info card-outline">
 	<div class="card-header">
 		<h4 class="card-title">List</h4>
 		<div class="card-tools">
 			<div class="btn-group">
 				<button type="button" class="btn btn-info" data-toggle="dropdown" aria-expanded="false">Change Status</button>
-				</>
 				<div class="dropdown-menu" role="menu" >
 					<button type="button" onClick="" class="dropdown-item" data-toggle="modal" data-target="#modal-success">
 						Change to Active
@@ -73,22 +64,19 @@
 						</button>
 					</div>
 				</div>
-			<a href="/admin/item/form" class="btn btn-warning" style="background-color: #F0AD4E; color: white; font-weight: 500;">Add New</a>
+			<a href="/admin/category/formCategory" class="btn btn-warning" style="background-color: #F0AD4E; color: white; font-weight: 500;">Add New</a>
 			<button type="button" class="btn btn-danger" onClick="" data-toggle="modal" data-target="#modal-danger">
 				<i class="fas fa-trash-alt"></i>Delete Multi
 			</button>
 		</div>
 		<input type="hidden" name="action" id="inputHiddenAll" value="" >
 	</div>
-
 	<div class="card-body">
 		<!-- Control -->
-		<!-- <form action="" method="get" class="table-responsive" id="zt-form"> -->
+		<!-- <form action="" method="post" class="table-responsive" id="zt-form"> -->
 
 			<!-- List Content -->
 		
-			
-
 			<table class="table table-bordered table-hover text-nowrap btn-table mb-0">
 				<thead>
 					<tr>
@@ -99,55 +87,49 @@
 							</div>
 						</th>
 						<th class="text-center">#</a></th>
-						<th class="text-center">Image</a></th>
-						<th class="text-center pointer">
-							<a href="#" class="title_col" >Name <i class="fa fa-fw fa-sort"></i></a>
-						</th>
+						<th class="text-center">Name</a></th>
 						<th class="text-center">Status</a></th>
 						<th class="text-center">Ordering</a></th>
 						<th class="text-center">Action</th>
 					</tr>
 				</thead>
 				<tbody>
-                    <% items.forEach((row, index) => { %>
+					<% categories.forEach((row, index) => { %>
 						<tr>
 							<td class="text-center">
 								<div class="custom-control custom-checkbox">
-									<input class="custom-control-input" type="checkbox" name="cid" id="check<%= index+1  %>" value="<%= index+1  %>">
+									<input class="custom-control-input" type="checkbox" name="cid" id="check<%= index + 1  %>" value="<%= row._id %>">
 									<label for="check<%= index + 1  %>" class="custom-control-label"></label>
 								</div>
 							</td>
-							<td class="text-center"><%= index + 1  %></td>
-
-							<td class="text-center"><img src="/uploads/<%= row.image %>" alt="" width="60" height="60" class="img-thumbnail" /></td>
-
-							<td class="text-center"><span><%= row.name  %></span></td>
-
+							<td class="text-center"><%= index + 1 %></td>
+							<td class="text-center"><span><%= row.name %></span></td>
 							<%- renderStatus(row._id, row.status) %>
-
-							<td class="text-center position-relative" >
+							<td class="text-center position-relative">
 								<input type="number" name="items-ordering" value="<%= row.ordering %>" class="text-center ordering">
 							</td>
-
 							<td class="text-center">
-								<a href="/admin/item/form/<%= row._id%>" class="rounded-circle btn btn-sm btn-info " title="Edit">
+								<a href="/admin/category/formCategory/<%= row._id %>" class="rounded-circle btn btn-sm btn-info" title="Edit">
 									<i class="fas fa-pencil-alt"></i>
 								</a>
-			 
-								<a href="javascript:clickToDeleteId('/admin/item/delete/<%= row._id%>')" class="rounded-circle btn btn-sm btn-danger">
+								<a href="javascript:clickToDeleteId('/admin/category/delete/<%= row._id %>')" class="rounded-circle btn btn-sm btn-danger">
 									<i class="fas fa-trash-alt"></i>
 								</a>
-							</td> 
+							</td>
 						</tr>
 					<% }) %>
 				</tbody>
 			</table>
 		<!-- </form> -->
+		
 	</div>
-	<!-- pagination -->
 	<div class="card-footer clearfix">
 		<ul class="pagination pagination-sm m-0 float-right">
-			<%- renderPagination(pagination , status) %>	
+			<li class="page-item"><a class="page-link" href="#">«</a></li>
+			<li class="page-item"><a class="page-link" href="#">1</a></li>
+			<li class="page-item"><a class="page-link" href="#">2</a></li>
+			<li class="page-item"><a class="page-link" href="#">3</a></li>
+			<li class="page-item"><a class="page-link" href="#">»</a></li>
 		</ul>
 	</div>
 </div>
@@ -177,15 +159,8 @@
             disableSubmit();
 
         })
-    })
-</script>
 
-<script>
-	imgInp.onchange = evt => {
-		const [file] = imgInp.files
-		if (file) {
-			blah.src = URL.createObjectURL(file)
-		}
-	}
-</script>
+
+    })
+</script>	
 

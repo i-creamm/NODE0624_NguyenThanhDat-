@@ -11,11 +11,11 @@ class ItemService {
         if (search) {
             query.name = new RegExp(search, 'ig');
         }
-        return await ItemModel.find(query).skip(pageSkip).limit(pageLimit).sort({'createdAt': -1, 'updatedAt': -1})
+        return await ItemModel.find(query).skip(pageSkip).limit(pageLimit).sort({'createdAt': -1})
     }
 
-    save = async ({name, ordering, status, image}) => {
-        return await ItemModel.create({name, ordering, status, image})
+    save = async ({cate_name, ordering, status, image}) => {
+        return await ItemModel.create({cate_name, ordering, status, image})
     }
 
     changeStatusById = async (id, status) => {

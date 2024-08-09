@@ -1,7 +1,7 @@
-const ItemService = require("../services/item_service");
-const { ItemValidate } = require("../validation/item_validates");
+const ItemService = require("../../services/item_service");
+const { ItemValidate } = require("../../validation/item_validates");
 const { validationResult } = require("express-validator");
-const updateItem = require("../utils/upload");
+const updateItem = require("../../utils/upload");
 const uploadImage = updateItem.upload("image");
 const path = require('path')
 const fs = require('fs')
@@ -34,8 +34,8 @@ class ItemController {
       },
     ]
 
-    const pageLimit = 3;
-    const pageRanges = 3;
+    const pageLimit = 10;
+    const pageRanges = 5;
     let totalItems = await await ItemService.countItemWithStatus(status);
     const pagination = {
       pageLimit: pageLimit,
@@ -47,13 +47,12 @@ class ItemController {
     const pageSkip = (pagination.currentPage - 1) * pageLimit;
 
     let items = await ItemService.getAllItems(status, search, pageSkip, pageLimit);
-    return res.render("admin/pages/item/list", {items, countStatus, status, search, pagination});
+    return res.render("admin/pages/item/list", {items, countStatus, status, search, pagination, message: {}});
   };
 
   //direct form put in
   getForm = async (req, res, next) => {
     let title = "Add - Form";
-
     const {id} = req.params
     const item = req.params.id ? await ItemService.findId(id) : {};
     if (id) title = "Edit - Form";
@@ -66,9 +65,6 @@ class ItemController {
     res.redirect("/admin/item");
   }
 
-  changeOrdering = async (req, res, next) => {
-
-  }
 
   //save info form (Add or Edit)
   saveForm = [uploadImage , 
@@ -79,7 +75,7 @@ class ItemController {
     const item = id ? await ItemService.findId(id) : {};
 
     if (!errors.isEmpty()) {
-      return res.render('admin/pages/item/form', { item, title: id ? "Edit - Form" : "Add - Form", alert: errors.array() });
+      return res.render('admin/pages/item/form', { item, title: id ? "Edit - Form" : "Add - Form", alert: errors.array()});
     }
 
     if (req.file) {
@@ -87,7 +83,8 @@ class ItemController {
     }
     
     if (!id) {
-      await ItemService.save(req.body);
+      await ItemService.save(req.body)
+      console.log(req.body)
     } else {
       const { name, ordering, status, image } = req.body;
       const updateItem = { name, ordering, status, image };
@@ -100,7 +97,6 @@ class ItemController {
           }
         })
       }
-
       await ItemService.editById(id, updateItem);
     }
     res.redirect("/admin/item");
