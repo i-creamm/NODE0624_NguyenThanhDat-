@@ -3,6 +3,7 @@ var randomstring = require("randomstring");
 const multer = require("multer");
 
 let uploadFile = (
+  nameController,
   field,
   folderDes = __pathImage,
   fileNameLength = 10,
@@ -11,7 +12,7 @@ let uploadFile = (
 ) => {
   const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-      return cb(null, folderDes); // Set the destination folder for uploaded files
+      return cb(null, folderDes + nameController); // Set the destination folder for uploaded files
     },
     filename: (req, file, cb) => {
       return cb(

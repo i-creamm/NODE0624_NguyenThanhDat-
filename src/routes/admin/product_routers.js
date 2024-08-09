@@ -6,7 +6,7 @@ router.get('/', ProductController.getAllProduct)
 
 router.get('/formProduct/:id?', ProductController.getFormProduct)
 
-router.post('/formProduct/:id?', ProductController.saveFormProduct)
+router.post('/formProduct/:id?', ProductController.saveForm)
 
 
 module.exports = router;

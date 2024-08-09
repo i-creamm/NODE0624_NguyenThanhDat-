@@ -1,4 +1,10 @@
-const ProductService = require('../../services/product_service')
+const MainService = require('../../services/product_service')
+const CategoryService = require('../../services/category_service')
+const nameController = 'product'
+const updateItem = require("../../utils/upload");
+const uploadImage = updateItem.upload(nameController,"image");
+const path = require('path')
+const fs = require('fs')
 
 class ProductController {
 
@@ -7,50 +13,70 @@ class ProductController {
         const countStatus = [
             {
               name: "All",
-              count: await ProductService.countItemWithStatus(),
+              count: await MainService.countItemWithStatus(),
               value: "all",
-              link: "/admin/product",
+              link: `/admin/${nameController}`,
               active: status != "inactive" && status != "active",
             },
             {
               name: "Active",
-              count: await ProductService.countItemWithStatus("active"),
+              count: await MainService.countItemWithStatus("active"),
               value: "active",
               link: "/admin/product?status=active",
               active: status == "active",
             },
             {
               name: "Inactive",
-              count: await ProductService.countItemWithStatus("inactive"),
+              count: await MainService.countItemWithStatus("inactive"),
               value: "inactive",
               link: "/admin/product?status=inactive",
               active: status == "inactive",
             },
         ]
-        let products = await ProductService.getProducts(status, search);
+        let products = await MainService.getProducts(status, search);
         res.render('admin/pages/product/listProduct', {products, countStatus})
     }
 
     getFormProduct = async (req, res, next) => {
       let title = "Add - Form";
       const { id } = req.params
-      const product = req.params.id ? await ProductService.findId(id) : {};
+      const product = req.params.id ? await MainService.findId(id) : {};
       if (id) title = "Edit - Form";
-      res.render("admin/pages/product/formProduct", { product, title, alert: [] });
+      const categories = await CategoryService.getALl();
+      res.render("admin/pages/product/formProduct", { product, title, alert: [] , categories });
     }
 
-    saveFormProduct = async (req, res, next) => {
-
+    saveForm = [uploadImage , 
+      async (req, res, next) => {
       const { id } = req.params;
-      if (!id) {
-        await ProductService.saveProduct(req.body)
-      } else {
-        const { name, status, ordering } = req.body;
-        const updateItem = { name, status, ordering };
-        await ProductService.editById(id, updateItem);
+      const item = id ? await MainService.findId(id) : {};
+      // if (!errors.isEmpty()) {
+      //   return res.render(`admin/pages/${nameController}/formProduct`, { item, title: id ? "Edit - Form" : "Add - Form", alert: errors.array()});
+      // }
+  
+      if (req.file) {
+        req.body.image = req.file.filename;
       }
-      res.redirect("/admin/item");
-    }
+      
+      if (!id) {
+        await MainService.save(req.body)
+      } else {
+        const { name, ordering, status, image } = req.body;
+        const updateItem = { name, ordering, status, image };
+  
+        if (req.file && item.image) {
+          const imagePath = path.join(__dirname, "../../public/uploads", item.image.replace("/uploads/", ""))
+          fs.unlink(imagePath, (err) => {
+            if (err) {
+              console.error("Error deleting image:", err);
+            }
+          })
+        }
+        await MainService.editById(id, updateItem);
+      }
+      res.redirect(`/admin/${nameController}`);
+    }];
+  
 }
 
 module.exports = new ProductController()

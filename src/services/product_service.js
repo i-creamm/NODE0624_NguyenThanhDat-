@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const ProductModel = require('../models/product_model')
 
 class ProductService {
@@ -10,11 +11,15 @@ class ProductService {
         if (search) {
             query.productName = new RegExp(search, 'ig');
         }
-        return await ProductModel.find(query).populate('category')
+        return await ProductModel.find(query)
     }
 
-    saveProduct = async ({name, status, ordering}) => {
-        return await ProductModel.create({name, status, ordering})
+    save = async ( { name, ordering, status, image , idCategory }) => {
+        // let id = new mongoose.Types.ObjectId(idCategory)
+            
+        return await ProductModel.create({
+            name, ordering, status, image , idCategory : idCategory
+        })
     }
 
     findId = async (id) => {

@@ -12,6 +12,10 @@ class CategoryService {
         }
         return await CategoryModel.find(query)
     }
+    getALl = async () => {
+        return await CategoryModel.find()
+    }
+
 
     saveCategory = async ({name, status, ordering}) => {
         return await CategoryModel.create({name, status, ordering})
