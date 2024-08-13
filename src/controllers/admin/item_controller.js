@@ -1,8 +1,11 @@
-const ItemService = require("../../services/item_service");
+const MainService = require("../../services/item_service");
 const { ItemValidate } = require("../../validation/item_validates");
 const { validationResult } = require("express-validator");
 const updateItem = require("../../utils/upload");
-const uploadImage = updateItem.upload("image");
+const uploadImage = updateItem.upload("items","image");
+const nameController = 'item'
+const linkPrefix = `/admin/${nameController}`
+const folderImage = '/items'
 const path = require('path')
 const fs = require('fs')
 
@@ -13,30 +16,30 @@ class ItemController {
     const countStatus = [
       {
         name: "All",
-        count: await ItemService.countItemWithStatus(),
+        count: await MainService.countItemWithStatus(),
         value: "all",
-        link: "/admin/item",
+        link: `${linkPrefix}`,
         active: status != "inactive" && status != "active",
       },
       {
         name: "Active",
-        count: await ItemService.countItemWithStatus("active"),
+        count: await MainService.countItemWithStatus("active"),
         value: "active",
-        link: "/admin/item?status=active",
+        link: `${linkPrefix}?status=active`,
         active: status == "active",
       },
       {
         name: "Inactive",
-        count: await ItemService.countItemWithStatus("inactive"),
+        count: await MainService.countItemWithStatus("inactive"),
         value: "inactive",
-        link: "/admin/item?status=inactive",
+        link: `${linkPrefix}?status=inactive`,
         active: status == "inactive",
       },
     ]
 
     const pageLimit = 10;
     const pageRanges = 5;
-    let totalItems = await await ItemService.countItemWithStatus(status);
+    let totalItems = await await MainService.countItemWithStatus(status);
     const pagination = {
       pageLimit: pageLimit,
       totalItems: totalItems,
@@ -46,23 +49,23 @@ class ItemController {
     };
     const pageSkip = (pagination.currentPage - 1) * pageLimit;
 
-    let items = await ItemService.getAllItems(status, search, pageSkip, pageLimit);
-    return res.render("admin/pages/item/list", {items, countStatus, status, search, pagination, message: {}});
+    let items = await MainService.getAllItems(status, search, pageSkip, pageLimit);
+    return res.render(`admin/pages/${nameController}/list`, {items, countStatus, status, search, pagination, message: {}});
   };
 
   //direct form put in
   getForm = async (req, res, next) => {
     let title = "Add - Form";
     const {id} = req.params
-    const item = req.params.id ? await ItemService.findId(id) : {};
+    const item = req.params.id ? await MainService.findId(id) : {};
     if (id) title = "Edit - Form";
-    res.render("admin/pages/item/form", { item, title, alert: [] });
+    res.render(`admin/pages/${nameController}/form`, { item, title, alert: [] });
   };
 
   changeStatus = async (req, res, next) => {
     let {id, status} = req.params
-    await ItemService.changeStatusById(id, status)
-    res.redirect("/admin/item");
+    await MainService.changeStatusById(id, status)
+    res.redirect(`${linkPrefix}`);
   }
 
 
@@ -72,10 +75,10 @@ class ItemController {
     const { id } = req.params;
     await ItemValidate(req);
     const errors = validationResult(req);
-    const item = id ? await ItemService.findId(id) : {};
+    const item = id ? await MainService.findId(id) : {};
 
     if (!errors.isEmpty()) {
-      return res.render('admin/pages/item/form', { item, title: id ? "Edit - Form" : "Add - Form", alert: errors.array()});
+      return res.render(`admin/pages/${nameController}/form`, { item, title: id ? "Edit - Form" : "Add - Form", alert: errors.array()});
     }
 
     if (req.file) {
@@ -83,32 +86,31 @@ class ItemController {
     }
     
     if (!id) {
-      await ItemService.save(req.body)
-      console.log(req.body)
+      await MainService.save(req.body)
     } else {
       const { name, ordering, status, image } = req.body;
       const updateItem = { name, ordering, status, image };
 
       if (req.file && item.image) {
-        const imagePath = path.join(__dirname, "../../public/uploads", item.image.replace("/uploads/", ""))
+        const imagePath = path.join(__dirname, `../../public/uploads${folderImage}`, item.image.replace(`/uploads/`, ""))
         fs.unlink(imagePath, (err) => {
           if (err) {
             console.error("Error deleting image:", err);
           }
         })
       }
-      await ItemService.editById(id, updateItem);
+      await MainService.editById(id, updateItem);
     }
-    res.redirect("/admin/item");
+    res.redirect(`${linkPrefix}`);
   }];
 
   //delete item
   deleteItem = async (req, res, next) => {
     const {id} = req.params
-    const item = await ItemService.findId(id)
+    const item = await MainService.findId(id)
 
     if (item && item.image) {
-      const imagePath = path.join(__dirname, "../../public/uploads", item.image.replace("/uploads/", ""))
+      const imagePath = path.join(__dirname, `../../public/uploads`, item.image.replace(`/uploads/`, ""))
       fs.unlink(imagePath, (err) => {
         if (err) {
           console.error("Error deleting image:", err)
@@ -116,9 +118,14 @@ class ItemController {
       });
     }
 
-    await ItemService.deleteById(id)
-    res.redirect("/admin/item")
+    await MainService.deleteById(id)
+    res.redirect(`${linkPrefix}`)
   }
+
+  // deleteByClick = (req, res, next) => {
+  //   console.log(req.body.checkItem)
+  //   res.send()
+  // }
 }
 
 module.exports = new ItemController();

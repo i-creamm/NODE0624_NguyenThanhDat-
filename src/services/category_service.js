@@ -1,39 +1,48 @@
-const CategoryModel = require('../models/category_model')
+const MainModel = require('../models/category_model')
 
 class CategoryService {
 
-    getAllCategory = async (categoryStatus, search) => {
-        let query = {}
-        if (categoryStatus){
-            query.categoryStatus = categoryStatus
+    getAllItems = async (status , search, pageSkip, pageLimit) =>{
+        const query = {};
+        if (status) {
+            query.status = status;
         }
         if (search) {
-            query.category_name = new RegExp(search, 'ig');
+            query.name = new RegExp(search, 'ig');
         }
-        return await CategoryModel.find(query)
-    }
-    getALl = async () => {
-        return await CategoryModel.find()
+        return await MainModel.find(query).skip(pageSkip).limit(pageLimit).sort({'createdAt': -1})
     }
 
+    save = async ({name, ordering, status, slug}) => {
+        const item = await MainModel.create({name, ordering, status, slug})
+        return item
+    }
 
-    saveCategory = async ({name, status, ordering}) => {
-        return await CategoryModel.create({name, status, ordering})
+    changeStatusById = async (id, status) => {
+        return await MainModel.findByIdAndUpdate(id, {status})
     }
 
     findId = async (id) => {
-        return await CategoryModel.findById(id)
+        return await MainModel.findById(id)
     }
 
     editById = async (id , updateItem) => {
-        return await CategoryModel.findByIdAndUpdate(id, updateItem) 
+        return await MainModel.findByIdAndUpdate(id, updateItem) 
     }
 
-    countItemWithStatus = async(categoryName = "") => {
+    deleteById = async (id) => {
+        return await MainModel.findByIdAndDelete(id)
+    }
+
+    countItemWithStatus = async(name = "") => {
         let status = {}
-        if(categoryName != "") status = {status: categoryName}
-        return await CategoryModel.countDocuments(status)
+        if(name != "") status = {status: name}
+        return await MainModel.countDocuments(status)
+    }
+
+    countAllItems = async () => {
+        return await MainModel.countDocuments()
     }
 }
 
-module.exports = new CategoryService()
+module.exports = new CategoryService();

@@ -1,5 +1,4 @@
-const ItemModel = require('../models/item_model')
-
+const MainModel = require('../models/item_model')
 
 class ItemService {
 
@@ -11,37 +10,37 @@ class ItemService {
         if (search) {
             query.name = new RegExp(search, 'ig');
         }
-        return await ItemModel.find(query).skip(pageSkip).limit(pageLimit).sort({'createdAt': -1})
+        return await MainModel.find(query).skip(pageSkip).limit(pageLimit).sort({'createdAt': -1})
     }
 
-    save = async ({cate_name, ordering, status, image}) => {
-        return await ItemModel.create({cate_name, ordering, status, image})
+    save = async ({name, ordering, status, image}) => {
+        return await MainModel.create({name, ordering, status, image})
     }
 
     changeStatusById = async (id, status) => {
-        return await ItemModel.findByIdAndUpdate(id, {status})
+        return await MainModel.findByIdAndUpdate(id, {status})
     }
 
     findId = async (id) => {
-        return await ItemModel.findById(id)
+        return await MainModel.findById(id)
     }
 
     editById = async (id , updateItem) => {
-        return await ItemModel.findByIdAndUpdate(id, updateItem) 
+        return await MainModel.findByIdAndUpdate(id, updateItem) 
     }
 
     deleteById = async (id) => {
-        return await ItemModel.findByIdAndDelete(id)
+        return await MainModel.findByIdAndDelete(id)
     }
 
     countItemWithStatus = async(name = "") => {
         let status = {}
         if(name != "") status = {status: name}
-        return await ItemModel.countDocuments(status)
+        return await MainModel.countDocuments(status)
     }
 
     countAllItems = async () => {
-        return await ItemModel.countDocuments()
+        return await MainModel.countDocuments()
     }
 }
 

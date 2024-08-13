@@ -12,7 +12,7 @@ let uploadFile = (
 ) => {
   const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-      return cb(null, folderDes + nameController); // Set the destination folder for uploaded files
+      return cb(null, folderDes + "/" + nameController); // Set the destination folder for uploaded files
     },
     filename: (req, file, cb) => {
       return cb(

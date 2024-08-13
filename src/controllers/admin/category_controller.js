@@ -1,56 +1,101 @@
-const CategoryService = require('../../services/category_service')
+const MainService = require("../../services/category_service");
+const { ItemValidate } = require("../../validation/item_validates");
+const { validationResult } = require("express-validator");
 
-class CategoryController {
+const nameController = 'category'
+const linkPrefix = `/admin/${nameController}`
 
-    getAllCategory = async (req, res, next) => {
-        const { categoryStatus, search} = req.query
-        const countStatus = [
-            {
-              name: "All",
-              count: await CategoryService.countItemWithStatus(),
-              value: "all",
-              link: "/admin/category",
-              active: categoryStatus != "inactive" && categoryStatus != "active",
-            },
-            {
-              name: "Active",
-              count: await CategoryService.countItemWithStatus("active"),
-              value: "active",
-              link: "/admin/category?status=active",
-              active: categoryStatus == "active",
-            },
-            {
-              name: "Inactive",
-              count: await CategoryService.countItemWithStatus("inactive"),
-              value: "inactive",
-              link: "/admin/category?status=inactive",
-              active: categoryStatus == "inactive",
-            },
-        ]
-        let categories = await CategoryService.getAllCategory(categoryStatus, search);
-        res.render('admin/pages/category/listCategory', {categories, countStatus})
+
+
+class ItemController {
+  getAll = async (req, res, next) => {
+    const { status, search, page = 1} = req.query;
+    const countStatus = [
+      {
+        name: "All",
+        count: await MainService.countItemWithStatus(),
+        value: "all",
+        link: `${linkPrefix}`,
+        active: status != "inactive" && status != "active",
+      },
+      {
+        name: "Active",
+        count: await MainService.countItemWithStatus("active"),
+        value: "active",
+        link: `${linkPrefix}?status=active`,
+        active: status == "active",
+      },
+      {
+        name: "Inactive",
+        count: await MainService.countItemWithStatus("inactive"),
+        value: "inactive",
+        link: `${linkPrefix}?status=inactive`,
+        active: status == "inactive",
+      },
+    ]
+
+    const pageLimit = 10;
+    const pageRanges = 5;
+    let totalItems = await await MainService.countItemWithStatus(status);
+    const pagination = {
+      pageLimit: pageLimit,
+      totalItems: totalItems,
+      totalPages: Math.ceil(totalItems / pageLimit),
+      currentPage: parseInt(page),
+      pageRanges: pageRanges,
+    };
+    const pageSkip = (pagination.currentPage - 1) * pageLimit;
+
+    let items = await MainService.getAllItems(status, search, pageSkip, pageLimit);
+    return res.render(`admin/pages/${nameController}/list`, {items, countStatus, status, search, pagination, message: {}});
+  };
+
+  //direct form put in
+  getForm = async (req, res, next) => {
+    let title = "Add - Form";
+    const {id} = req.params
+    const item = req.params.id ? await MainService.findId(id) : {};
+    if (id) title = "Edit - Form";
+    res.render(`admin/pages/${nameController}/form`, { item, title, alert: [] });
+  };
+
+  changeStatus = async (req, res, next) => {
+    let {id, status} = req.params
+    await MainService.changeStatusById(id, status)
+    res.redirect(`${linkPrefix}`);
+  }
+
+
+  //save info form (Add or Edit)
+  saveForm = async (req, res, next) => {
+    const { id } = req.params;
+    await ItemValidate(req);
+    const errors = validationResult(req);
+    const item = id ? await MainService.findId(id) : {};
+
+    if (!errors.isEmpty()) {
+      return res.render(`admin/pages/${nameController}/form`, { item, title: id ? "Edit - Form" : "Add - Form", alert: errors.array()});
     }
 
-    getFormCategory = async (req, res, next) => {
-      let title = "Add - Form";
-      const { id } = req.params
-      const category = req.params.id ? await CategoryService.findId(id) : {};
-      if (id) title = "Edit - Form";
-      res.render("admin/pages/category/formCategory", { category, title, alert: [] });
+    if (!id) {
+      await MainService.save(req.body)
+    } else {
+      const { name, ordering, status, slug} = req.body;
+      const updateItem = { name, ordering, status, slug}
+      await MainService.editById(id, updateItem);
     }
+    res.redirect(`${linkPrefix}`);
+  };
 
-    saveFormCategory = async (req, res, next) => {
-        const { id } = req.params
-        if (!id) {
-            await CategoryService.saveCategory(req.body)
-            console.log(req.body)
-        } else {
-            const {name, status, ordering} = req.body;
-            const updateItem = {name, status, ordering};
-            await CategoryService.editById(id, updateItem);
-        }
-        res.redirect("/admin/category");
-    }
+  //delete item
+  deleteItem = async (req, res, next) => {
+    const {id} = req.params
+    const item = await MainService.findId(id)
+    await MainService.deleteById(id)
+    res.redirect(`${linkPrefix}`)
+  }
+
+
 }
 
-module.exports = new CategoryController()
+module.exports = new ItemController();

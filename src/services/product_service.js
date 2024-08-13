@@ -1,40 +1,50 @@
 const mongoose = require('mongoose');
-const ProductModel = require('../models/product_model')
+const MainModel = require('../models/product_model')
 
 class ProductService {
 
-    getProducts = async (productStatus, search) => {
-        let query = {}
-        if (productStatus){
-            query.productStatus = productStatus
+    getAllItems = async (status , search, pageSkip, pageLimit) =>{
+        const query = {};
+        if (status) {
+            query.status = status;
         }
         if (search) {
-            query.productName = new RegExp(search, 'ig');
+            query.name = new RegExp(search, 'ig');
         }
-        return await ProductModel.find(query)
+        return await MainModel.find(query).skip(pageSkip).limit(pageLimit).sort({'createdAt': -1})
     }
 
     save = async ( { name, ordering, status, image , idCategory }) => {
-        // let id = new mongoose.Types.ObjectId(idCategory)
-            
-        return await ProductModel.create({
-            name, ordering, status, image , idCategory : idCategory
+        let id = new mongoose.Types.ObjectId(idCategory)
+        return await MainModel.create({
+            name, ordering, status, image , idCategory : id
         })
     }
 
+    changeStatusById = async (id, status) => {
+        return await MainModel.findByIdAndUpdate(id, {status})
+    }
+
     findId = async (id) => {
-        return await ProductModel.findById(id)
+        return await MainModel.findById(id)
     }
 
     editById = async (id , updateItem) => {
-        return await ProductModel.findByIdAndUpdate(id, updateItem) 
+        return await MainModel.findByIdAndUpdate(id, updateItem) 
     }
 
-    countItemWithStatus = async(productName = "") => {
+    deleteById = async (id) => {
+        return await MainModel.findByIdAndDelete(id)
+    }
+
+    countItemWithStatus = async(name = "") => {
         let status = {}
-        if(productName != "") status = {status: productName}
-        return await ProductModel.countDocuments(status)
-        
+        if(name != "") status = {status: name}
+        return await MainModel.countDocuments(status)
+    }
+
+    countAllItems = async () => {
+        return await MainModel.countDocuments()
     }
 }
 

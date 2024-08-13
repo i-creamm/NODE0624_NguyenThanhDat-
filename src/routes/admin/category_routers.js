@@ -1,12 +1,15 @@
 var express = require('express');
 var router = express.Router();
-const CategoryController = require('../../controllers/admin/category_controller')
+const MainController = require('../../controllers/admin/category_controller')
 
-router.get('/', CategoryController.getAllCategory)
+    router.get('/', MainController.getAll)
 
-router.get('/formCategory/:id?', CategoryController.getFormCategory)
+    router.get('/form/:id?', MainController.getForm)
 
-router.post('/formCategory/:id?', CategoryController.saveFormCategory)
+    router.get('/changeStatus/:id/:status', MainController.changeStatus)
+    
+    router.post('/form/:id?', MainController.saveForm)
 
-
+    router.get('/delete/:id', MainController.deleteItem)
+    
 module.exports = router;

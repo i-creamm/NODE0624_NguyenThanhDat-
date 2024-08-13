@@ -1,15 +1,15 @@
 var express = require('express');
 var router = express.Router();
-const ItemController = require('../../controllers/admin/item_controller')
+const MainController = require('../../controllers/admin/item_controller')
 
-    router.get('/', ItemController.getAll)
+    router.get('/', MainController.getAll)
 
-    router.get('/form/:id?', ItemController.getForm)
+    router.get('/form/:id?', MainController.getForm)
 
-    router.get('/changeStatus/:id/:status', ItemController.changeStatus)
+    router.get('/changeStatus/:id/:status', MainController.changeStatus)
     
-    router.post('/form/:id?', ItemController.saveForm)
+    router.post('/form/:id?', MainController.saveForm)
 
-    router.get('/delete/:id', ItemController.deleteItem)
+    router.get('/delete/:id', MainController.deleteItem)
     
 module.exports = router;

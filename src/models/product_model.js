@@ -4,9 +4,8 @@ var slugify = require('slugify')
 const ConnectionDocument = 'products'
 const ModelDocument = 'product'
 
-const categorySchema = new Schema({
+const productSchema = new Schema({
   name: String,
-  slug_product: String,
   status: {
     type: String,
     enum: ['active', 'inactive'],
@@ -17,22 +16,36 @@ const categorySchema = new Schema({
     min: 0,
     max: 100
   },
+  price: Number,
+  isSpecial: Boolean,
+  rate: String,
+  detail: String,
   image: String,
   images : [String],
   idCategory : {
-    type: String,
-  }
+    type: Schema.Types.ObjectId,
+    ref: 'Category',
+  },
+  slug: String,
+
+
 }, {
   collection: ConnectionDocument, timestamps: true
 });
 
-categorySchema.pre('save', function(next) {
-  this.slug_product = slugify(this.name, { lower: true })
-  next()
+productSchema.pre("save", function (next) {
+  if (this.name) {
+    this.slug = slugify(this.name, { lower: true, strict: true });
+  }
+  next();
 });
 
+productSchema.pre('findOneAndUpdate', function (next) {
+  const update = this.getUpdate();
+  if (update.name) {
+    update.slug = slugify(update.name, { lower: true, strict: true });
+  }
+  next();
+});
 
-
-
-
-module.exports = model(ModelDocument, categorySchema)
+module.exports = model(ModelDocument, productSchema)

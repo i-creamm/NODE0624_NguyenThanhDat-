@@ -37,4 +37,3 @@ imgInp.onchange = evt => {
     }
 }
 
-module.exports = {deleteById: deleteById}
