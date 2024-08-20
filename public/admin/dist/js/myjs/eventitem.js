@@ -39,6 +39,25 @@ imgInp.onchange = evt => {
 }
 
 
+$(document).ready(function () {
+    const inputElement = $('#filepond')
+
+    FilePond.registerPlugin(
+        FilePondPluginImagePreview,
+      );
+
+   
+
+    const pond = FilePond.create(inputElement[0])
+
+    pond.setOptions({
+        imagePreviewMinHeight : 100,
+        imagePreviewMaxWidth : 100,
+    });
+
+});
+
+
 
 
 

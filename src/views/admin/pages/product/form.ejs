@@ -73,9 +73,7 @@
                       <textarea name="editor" id="editor" class="form-control form-control-sm"><%= item.detail || '' %></textarea>
                     </div>
                 </div> -->
-                <textarea name="content" id="editor1" rows="10" cols="80">
-                    This is my textarea to be replaced with CKEditor 4.
-                </textarea>
+               
 
                 <!-- <div class="form-group row">
                     <label for="isSpecial" class="col-sm-2 col-form-label text-sm-right">Is Special</label>
@@ -83,12 +81,20 @@
                       <input type="checkbox" id="isSpecial" name="isSpecial" <%= item.isSpecial ? "checked" : '' %> />
                     </div>
                 </div> -->
+                <input type="file" 
+                    id="filepond"
+                    class="filepond"
+                    name="filepond" 
+                    multiple 
+                    data-allow-reorder="true"
+                    data-max-file-size="3MB"
+                    data-max-files="3">
 
                 <div class="form-group row">
                     <label for="image" class="col-sm-2 col-form-label text-sm-right">Image</label>
                     <div class="col-xs-12 col-sm-8">
                         <input type="file" name="image" class="form-control form-control-sm" id="imgInp" />
-                        <img id="blah" src="/uploads<%= folderImage%><%= item.image %>" alt="" class="img-thumbnail mt-1 " width="200px" height="200px" />
+                        <!-- <img id="blah" src="/uploads<%= folderImage%><%= item.image %>" alt="" class="img-thumbnail mt-1 " width="200px" height="200px" /> -->
                         <input type="hidden" name="old_image" value="<%= item.image %>">                
                     </div>
                 </div>
@@ -105,10 +111,5 @@
         </form>
     </div>
 
-    <script>ClassicEditor
-        .create(document.querySelector('#editor1'))
-        .catch(error => {
-            console.error(error);
-        });
-    </script>
+
 

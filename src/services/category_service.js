@@ -28,6 +28,9 @@ class CategoryService {
     findId = async (id) => {
         return await MainModel.findById(id)
     }
+    findBySlug = async (slug) => {
+        return await MainModel.findOne({slug})
+    }
 
     editById = async (id , updateItem) => {
         return await MainModel.findByIdAndUpdate(id, updateItem) 
