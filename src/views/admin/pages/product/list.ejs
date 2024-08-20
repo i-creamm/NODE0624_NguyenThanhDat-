@@ -54,37 +54,18 @@
 	<div class="card-header">
 		<h4 class="card-title">List</h4>
 		<div class="card-tools">
-			<div class="btn-group">
-				<button type="button" class="btn btn-info" data-toggle="dropdown" aria-expanded="false">Change Status</button>
-				<div class="dropdown-menu" role="menu" >
-					<button type="button" onClick="" class="dropdown-item" data-toggle="modal" data-target="#modal-success">
-						Change to Active
-						</button>
-					<div class="dropdown-divider"></div>
-						<button type="button" onClick="" class="dropdown-item" data-toggle="modal" data-target="#modal-danger">
-							Change to Inactive
-						</button>
-					</div>
-				</div>
 			<a href="<%= linkPrefix %>form" class="btn btn-warning" style="background-color: #F0AD4E; color: white; font-weight: 500;">Add New</a>
-			<!-- <button type="button" class="btn btn-danger" onClick="" data-toggle="modal" data-target="#modal-danger">
-				<i class="fas fa-trash-alt"></i>Delete Multi
-			</button> -->
-			<a href="<%= linkPrefix %>delete" class="btn btn-danger" onClick="" data-toggle="modal" data-target="#modal-danger"><i class="fas fa-trash-alt"></i>Delete Multi</a>
 		</div>
 		<input type="hidden" name="action" id="inputHiddenAll" value="" >
 	</div>
 
 	<div class="card-body">
-		<!-- Control -->
-		<!-- <form action="" method="get" class="table-responsive" id="zt-form"> -->
 
 			<!-- List Content -->
 		
 			
-
 			<table class="table table-bordered table-hover text-nowrap btn-table mb-0">
-				<thead>
+				<thead class="table table-dark">
 					<tr>
 						<th class="text-center">
 							<div class="custom-control custom-checkbox">
@@ -95,14 +76,13 @@
 
 						<th class="text-center">#</a></th>
 						<th class="text-center">Image</a></th>
-						<!-- <th class="text-center pointer">
-							<a href="#" class="title_col" >Name <i class="fa fa-fw fa-sort"></i></a>
-						</th> -->
 						<th class="text-center">Name</a></th>
 						<th class="text-center">Status</a></th>
 						<th class="text-center">Ordering</a></th>
-						<th class="text-center">Slug_Product</a></th>
+						<th class="text-center">Price</th>
 						<th class="text-center">GroupCategory</a></th>
+						<th class="text-center">Details Product</th>
+						<th class="text-center">Is Special</th>
 						<th class="text-center">Action</th>
 					</tr>
 				</thead>
@@ -124,26 +104,24 @@
 							<%- renderStatus(row._id, row.status, linkPrefix) %>
 
 							<td class="text-center position-relative" >
-								<input type="number" name="items-ordering" value="<%= row.ordering %>" class="text-center ordering">
-							</td>
-
-							<!-- <td class="text-center">
-								<input type="text" id="isCategory" name="isCategory" class="form-control form-control-sm text-center"
-									value="<%= row.slug || '' %>" readonly />
-							</td> -->
-
-							<td class="text-center">
-								<input type="text" id="slug" name="slug" class="form-control form-control-sm text-center"
-									value="<%= row.slug || '' %>" readonly />
+								<input data-link="<%= linkPrefix %>changeOrdering/<%= row._id %>" type="number" name="ordering" value="<%= row.ordering %>" class="text-center ordering">
 							</td>
 							
+							<td class="text-center">
+								<span>$<%= row.price%></span>
+							</td>
 
-							<% if (row.isCategory == categories._id) { %>
-								<td class="text-center">
-									<input type="text" id="idCategory" name="idCategory" class="form-control form-control-sm text-center"
-										value="<%= categories.name%>" readonly />
-								</td>
-							<% } %>
+
+							<td class="text-center">
+								<input type="text" id="idCategory" name="idCategory" class="form-control form-control-sm text-center"
+									value="<%= row.idCategory.name %>" readonly />
+							</td>
+
+							<td class="text-center"><span><%= row.detail  %></span></td>
+
+							<td class="text-center">
+								<input type="checkbox" id="isSpecial" name="isSpecial" <%= row.isSpecial ? 'checked' : '' %>><span>--isSpecial</span>
+							</td>
 							
 
 							<td class="text-center">
@@ -196,5 +174,33 @@
         })
     })
 </script>
+
+<script>
+    $('.ordering').change(function (e) {
+
+        toastr.options = {
+            "closeButton": true,            
+            "timeOut": 2000,                
+            "extendedTimeOut": 1000,       
+            "positionClass": "toast-top-right",  
+            "progressBar": true,            
+        };
+    
+        e.preventDefault();
+        const val = $(this).val();
+        const link = $(this).data('link') + '/' + val;
+        console.log(link)
+    
+        $.ajax({
+            url: link,
+            type: 'GET',
+            data: { ordering: val },
+            success: function(response) {
+                toastr.success('Ordering updated successfully!', 'Success');
+            }})
+        });
+</script>
+
+
 
 

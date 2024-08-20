@@ -5,5 +5,6 @@ router.use('/item',require('./item_routers'))
 router.use('/',require('./dashboard_router'))
 router.use('/product',require('./product_routers'))
 router.use('/category',require('./category_routers'))
+router.use('/menu',require('./menu_router'))
 
 module.exports = router

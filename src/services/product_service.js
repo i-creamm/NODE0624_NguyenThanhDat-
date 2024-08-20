@@ -11,18 +11,21 @@ class ProductService {
         if (search) {
             query.name = new RegExp(search, 'ig');
         }
-        return await MainModel.find(query).skip(pageSkip).limit(pageLimit).sort({'createdAt': -1})
+        return await MainModel.find(query).skip(pageSkip).limit(pageLimit).sort({'createdAt': -1}).populate('idCategory')
     }
 
-    save = async ( { name, ordering, status, image , idCategory }) => {
-        let id = new mongoose.Types.ObjectId(idCategory)
+    save = async ( { name, ordering, status, image , price, detail, isSpecial, idCategory }) => {
         return await MainModel.create({
-            name, ordering, status, image , idCategory : id
+            name, ordering, status, image , price, detail, isSpecial, idCategory: idCategory
         })
     }
 
     changeStatusById = async (id, status) => {
         return await MainModel.findByIdAndUpdate(id, {status})
+    }
+
+    changeOrderingById = async (id, ordering) => {
+        return await MainModel.findByIdAndUpdate(id, {ordering})
     }
 
     findId = async (id) => {
@@ -46,6 +49,7 @@ class ProductService {
     countAllItems = async () => {
         return await MainModel.countDocuments()
     }
+
 }
 
 module.exports = new ProductService()

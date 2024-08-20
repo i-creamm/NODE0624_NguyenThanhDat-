@@ -33559,3 +33559,12 @@ body.dark {
   background-color: rgba(0, 0, 0, 0.2);
 }
 /*# sourceMappingURL=style.css.map */
+
+@media (min-width: 992px) {  /* Remove Media query to enable in responsive */
+
+	.opacity-on-hover .menu-container > .menu-item > .menu-link {
+    transition: color .3s ease;
+    color: #111 !important;
+  }
+  .opacity-on-hover .menu-container:hover > .menu-item:not(:hover):not(.current) > .menu-link { color: #D5D5D5 !important; }
+}

@@ -16,12 +16,16 @@ const categorySchema = new Schema({
       min : 0,
       max : 100
     },
-    slug: String
+    slug: String,
+    idMenu: {
+      type: Schema.Types.ObjectId,
+      ref: 'menu',
+      required: false,
+    }
   }, {
       collection : ConnectionDocument, 
       timestamps: true,
   });
-
 
   categorySchema.pre("save", function (next) {
     if (this.name) {

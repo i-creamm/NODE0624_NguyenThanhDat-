@@ -2,6 +2,7 @@ const MainService = require("../../services/product_service");
 const CategoryService = require("../../services/category_service");
 const { ItemValidate } = require("../../validation/item_validates");
 const { validationResult } = require("express-validator");
+const { asyncHandle } =  require('../../utils/asyncHandle')
 
 const updateItem = require("../../utils/upload");
 const uploadImage = updateItem.upload("products","image");
@@ -53,8 +54,7 @@ class ProductController {
     const pageSkip = (pagination.currentPage - 1) * pageLimit;
 
     let items = await MainService.getAllItems(status, search, pageSkip, pageLimit);
-    let categories = await CategoryService.getAllItems()
-    return res.render(`admin/pages/${nameController}/list`, {items, categories, countStatus, status, search, pagination, message: {}});
+    return res.render(`admin/pages/${nameController}/list`, {items, countStatus, status, search, pagination, message: {}});
   };
 
   //direct form put in
@@ -73,10 +73,16 @@ class ProductController {
     res.redirect(`${linkPrefix}`);
   }
 
+  changeOrdering = async (req, res, next) => {
+    let {id, ordering} = req.params
+    await MainService.changeOrderingById(id, parseInt(ordering))
+    res.redirect(`${linkPrefix}`);
+  }
 
   //save info form (Add or Edit)
   saveForm = [uploadImage , 
-    async (req, res, next) => {
+    asyncHandle( async (req, res, next) => {
+
     const { id } = req.params;
     await ItemValidate(req);
     const errors = validationResult(req);
@@ -93,11 +99,11 @@ class ProductController {
     if (!id) {
       await MainService.save(req.body)
     } else {
-      const { name, ordering, status, image } = req.body;
-      const updateItem = { name, ordering, status, image };
+      const { name, ordering, status, image , idCategory} = req.body;
+      const updateItem = { name, ordering, status, image , idCategory};
 
       if (req.file && item.image) {
-        const imagePath = path.join(__dirname, `../../public/uploads${folderImage}`, item.image.replace(`/uploads/`, ""))
+        const imagePath = path.join(`public/uploads${folderImage}`, item.image.replace(`/uploads`, ""))
         fs.unlink(imagePath, (err) => {
           if (err) {
             console.error("Error deleting image:", err);
@@ -107,7 +113,7 @@ class ProductController {
       await MainService.editById(id, updateItem);
     }
     res.redirect(`${linkPrefix}`);
-  }];
+  })];
 
   //delete item
   deleteItem = async (req, res, next) => {
@@ -115,7 +121,7 @@ class ProductController {
     const item = await MainService.findId(id)
 
     if (item && item.image) {
-      const imagePath = path.join(__dirname, `../../public/uploads`, item.image.replace(`/uploads/`, ""))
+      const imagePath = path.join(`public/uploads${folderImage}`, item.image.replace(`/uploads`, ""))
       fs.unlink(imagePath, (err) => {
         if (err) {
           console.error("Error deleting image:", err)
@@ -126,7 +132,6 @@ class ProductController {
     await MainService.deleteById(id)
     res.redirect(`${linkPrefix}`)
   }
-
 
 }
 

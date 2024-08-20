@@ -16,15 +16,24 @@ const productSchema = new Schema({
     min: 0,
     max: 100
   },
-  price: Number,
-  isSpecial: Boolean,
-  rate: String,
+  price: { 
+    type: Number, 
+    required: true, 
+    min: 0 
+  },
+  description: {
+     type: String 
+  },
+  isSpecial: {
+    type: Boolean,
+    default: false
+  },
   detail: String,
   image: String,
   images : [String],
   idCategory : {
     type: Schema.Types.ObjectId,
-    ref: 'Category',
+    ref: 'category',
   },
   slug: String,
 

@@ -10,16 +10,19 @@ class CategoryService {
         if (search) {
             query.name = new RegExp(search, 'ig');
         }
-        return await MainModel.find(query).skip(pageSkip).limit(pageLimit).sort({'createdAt': -1})
+        return await MainModel.find(query).skip(pageSkip).limit(pageLimit).sort({'createdAt': -1}).populate('idMenu')
     }
 
-    save = async ({name, ordering, status, slug}) => {
-        const item = await MainModel.create({name, ordering, status, slug})
-        return item
+    save = async ({name, ordering, status, idMenu}) => {
+        return await MainModel.create({name, ordering, status, idMenu: idMenu || []})
     }
 
     changeStatusById = async (id, status) => {
         return await MainModel.findByIdAndUpdate(id, {status})
+    }
+
+    changeOrderingById = async (id, ordering) => {
+        return await MainModel.findByIdAndUpdate(id, {ordering})
     }
 
     findId = async (id) => {
@@ -43,6 +46,14 @@ class CategoryService {
     countAllItems = async () => {
         return await MainModel.countDocuments()
     }
+
+    getCategoryByMenuId = async (idMenu) => {
+    return await MainModel.find({
+            idMenu: idMenu,
+            status: "active",
+        }).sort({ordering: 1})
+    };
+
 }
 
 module.exports = new CategoryService();

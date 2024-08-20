@@ -44,6 +44,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', require('./src/routes'));
 
+app.use('/node_modules', express.static(__dirname + '/node_modules'));
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

@@ -1,0 +1,207 @@
+<%- include('../../helpers/render_status.ejs') %>
+<%- include('../../helpers/render_pagination.ejs') %>
+
+
+<% const collection = 'menu' ; const linkPrefix = `/admin/${collection}/`%>
+
+<div class="row mb-2">
+    <div class="col-sm-6">
+        <h1 class="m-0">Danh mục sản phẩm</h1>
+    </div>
+</div>
+
+<div class="card card-info card-outline">
+	<div class="card-header">
+		<h6 class="card-title">Search & Filter</h6>
+		<div class="card-tools">
+			<button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fas fa-minus"></i></button>
+		</div>
+	</div>
+	<div class="card-body">
+		<div class="row justify-content-between">
+			<div class="mb-1">
+				<div class="btn-search">
+					<% countStatus.forEach(e => { %>
+						<a href="<%= e.link %>">
+							<button type="button" class="btn btn-<%= e.active ? 'success' : 'default' %>">
+								<%= e.name %> (<span><%= e.count %></span>)
+							</button>
+						</a>
+					<% }) %>
+				</div>
+			</div>
+			<div class="mb-1">
+				<form action="<%= linkPrefix %>" method="get">
+					<input type="hidden" name="status" value="<%= status %>">
+					<div class="input-group">
+						<input type="text" class="form-control form-control-sm" name="search" value="<%= search %>" placeholder="Search for..." style="min-width: 300px">
+						<div class="input-group-append">
+							<a type="button" class="btn btn-sm btn-danger"  href="<%= linkPrefix %>">Clear</a>
+							<button type="submit" class="btn btn-sm btn-info" id="btn-search">Search</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<!-- Content -->
+<form action="/admin/category/multipleAction" method="post" name="multipleForm" id = "multiForm">
+<div class="card card-info card-outline">
+	<div class="card-header">
+		<h4 class="card-title">List</h4>
+		<div class="card-tools">
+			<div class="btn-group">
+				<button type="button" class="btn btn-info" data-toggle="dropdown" aria-expanded="false">Change Status</button>
+				<div class="dropdown-menu" role="menu" >
+					<button type="button" onClick="" class="dropdown-item" data-toggle="modal" data-target="#modal-success">
+						Change to Active
+						</button>
+					<div class="dropdown-divider"></div>
+						<button type="button" onClick="" class="dropdown-item" data-toggle="modal" data-target="#modal-danger">
+							Change to Inactive
+						</button>
+					</div>
+				</div>
+			<a href="<%= linkPrefix %>form" class="btn btn-warning" style="background-color: #F0AD4E; color: white; font-weight: 500;">Add New</a>
+			<!-- <button type="button" class="btn btn-danger" onClick="" data-toggle="modal" data-target="#modal-danger">
+				<i class="fas fa-trash-alt"></i>Delete Multi
+			</button> -->
+			<a href="<%= linkPrefix %>delete" class="btn btn-danger" onClick="" data-toggle="modal" data-target="#modal-danger"><i class="fas fa-trash-alt"></i>Delete Multi</a>
+		</div>
+		<input type="hidden" name="action" id="inputHiddenAll" value="" >
+	</div>
+
+	<div class="card-body">
+		<!-- Control -->
+		<!-- <form action="" method="get" class="table-responsive" id="zt-form"> -->
+
+			<!-- List Content -->
+		
+			
+
+			<table class="table table-bordered table-hover text-nowrap btn-table mb-0">
+				<thead class="table-dark">
+					<tr>
+						<th class="text-center">
+							<div class="custom-control custom-checkbox">
+								<input class="custom-control-input cbAll" type="checkbox" id="checkAll">
+								<label for="checkAll" class="custom-control-label"></label>
+							</div>
+						</th>
+
+						<th class="text-center">#</a></th>
+						<th class="text-center">Name</a></th>
+						<th class="text-center">Status</a></th>
+						<th class="text-center">Ordering</a></th>
+						<th class="text-center">Action</th>
+					</tr>
+				</thead>
+				<tbody>
+                    <% items.forEach((row, index) => { %>
+						<tr>
+							<td class="text-center">
+								<div class="custom-control custom-checkbox">
+									<input class="custom-control-input" type="checkbox" name="cid" id="check-<%= index+1  %>" value="<%= row._id  %>">
+									<label for="check-<%= index + 1  %>" class="custom-control-label"></label>
+								</div>
+							</td>
+							<td class="text-center"><%= index + 1  %></td>
+
+							<td class="text-center"><span><%= row.name%></span></td>
+
+							<%- renderStatus(row._id, row.status, linkPrefix) %>
+
+							<td class="text-center position-relative" >
+								<input data-link="<%= linkPrefix %>changeOrdering/<%= row._id %>" type="number" name="ordering" value="<%= row.ordering %>" class="text-center ordering">
+							</td>
+
+							<!-- <td>
+								<% if (row.child) { %>
+									<span style="color: green;">✔️ Yes</span>
+								<% } else { %>
+									<span style="color: red;">✖️ No</span>
+								<% } %>
+							</td> -->
+
+							<td class="text-center">
+								<a href="<%= linkPrefix %>form/<%= row._id%>" class="rounded-circle btn btn-sm btn-info " title="Edit">
+									<i class="fas fa-pencil-alt"></i>
+								</a>
+			 
+								<a href="javascript:clickToDeleteId('<%= linkPrefix %>delete/<%= row._id%>')" class="rounded-circle btn btn-sm btn-danger">
+									<i class="fas fa-trash-alt"></i>
+								</a>
+							</td> 
+						</tr>
+					<% }) %>
+				</tbody>
+			</table>
+		<!-- </form> -->
+	</div>
+	<!-- pagination -->
+	<div class="card-footer clearfix">
+		<ul class="pagination pagination-sm m-0 float-right">
+			<%- renderPagination(pagination , status) %>	
+		</ul>
+	</div>
+</div>
+<form>
+
+<script>
+	    document.addEventListener('DOMContentLoaded', function () {
+        let deletedID;
+        let btnDeleted = document.getElementById('buttonDeleted');
+        let deleteForm = document.forms['deletedForm'];
+        let submitAllForm = document.forms['multipleForm'];
+        let btnCheckAll = $('#checkAll');
+        let btnCheck    = $('input[name="cid"]');
+        let btnSubmitAll = $('#buttonSubmitAll');
+        let isChecked;
+
+        // button check all has been checked
+        btnCheckAll.change(function (){
+            isChecked = btnCheckAll.prop('checked');
+            if(isChecked === false){
+                $('input[class="ordering"]').removeAttr('name');
+            }
+            else {
+                $('input[class="ordering"]').attr('name', 'ordering');
+            }
+            btnCheck.prop('checked',isChecked);
+            disableSubmit();
+
+        })
+    })
+</script>
+
+<script>
+    $('.ordering').change(function (e) {
+
+        toastr.options = {
+            "closeButton": true,            
+            "timeOut": 2000,                
+            "extendedTimeOut": 1000,       
+            "positionClass": "toast-top-right",  
+            "progressBar": true,            
+        };
+    
+        e.preventDefault();
+        const val = $(this).val();
+        const link = $(this).data('link') + '/' + val;
+        console.log(link)
+    
+        $.ajax({
+            url: link,
+            type: 'GET',
+            data: { ordering: val },
+            success: function(response) {
+                toastr.success('Ordering updated successfully!', 'Success');
+            }})
+        });
+</script>
+
+

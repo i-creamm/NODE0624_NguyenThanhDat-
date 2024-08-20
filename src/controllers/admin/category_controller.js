@@ -1,13 +1,15 @@
 const MainService = require("../../services/category_service");
+const MenuService = require("../../services/menu_service");
 const { ItemValidate } = require("../../validation/item_validates");
 const { validationResult } = require("express-validator");
+
 
 const nameController = 'category'
 const linkPrefix = `/admin/${nameController}`
 
 
 
-class ItemController {
+class CategoryController {
   getAll = async (req, res, next) => {
     const { status, search, page = 1} = req.query;
     const countStatus = [
@@ -55,13 +57,20 @@ class ItemController {
     let title = "Add - Form";
     const {id} = req.params
     const item = req.params.id ? await MainService.findId(id) : {};
+    const items = await MenuService.getAllItems()
     if (id) title = "Edit - Form";
-    res.render(`admin/pages/${nameController}/form`, { item, title, alert: [] });
+    res.render(`admin/pages/${nameController}/form`, { item, items, title, alert: [] });
   };
 
   changeStatus = async (req, res, next) => {
     let {id, status} = req.params
     await MainService.changeStatusById(id, status)
+    res.redirect(`${linkPrefix}`);
+  }
+
+  changeOrdering = async (req, res, next) => {
+    let {id, ordering} = req.params
+    await MainService.changeOrderingById(id, parseInt(ordering))
     res.redirect(`${linkPrefix}`);
   }
 
@@ -80,8 +89,8 @@ class ItemController {
     if (!id) {
       await MainService.save(req.body)
     } else {
-      const { name, ordering, status, slug} = req.body;
-      const updateItem = { name, ordering, status, slug}
+      const { name, ordering, status, idMenu} = req.body;
+      const updateItem = { name, ordering, status, idMenu}
       await MainService.editById(id, updateItem);
     }
     res.redirect(`${linkPrefix}`);
@@ -98,4 +107,4 @@ class ItemController {
 
 }
 
-module.exports = new ItemController();
+module.exports = new CategoryController();
