@@ -31,9 +31,6 @@ class ProductService {
     findId = async (id) => {
         return await MainModel.findById(id)
     }
-    findByParam = async (params) => {
-        return await MainModel.find(params)
-    }
 
     editById = async (id , updateItem) => {
         return await MainModel.findByIdAndUpdate(id, updateItem) 
@@ -57,6 +54,18 @@ class ProductService {
     //Frontend
     getProductWithSpecial = async () => {
         return await MainModel.countDocuments()
+    }
+
+    findByParam = async (params) => {
+        return await MainModel.find(params)
+    }
+
+    findBySlug = async (slug) => {
+        return await MainModel.findOne({slug})
+    }
+
+    findByProduct = async (id) => {
+        return await MainModel.findOne(id)
     }
 
 }

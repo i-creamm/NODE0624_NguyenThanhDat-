@@ -1,9 +1,8 @@
 const MainService = require("../../services/category_service");
 const MenuService = require("../../services/menu_service");
+const {generateCountStatus, generatePagination} = require('../../utils/helper')
 const { ItemValidate } = require("../../validation/item_validates");
 const { validationResult } = require("express-validator");
-
-
 const nameController = 'category'
 const linkPrefix = `/admin/${nameController}`
 
@@ -12,43 +11,18 @@ const linkPrefix = `/admin/${nameController}`
 class CategoryController {
   getAll = async (req, res, next) => {
     const { status, search, page = 1} = req.query;
-    const countStatus = [
-      {
-        name: "All",
-        count: await MainService.countItemWithStatus(),
-        value: "all",
-        link: `${linkPrefix}`,
-        active: status != "inactive" && status != "active",
-      },
-      {
-        name: "Active",
-        count: await MainService.countItemWithStatus("active"),
-        value: "active",
-        link: `${linkPrefix}?status=active`,
-        active: status == "active",
-      },
-      {
-        name: "Inactive",
-        count: await MainService.countItemWithStatus("inactive"),
-        value: "inactive",
-        link: `${linkPrefix}?status=inactive`,
-        active: status == "inactive",
-      },
-    ]
 
-    const pageLimit = 10;
-    const pageRanges = 5;
-    let totalItems = await await MainService.countItemWithStatus(status);
-    const pagination = {
-      pageLimit: pageLimit,
-      totalItems: totalItems,
-      totalPages: Math.ceil(totalItems / pageLimit),
-      currentPage: parseInt(page),
-      pageRanges: pageRanges,
-    };
-    const pageSkip = (pagination.currentPage - 1) * pageLimit;
+    //filter all, active, inactive
+    const allCount = await MainService.countItemWithStatus()
+    const activeCount = await MainService.countItemWithStatus("active")
+    const inactiveCount = await MainService.countItemWithStatus("inactive")
+    const countStatus = await generateCountStatus(status, linkPrefix, allCount, activeCount, inactiveCount)
 
-    let items = await MainService.getAllItems(status, search, pageSkip, pageLimit);
+    // pagination
+    const totalItems = await MainService.countItemWithStatus(status);
+    const pagination = generatePagination(totalItems, page, 5);
+
+    let items = await MainService.getAllItems(status, search, pagination.pageSkip, pagination.pageLimit);
     return res.render(`admin/pages/${nameController}/list`, {items, countStatus, status, search, pagination, message: {}});
   };
 

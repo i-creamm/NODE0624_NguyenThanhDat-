@@ -1,12 +1,12 @@
 <%
-    renderPagination = (pagination, status) => {
+    renderPagination = (pagination, status, collection) => {
         let statusN = status == undefined ? '' : `&status=${status}`
         let totalPages = pagination.totalPages
         let currentPage = pagination.currentPage
         let pageLimit = pagination.pageLimit
         let pageRanges = pagination.pageRanges
         let xHtmlPagination = ''
-        let link = '/admin/item/?page'
+        let link = `/admin/${collection}/?page`
 
 
         if(totalPages > 1){

@@ -28,9 +28,6 @@ class CategoryService {
     findId = async (id) => {
         return await MainModel.findById(id)
     }
-    findBySlug = async (slug) => {
-        return await MainModel.findOne({slug})
-    }
 
     editById = async (id , updateItem) => {
         return await MainModel.findByIdAndUpdate(id, updateItem) 
@@ -50,12 +47,19 @@ class CategoryService {
         return await MainModel.countDocuments()
     }
 
+    
+
+    //frontend
+    findBySlug = async (slug) => {
+        return await MainModel.findOne({slug})
+    }
+
     getCategoryByMenuId = async (idMenu) => {
-    return await MainModel.find({
-            idMenu: idMenu,
-            status: "active",
-        }).sort({ordering: 1})
-    };
+        return await MainModel.find({
+                idMenu: idMenu,
+                status: "active",
+            }).sort({ordering: 1})
+        };
 
 }
 

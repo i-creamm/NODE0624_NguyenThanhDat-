@@ -50,30 +50,14 @@
 
 <!-- Content -->
 <form action="/admin/category/multipleAction" method="post" name="multipleForm" id = "multiForm">
-<div class="card card-info card-outline">
-	<div class="card-header">
-		<h4 class="card-title">List</h4>
-		<div class="card-tools">
-			<div class="btn-group">
-				<button type="button" class="btn btn-info" data-toggle="dropdown" aria-expanded="false">Change Status</button>
-				<div class="dropdown-menu" role="menu" >
-					<button type="button" onClick="" class="dropdown-item" data-toggle="modal" data-target="#modal-success">
-						Change to Active
-						</button>
-					<div class="dropdown-divider"></div>
-						<button type="button" onClick="" class="dropdown-item" data-toggle="modal" data-target="#modal-danger">
-							Change to Inactive
-						</button>
-					</div>
-				</div>
-			<a href="<%= linkPrefix %>form" class="btn btn-warning" style="background-color: #F0AD4E; color: white; font-weight: 500;">Add New</a>
-			<!-- <button type="button" class="btn btn-danger" onClick="" data-toggle="modal" data-target="#modal-danger">
-				<i class="fas fa-trash-alt"></i>Delete Multi
-			</button> -->
-			<a href="<%= linkPrefix %>delete" class="btn btn-danger" onClick="" data-toggle="modal" data-target="#modal-danger"><i class="fas fa-trash-alt"></i>Delete Multi</a>
+	<div class="card card-info card-outline">
+		<div class="card-header">
+			<h4 class="card-title">List</h4>
+			<div class="card-tools">
+				<a href="<%= linkPrefix %>form" class="btn btn-warning" style="background-color: #F0AD4E; color: white; font-weight: 500;">Add New</a>
+			</div>
+			<input type="hidden" name="action" id="inputHiddenAll" value="" >
 		</div>
-		<input type="hidden" name="action" id="inputHiddenAll" value="" >
-	</div>
 
 	<div class="card-body">
 		<!-- Control -->
@@ -145,7 +129,7 @@
 	<!-- pagination -->
 	<div class="card-footer clearfix">
 		<ul class="pagination pagination-sm m-0 float-right">
-			<%- renderPagination(pagination , status) %>	
+			<%- renderPagination(pagination , status, collection) %>	
 		</ul>
 	</div>
 </div>
@@ -178,30 +162,5 @@
     })
 </script>
 
-<script>
-    $('.ordering').change(function (e) {
-
-        toastr.options = {
-            "closeButton": true,            
-            "timeOut": 2000,                
-            "extendedTimeOut": 1000,       
-            "positionClass": "toast-top-right",  
-            "progressBar": true,            
-        };
-    
-        e.preventDefault();
-        const val = $(this).val();
-        const link = $(this).data('link') + '/' + val;
-        console.log(link)
-    
-        $.ajax({
-            url: link,
-            type: 'GET',
-            data: { ordering: val },
-            success: function(response) {
-                toastr.success('Ordering updated successfully!', 'Success');
-            }})
-        });
-</script>
 
 

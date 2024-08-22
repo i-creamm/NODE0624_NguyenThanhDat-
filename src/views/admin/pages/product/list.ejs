@@ -108,16 +108,19 @@
 							</td>
 							
 							<td class="text-center">
-								<span>$<%= row.price%></span>
+								<span><%= row.price%>$</span>
 							</td>
 
 
 							<td class="text-center">
-								<input type="text" id="idCategory" name="idCategory" class="form-control form-control-sm text-center"
-									value="<%= row.idCategory.name %>" readonly />
+								<% if (row.idCategory && row.idCategory.name) { %>
+								<span><%= row.idCategory.name %></span>
+								<% } else { %>
+								<span>No Menu</span>
+								<% } %>
 							</td>
 
-							<td class="text-center"><span><%= row.detail  %></span></td>
+							<td class="text-center"><span><%= row.detail || "" %></span></td>
 
 							<td class="text-center">
 								<input type="checkbox" id="isSpecial" name="isSpecial" <%= row.isSpecial ? 'checked' : '' %>><span>--isSpecial</span>
@@ -142,7 +145,7 @@
 	<!-- pagination -->
 	<div class="card-footer clearfix">
 		<ul class="pagination pagination-sm m-0 float-right">
-			<%- renderPagination(pagination , status) %>	
+			<%- renderPagination(pagination , status, collection) %>	
 		</ul>
 	</div>
 </div>
@@ -175,31 +178,6 @@
     })
 </script>
 
-<script>
-    $('.ordering').change(function (e) {
-
-        toastr.options = {
-            "closeButton": true,            
-            "timeOut": 2000,                
-            "extendedTimeOut": 1000,       
-            "positionClass": "toast-top-right",  
-            "progressBar": true,            
-        };
-    
-        e.preventDefault();
-        const val = $(this).val();
-        const link = $(this).data('link') + '/' + val;
-        console.log(link)
-    
-        $.ajax({
-            url: link,
-            type: 'GET',
-            data: { ordering: val },
-            success: function(response) {
-                toastr.success('Ordering updated successfully!', 'Success');
-            }})
-        });
-</script>
 
 
 

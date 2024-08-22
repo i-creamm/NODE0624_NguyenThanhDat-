@@ -12,6 +12,6 @@ router.use(async (req , res , next) => {
     next()
 })
 
-router.use('/',require('./home_routers'))
+router.use('/', require('./home_routers'))
 
 module.exports = router

@@ -1,40 +1,44 @@
 var express = require('express');
 var router = express.Router();
-const HomeController = require('../../controllers/frontend/home_controller')
 const ProductService = require('../../services/product_service');
-const category_service = require('../../services/category_service');
-const product_service = require('../../services/product_service');
+const CategoryService = require('../../services/category_service');
 
-// router.get('/category', require('./category_routers'))
 
 router.get('/:slug', async (req , res , next) => {
     const { slug } = req.params
-    const categoriesWithSlug = await category_service.findBySlug(slug)
+
+    //for category
+    const categoriesWithSlug = await CategoryService.findBySlug(slug)
     if(categoriesWithSlug) {
-        const products = await product_service.findByParam({idCategory: categoriesWithSlug._id})
-        return res.render('frontend/pages/product', {category : categoriesWithSlug,categories : products, layout: "frontend" })
+        const products = await ProductService.findByParam({idCategory: categoriesWithSlug._id})
+        return res.render('frontend/pages/product', {category : categoriesWithSlug, categories : products, layout: "frontend" })
     }
+
+    //for product detail
+    const productWithSlug = await ProductService.findBySlug(slug);
+    if (productWithSlug) {
+        return res.render('frontend/pages/detail', { products: productWithSlug, layout: "frontend" });
+    }
+
     next()
 })
 
-// router.get('/:slug', async (req , res , next) => {
-//     const { slug } = req.params
-//     const productWithSlug = await product_service.findBySlug(slug)
-//     if(slug == 'sp1') {
-//         return res.render('frontend/pages/contact', {layout: "frontend" })
-//     }
-//     next()
-// })
 
-    
-router.get('/:slug?', (req , res , next) => {
+router.get('/:slug', (req , res , next) => {
     const { slug } = req.params
     switch (slug) {
         case 'contact':
             res.render('frontend/pages/contact', {layout: "frontend" })
             break;
+        case 'about':
+            res.render('frontend/pages/about', {layout: "frontend" })
+            break;
+        case 'blog':
+            res.render('frontend/pages/blog', {layout: "frontend" })
+            break;
         default:
             res.render('frontend/pages/home', {layout: "frontend" })
+            break;
     }
 })
     

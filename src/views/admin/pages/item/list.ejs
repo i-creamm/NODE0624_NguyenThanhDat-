@@ -121,7 +121,7 @@
 							<%- renderStatus(row._id, row.status, linkPrefix) %>
 
 							<td class="text-center position-relative" >
-								<input type="number" name="items-ordering" value="<%= row.ordering %>" class="text-center ordering">
+								<input data-link="<%= linkPrefix %>changeOrdering/<%= row._id %>" type="number" name="ordering" value="<%= row.ordering %>" class="text-center ordering">
 							</td>
 
 							<td class="text-center">
@@ -142,7 +142,7 @@
 	<!-- pagination -->
 	<div class="card-footer clearfix">
 		<ul class="pagination pagination-sm m-0 float-right">
-			<%- renderPagination(pagination , status) %>	
+			<%- renderPagination(pagination , status, collection) %>	
 		</ul>
 	</div>
 </div>
@@ -175,13 +175,5 @@
     })
 </script>
 
-<!-- <script>
-	imgInp.onchange = evt => {
-		const [file] = imgInp.files
-		if (file) {
-			blah.src = URL.createObjectURL(file)
-		}
-	}
-</script> -->
 
 
