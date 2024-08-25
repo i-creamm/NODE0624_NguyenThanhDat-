@@ -26,11 +26,11 @@
             <!-- Shop
             ============================================= -->
             <div id="shop" class="shop row gutter-30">
-                <% categories.forEach(e => { %>
+                <% products.forEach(e => { %>
                 <div class="product col-lg-3 col-md-4 col-sm-6 col-12">
                     <div class="grid-inner">
                         <div class="product-image">
-                            <a href="/dat"><img src="/uploads<%= folderImage%><%= e.image%>" alt="Checked Short Dress"></a>
+                            <a href="/<%= e.slug %>"><img src="/uploads<%= folderImage%><%= e.image%>" alt="Checked Short Dress"></a>
                             <!-- <a href="#"><img src="images/shop/dress/1-1.jpg" alt="Checked Short Dress"></a> -->
                             <!-- <div class="sale-flash badge bg-secondary p-2">Out of Stock</div> 
                             <div class="bg-overlay">
@@ -42,7 +42,7 @@
                         </div>
                         <div class="product-desc text-center">
                             <div class="product-title"><h3><a href="#"><%= e.name%></a></h3></div>
-                            <!-- <div class="product-price"><del>$24.99</del> <ins>$12.49</ins></div> -->
+                            <div class="product-price"><del>$24.99</del> <ins>$<%= e.price%></ins></div>
                             <a href="#" class="btn btn-sm btn-dark px-3 mt-2"><i class="uil uil-shopping-cart me-1"></i> Add to Cart</a>
                         </div>
                     </div>

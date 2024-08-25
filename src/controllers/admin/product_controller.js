@@ -8,6 +8,7 @@ const { asyncHandle } =  require('../../utils/asyncHandle')
 
 const updateItem = require("../../utils/upload");
 const uploadImage = updateItem.upload("products","image");
+const uploadImages = updateItem.uploadArrayImage("products","file", 2)
 
 const nameController = 'product'
 const linkPrefix = `/admin/${nameController}`
@@ -57,7 +58,7 @@ class ProductController {
   }
 
   //save info form (Add or Edit)
-  saveForm = [uploadImage , 
+  saveForm = [uploadImage , uploadImages,
     asyncHandle( async (req, res, next) => {
 
     const { id } = req.params;
@@ -76,8 +77,8 @@ class ProductController {
     if (!id) {
       await MainService.save(req.body)
     } else {
-      const { name, ordering, status, image , idCategory} = req.body;
-      const updateItem = { name, ordering, status, image , idCategory};
+      const {name, ordering, status, image , price, detail, idCategory} = req.body;
+      const updateItem = { name, ordering, status, image , price, detail, idCategory};
 
       if (req.file && item.image) {
         const imagePath = path.join(`public/uploads${folderImage}`, item.image.replace(`/uploads`, ""))

@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 const MainModel = require('../models/product_model')
 
 class ProductService {
@@ -14,9 +13,17 @@ class ProductService {
         return await MainModel.find(query).skip(pageSkip).limit(pageLimit).sort({'createdAt': -1}).populate('idCategory')
     }
 
-    save = async ( { name, ordering, status, image , price, detail, isSpecial, idCategory }) => {
+    // save = async ( { name, ordering, status, image , price, detail, isSpecial, idCategory }) => {
+
+    //     return await MainModel.create({
+    //         name, ordering, status, image , price, detail, isSpecial, idCategory: idCategory
+    //     })
+    // }
+
+    save = async ( { name, ordering, status, image , price, detail, images }) => {
+           
         return await MainModel.create({
-            name, ordering, status, image , price, detail, isSpecial, idCategory: idCategory
+            name, ordering, status, image , price, detail, images
         })
     }
 
@@ -52,21 +59,19 @@ class ProductService {
 
 
     //Frontend
-    getProductWithSpecial = async () => {
-        return await MainModel.countDocuments()
-    }
+
+    // getProductWithSpecial = async () => {
+    //     return await MainModel.countDocuments()
+    // }
 
     findByParam = async (params) => {
         return await MainModel.find(params)
     }
 
     findBySlug = async (slug) => {
-        return await MainModel.findOne({slug})
+        return await MainModel.findOne({slug}).populate('idCategory')
     }
 
-    findByProduct = async (id) => {
-        return await MainModel.findOne(id)
-    }
 
 }
 

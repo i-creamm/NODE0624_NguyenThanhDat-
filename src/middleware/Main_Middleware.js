@@ -1,16 +1,19 @@
 const MainService = require('../services/menu_service')
 const CategoryService = require('../services/category_service')
 
-class Middleware {
-    header = async (req, res, next) => {
-        const menus = await MainService.getAllOrderingAndStatus()
-        for (let menu of menus) {
-            menu.categories = await CategoryService.getCategoryByMenuId(menu._id);
+    const fetchMenusAndCategories  = async (req, res, next) => {
+        try {
+            const menus = await MainService.getAllOrderingAndStatus()
+            for (let menu of menus) {
+                menu.categories = await CategoryService.getCategoryByMenuId(menu._id);
+            }
+            res.locals.menus = menus
+            next()
+        } catch (error) {
+            next(error)
         }
-        res.locals.menus = menus
-        next()
     }
+
+module.exports = {
+    fetchMenusAndCategories
 }
-
-
-module.exports = new Middleware();

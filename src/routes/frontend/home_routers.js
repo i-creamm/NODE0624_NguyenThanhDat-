@@ -4,6 +4,10 @@ const ProductService = require('../../services/product_service');
 const CategoryService = require('../../services/category_service');
 
 
+router.get('/', async(req , res , next) => {
+    res.render('frontend/pages/home', {layout: "frontend" })
+})
+
 router.get('/:slug', async (req , res , next) => {
     const { slug } = req.params
 
@@ -11,7 +15,7 @@ router.get('/:slug', async (req , res , next) => {
     const categoriesWithSlug = await CategoryService.findBySlug(slug)
     if(categoriesWithSlug) {
         const products = await ProductService.findByParam({idCategory: categoriesWithSlug._id})
-        return res.render('frontend/pages/product', {category : categoriesWithSlug, categories : products, layout: "frontend" })
+        return res.render('frontend/pages/product', {category : categoriesWithSlug, products, layout: "frontend" })
     }
 
     //for product detail
@@ -19,7 +23,6 @@ router.get('/:slug', async (req , res , next) => {
     if (productWithSlug) {
         return res.render('frontend/pages/detail', { products: productWithSlug, layout: "frontend" });
     }
-
     next()
 })
 
