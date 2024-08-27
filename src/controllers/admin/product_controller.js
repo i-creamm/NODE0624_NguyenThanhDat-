@@ -29,7 +29,7 @@ class ProductController {
     const countStatus = await generateCountStatus(status, linkPrefix, allCount, activeCount, inactiveCount)
 
     // pagination
-    const totalItems = await MainService.countItemWithStatus(status);
+    let totalItems = status == 'active' ? activeCount : status == 'inactive' ? inactiveCount : allCount;
     const pagination = generatePagination(totalItems, page, 5);
 
     let items = await MainService.getAllItems(status, search, pagination.pageSkip, pagination.pageLimit);
