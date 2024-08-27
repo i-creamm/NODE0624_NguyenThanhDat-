@@ -53,7 +53,7 @@
                     </div>
                 </div>
 
-                <!-- <div class="form-group row">
+                <div class="form-group row">
                     <label for="GroupCategory" class="col-sm-2 col-form-label text-sm-right">GroupCategory</label>
                     <div class="col-xs-12 col-sm-8">
                         <select class="custom-select custom-select-sm" name="idCategory" aria-label="Default select example">
@@ -65,9 +65,7 @@
                             <% }) %>
                           </select>
                     </div>
-                </div> -->
-
-
+                </div>
 
 
                 <div class="form-group row">
@@ -79,105 +77,19 @@
 
 
                 <!-- <div class="form-group row">
-                    <label for="isSpecial" class="col-sm-2 col-form-label text-sm-right">Is Special</label>
-                    <input type="checkbox" id="isSpecial" name="isSpecial" <%= item.isSpecial ? "checked" : '' %> />
-                </div> -->
-
-                <!-- <div class="form-group row">
                     <label for="isSpecial" class="col-sm-2 col-form-label text-sm-right">Images</label>
                     <div class="col-xs-12 col-sm-8">
                         <input type="file" 
                             id="filepond"
                             class="filepond"
-                            name="filepond[]" 
+                            name="images" 
                             multiple 
                             data-allow-reorder="true"
                             data-max-file-size="3MB"
                             data-max-files="3">
                     </div>
-                </div> -->
-
-                <div class="form-group row">
-                    <label for="images" class="col-sm-2 col-form-label text-sm-right">Images</label>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="card card-default">
-                                <div class="card-header">
-                                    <h3 class="card-title">Dropzone.js <small><em>jQuery File Upload</em> like look</small></h3>
-                                </div>
-                                <div class="card-body">
-                                    <div id="actions" class="row">
-                                        <div class="col-lg-6">
-                                            <div class="btn-group w-100">
-                                                <span class="btn btn-success col fileinput-button">
-                                                    <i class="fas fa-plus"></i>
-                                                    <span>Add files</span>
-                                                </span>
-                                                <button type="submit" class="btn btn-primary col start">
-                                                    <i class="fas fa-upload"></i>
-                                                    <span>Start upload</span>
-                                                </button>
-                                                <button type="reset" class="btn btn-warning col cancel">
-                                                    <i class="fas fa-times-circle"></i>
-                                                    <span>Cancel upload</span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 d-flex align-items-center">
-                                            <div class="fileupload-process w-100">
-                                                <div id="total-progress" class="progress progress-striped active" role="progressbar"
-                                                    aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-                                                    <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="table table-striped files" id="previews">
-                                        <div id="template" class="row mt-2">
-                                            <div class="col-auto">
-                                                <span class="preview"><img src="data:," alt data-dz-thumbnail /></span>
-                                            </div>
-                                            <div class="col d-flex align-items-center">
-                                                <p class="mb-0">
-                                                    <span class="lead" data-dz-name></span>
-                                                    (<span data-dz-size></span>)
-                                                </p>
-                                                <strong class="error text-danger" data-dz-errormessage></strong>
-                                            </div>
-                                            <div class="col-4 d-flex align-items-center">
-                                                <div class="progress progress-striped active w-100" role="progressbar" aria-valuemin="0"
-                                                    aria-valuemax="100" aria-valuenow="0">
-                                                    <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-auto d-flex align-items-center">
-                                                <div class="btn-group">
-                                                    <button class="btn btn-primary start">
-                                                        <i class="fas fa-upload"></i>
-                                                        <span>Start</span>
-                                                    </button>
-                                                    <button data-dz-remove class="btn btn-warning cancel">
-                                                        <i class="fas fa-times-circle"></i>
-                                                        <span>Cancel</span>
-                                                    </button>
-                                                    <button data-dz-remove class="btn btn-danger delete">
-                                                        <i class="fas fa-trash"></i>
-                                                        <span>Delete</span>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
-
                 
-
                 <div class="form-group row">
                     <label for="image" class="col-sm-2 col-form-label text-sm-right">Image</label>
                     <div class="col-xs-12 col-sm-8">
@@ -185,9 +97,68 @@
                         <img id="blah" src="/uploads<%= folderImage%><%= item.image %>" alt="" class="img-thumbnail mt-1 " width="200px" height="200px" />
                         <input type="hidden" name="old_image" value="<%= item.image %>">                
                     </div>
+                </div> -->
+
+                <!-- <div class="form-group row">
+                    <label for="images" class="col-sm-2 col-form-label text-sm-right">Images</label>
+                    <div class="col-xs-12 col-sm-8">
+                        <input type="file" 
+                            id="filepond-images"
+                            name="images[]" 
+                            class="filepond"
+                            multiple 
+                            data-max-file-size="3MB"
+                            data-max-files="3">
+                    </div>
+                </div>
+                
+                <div class="form-group row">
+                    <label for="image" class="col-sm-2 col-form-label text-sm-right">Image</label>
+                    <div class="col-xs-12 col-sm-8">
+                        <input type="file" 
+                            id="filepond-image"
+                            name="image" 
+                            class="filepond">
+                        <img id="image-preview" src="/uploads<%= folderImage %><%= item.image %>" alt="" class="img-thumbnail mt-1" width="200px" height="200px" />
+                    </div>
+                </div> -->
+
+                <!-- Image Upload Field for Main Image -->
+                <div class="form-group row">
+                    <label for="image" class="col-sm-2 col-form-label text-sm-right">Main Image</label>
+                    <div class="col-xs-12 col-sm-8">
+                        <input type="file" name="image" class="form-control form-control-sm" id="image-input" />
+                        <% if (item.image) { %>
+                            <div id="mainImageContainer">
+                                <img id="main-image-preview" src="/uploads/products/<%= item.image %>" alt="Product Main Image"
+                                    style="max-width: 100px; max-height: 100px;" />
+                            </div>
+                            <% } else { %>
+                                <div id="main-image-preview"></div>
+                            <% } %>
+                    </div>
+                </div>
+                
+                <!-- Image Upload Field for Detail Images -->
+                <div class="form-group row">
+                    <label for="images" class="col-sm-2 col-form-label text-sm-right">Detail Images</label>
+                    <div class="col-xs-12 col-sm-8">
+                        <input type="file" name="images" class="form-control form-control-sm" id="images-input" multiple />
+                        <div id="imageContainer">
+                            <% if (item.images && item.images.length> 0) { %>
+                                <% item.images.forEach((image, index)=> { %>
+                                    <div class="image-preview">
+                                        <img src="/uploads/products/<%= image %>" alt="Product Detail Image <%= index + 1 %>"
+                                            style="max-width: 100px; max-height: 100px;" />
+                                        <button type="button" class="btn btn-sm btn-danger deleteButton"
+                                            data-index="<%= index %>">Delete</button>
+                                    </div>
+                                <% }); %>
+                            <% } %>
+                        </div>
+                    </div>
                 </div>
 
-           </div>
             <div class="card-footer">
                 <div class="col-12 col-sm-8 offset-sm-2">
                     <button type="submit" class="btn btn-sm btn-success mr-1">
@@ -198,3 +169,40 @@
             </div>
         </form>
     </div>
+
+
+
+    <script>
+        document.getElementById('images-input').addEventListener('change', function(event) {
+          const files = event.target.files;
+          const imageContainer = document.getElementById('imageContainer');
+          imageContainer.innerHTML = ''; // Xóa các preview trước đó
+      
+          Array.from(files).forEach((file, index) => {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+              const imageWrapper = document.createElement('div');
+              imageWrapper.className = 'image-preview';
+      
+              const imgElement = document.createElement('img');
+              imgElement.src = e.target.result;
+              imgElement.style.maxWidth = '200px';
+              imgElement.style.maxHeight = '200px';
+      
+              const deleteButton = document.createElement('button');
+              deleteButton.className = 'btn btn-sm btn-danger deleteButton';
+              deleteButton.textContent = 'Delete';
+              deleteButton.type = 'button';
+      
+              deleteButton.addEventListener('click', function() {
+                imageWrapper.remove();
+              });
+      
+              imageWrapper.appendChild(imgElement);
+              imageWrapper.appendChild(deleteButton);
+              imageContainer.appendChild(imageWrapper);
+            };
+            reader.readAsDataURL(file);
+          });
+        });
+      </script>

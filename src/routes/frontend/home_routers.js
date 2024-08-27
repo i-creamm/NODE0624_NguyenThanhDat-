@@ -4,10 +4,6 @@ const ProductService = require('../../services/product_service');
 const CategoryService = require('../../services/category_service');
 
 
-router.get('/', async(req , res , next) => {
-    res.render('frontend/pages/home', {layout: "frontend" })
-})
-
 router.get('/:slug', async (req , res , next) => {
     const { slug } = req.params
 
@@ -26,8 +22,7 @@ router.get('/:slug', async (req , res , next) => {
     next()
 })
 
-
-router.get('/:slug', (req , res , next) => {
+router.get('/:slug?', (req , res , next) => {
     const { slug } = req.params
     switch (slug) {
         case 'contact':

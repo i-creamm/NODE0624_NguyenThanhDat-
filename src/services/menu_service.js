@@ -14,8 +14,8 @@ class MenuService {
         return (await MainModel.find(query).skip(pageSkip).limit(pageLimit).sort({'createdAt': -1}))
     }
 
-    save = async ({name, ordering, status, child}) => {
-        return await MainModel.create({name, ordering, status, child})
+    save = async ({name, ordering, status}) => {
+        return await MainModel.create({name, ordering, status})
     }
 
     changeStatusById = async (id, status) => {

@@ -20,11 +20,13 @@ class ProductService {
     //     })
     // }
 
-    save = async ( { name, ordering, status, image , price, detail, images }) => {
+    save = async ( { name, ordering, status, image, images , price, detail, idCategory}) => {
            
-        return await MainModel.create({
-            name, ordering, status, image , price, detail, images
+        const data = await MainModel.create({
+            name, ordering, status, image, images , price, detail, idCategory: idCategory
         })
+        console.log(data)
+        return data
     }
 
     changeStatusById = async (id, status) => {

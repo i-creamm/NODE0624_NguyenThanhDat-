@@ -24,10 +24,6 @@ const productSchema = new Schema({
   description: {
      type: String 
   },
-  isSpecial: {
-    type: Boolean,
-    default: false
-  },
   detail: String,
   image: String,
   images : [String],
