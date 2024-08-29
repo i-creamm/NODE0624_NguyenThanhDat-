@@ -64,12 +64,59 @@ $(document).ready(function () {
         focus: true,
     })
 
-    // imgInp.onchange = evt => {
-    //     const [file] = imgInp.files
-    //     if (file) {
-    //         blah.src = URL.createObjectURL(file)
-    //     }
-    // }
+    //check Special
+    $('input[name="isSpecial"]').on('click', function () {
+
+        toastr.options = {
+            "closeButton": true,            
+            "timeOut": 2000,                
+            "extendedTimeOut": 1000,       
+            "positionClass": "toast-top-right",  
+            "progressBar": true,            
+        };
+        
+        const linkSpecial = $(this).data('link');
+        const isChecked = $(this).prop('checked');
+
+        $.ajax({
+            url: linkSpecial + '?isSpecial=' + isChecked,
+            type: 'GET',
+            success: function () {
+                toastr.info('productWithSpecial show to Website successfully', 'Success')
+            }
+        });
+    });
+
+    //check New
+    $('input[name="newProduct"]').on('click', function () {
+
+        toastr.options = {
+            "closeButton": true,            
+            "timeOut": 2000,                
+            "extendedTimeOut": 1000,       
+            "positionClass": "toast-top-right",  
+            "progressBar": true,            
+        };
+        
+        const linkNewProduct = $(this).data('link');
+        const isChecked = $(this).prop('checked');
+
+        $.ajax({
+            url: linkNewProduct + '?newProduct=' + isChecked,
+            type: 'GET',
+            success: function () {
+                toastr.info('Product show to Website successfully', 'Success')
+            }
+        });
+    });
+
+    imgInp.onchange = evt => {
+        const [file] = imgInp.files
+        if (file) {
+            blah.src = URL.createObjectURL(file)
+        }
+    }
+
 
     // const inputElement = $('#filepond')
     // FilePond.registerPlugin(
@@ -84,69 +131,6 @@ $(document).ready(function () {
     //     maxFileSize: '5MB',
     //     acceptedFileTypes: ['image/*'],
     // });
-
-
-    // Register FilePond plugins
-    FilePond.registerPlugin(FilePondPluginImagePreview);
-
-    // Create FilePond instances
-    const pondImages = FilePond.create(document.querySelector('#filepond-images'));
-    const pondImage = FilePond.create(document.querySelector('#filepond-image'));
-
-    // Configure FilePond for images
-    pondImages.setOptions({
-        server: {
-            url: '/admin/product/form', // Endpoint to handle file uploads
-            process: {
-                url: '/admin/product/form', // Processing endpoint
-                method: 'POST',
-                // headers: {
-                //     'X-CSRF-TOKEN': '{{ csrf_token() }}' // Adjust CSRF token if needed
-                // },
-                onload: (response) => {
-                    // Handle the response
-                    return response.key; // Return the key from the response to FilePond
-                },
-                onerror: (response) => {
-                    // Handle the error
-                    return response.message; // Return error message
-                }
-            },
-            revert: '/admin/product/form', // Endpoint to revert file
-            remove: '/admin/product/form', // Endpoint to remove file
-        },
-        instantUpload: false, // Prevent instant upload
-        imagePreviewHeight: 170,
-        allowRevert: true,
-        allowRemove: true
-    });
-
-    pondImage.setOptions({
-        server: {
-            url: '/admin/product/form', // Endpoint to handle file uploads
-            process: {
-                url: '/admin/product/form', // Processing endpoint
-                method: 'POST',
-                // headers: {
-                //     'X-CSRF-TOKEN': '{{ csrf_token() }}' // Adjust CSRF token if needed
-                // },
-                onload: (response) => {
-                    // Handle the response
-                    return response.key; // Return the key from the response to FilePond
-                },
-                onerror: (response) => {
-                    // Handle the error
-                    return response.message; // Return error message
-                }
-            },
-            revert: '/admin/product/form', // Endpoint to revert file
-            remove: '/admin/product/form', // Endpoint to remove file
-        },
-        instantUpload: false, // Prevent instant upload
-        imagePreviewHeight: 170,
-        allowRevert: true,
-        allowRemove: true
-    });
 });
 
 

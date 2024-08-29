@@ -1,5 +1,7 @@
 const MainService = require('../services/menu_service')
 const CategoryService = require('../services/category_service')
+const SliderService = require('../services/slider_service')
+const ProductService = require('../services/product_service')
 
     const fetchMenusAndCategories  = async (req, res, next) => {
         try {
@@ -14,6 +16,28 @@ const CategoryService = require('../services/category_service')
         }
     }
 
+    const fetchSlider = async (req, res, next) => {
+        try {
+            const sliders = await SliderService.findSliderWithStatus()
+            res.locals.sliders = sliders
+            next()
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    const fetchProductWithSpecial = async (req, res, next) => {
+        try {
+            const specials = await ProductService.getProductWithSpecial()
+            res.locals.specials = specials
+            next()
+        } catch (error) {
+            next(error)
+        }
+    }
+
 module.exports = {
-    fetchMenusAndCategories
+    fetchMenusAndCategories,
+    fetchSlider,
+    fetchProductWithSpecial
 }

@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 
 var expressLayouts = require('express-ejs-layouts');
 var MainDB = require('./src/apps/database/init_main_db');
+
 // const flash = require('connect-flash');
 // const session = require('express-session');
 
@@ -58,7 +59,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error' );
+  res.render('error');
   // res.render('error' , {layout: "frontend"});
 });
 

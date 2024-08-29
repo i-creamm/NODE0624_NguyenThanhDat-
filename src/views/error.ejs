@@ -1,3 +1,49 @@
-<h1><%= message %></h1>
-<h2><%= error.status %></h2>
-<pre><%= error.stack %></pre>
+<style>
+    .error-box {
+        background-color: #000000;
+        color: #ffffff;
+        padding: 20px;
+        border-radius: 5px;
+        margin: 20px;
+        border: 1px solid #f5c6cb;
+        font-family: Arial, sans-serif;
+    }
+
+    .error-box h2 {
+        margin-top: 0;
+    }
+
+    .error-box pre {
+        background-color: #f1f1f1;
+        padding: 10px;
+        border-radius: 3px;
+        overflow: auto;
+        max-height: 300px;
+    }
+
+    .error-image {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 800px;
+        /* Kích thước của thumbnail */
+        height: auto;
+        border: 1px solid #000000;
+        /* Viền xám nhạt */
+        border-radius: 20px;
+        /* Bo góc cho hình ảnh */
+        padding: 4px;
+        /* Khoảng cách giữa viền và hình ảnh */
+        box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+        /* Đổ bóng nhẹ */
+    }
+</style>
+
+<img src="/uploads/error/404.jpg" alt="Error-image" class="error-image">
+<div class="error-box">
+    <h2>Error Occurred</h2>
+    <pre><%= error.message %></pre>
+    <pre><%= error.stack %></pre>
+</div>
+
+

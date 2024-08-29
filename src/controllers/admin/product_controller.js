@@ -20,20 +20,24 @@ const fs = require('fs')
 
 class ProductController {
   getAll = async (req, res, next) => {
-    const { status, search, page = 1} = req.query;
+    const { status, category, search, page = 1} = req.query;
 
     //filter all, active, inactive
-    const allCount = await MainService.countItemWithStatus()
-    const activeCount = await MainService.countItemWithStatus("active")
-    const inactiveCount = await MainService.countItemWithStatus("inactive")
+    const [allCount, activeCount, inactiveCount] = await Promise.all([
+      MainService.countItemWithStatus(),
+      MainService.countItemWithStatus("active"),
+      MainService.countItemWithStatus("inactive")
+    ])
     const countStatus = await generateCountStatus(status, linkPrefix, allCount, activeCount, inactiveCount)
 
+    //filter category
+    const categories = await CategoryService.getAllItems()
     // pagination
     let totalItems = status == 'active' ? activeCount : status == 'inactive' ? inactiveCount : allCount;
     const pagination = generatePagination(totalItems, page, 5);
 
-    let items = await MainService.getAllItems(status, search, pagination.pageSkip, pagination.pageLimit);
-    return res.render(`admin/pages/${nameController}/list`, {items, countStatus, status, search, pagination, message: {}});
+    let items = await MainService.getAllItems(status, category, search, pagination.pageSkip, pagination.pageLimit);
+    return res.render(`admin/pages/${nameController}/list`, {items, category, categories, countStatus, status, search, pagination, message: {}});
   };
 
   //direct form put in
@@ -55,6 +59,20 @@ class ProductController {
   changeOrdering = async (req, res, next) => {
     let {id, ordering} = req.params
     await MainService.changeOrderingById(id, parseInt(ordering))
+    res.redirect(`${linkPrefix}`);
+  }
+
+  changeSpecial = async (req, res, next) => {
+    let {id} = req.params
+    let {isSpecial} = req.query
+    await MainService.changeIsSpecial(id, isSpecial)
+    res.redirect(`${linkPrefix}`);
+  }
+
+  changeNew = async (req, res, next) => {
+    let {id} = req.params
+    let {newProduct} = req.query
+    await MainService.changeNewProduct(id, newProduct)
     res.redirect(`${linkPrefix}`);
   }
 
@@ -100,7 +118,10 @@ class ProductController {
       await ItemValidate(req);
       const errors = validationResult(req);
       const item = id ? await MainService.findId(id) : {};
-  
+
+      req.body.isSpecial = req.body.isSpecial === 'on';
+      req.body.newProduct = req.body.newProduct === 'on';
+
       if (!errors.isEmpty()) {
         return res.render(`admin/pages/${nameController}/form`, {
           item,
@@ -123,8 +144,8 @@ class ProductController {
       if (!id) {
         await MainService.save(req.body);
       } else {
-        const { name, ordering, status, image, images, price, detail, idCategory } = req.body;
-        const updateItem = { name, ordering, status, image, images, price, detail, idCategory };
+        const { name, ordering, status, image, images, isSpecial, newProduct, price, detail, idCategory } = req.body;
+        const updateItem = { name, ordering, status, image, images, isSpecial, newProduct, price, detail, idCategory };
   
         if (req.files['image'] && item.image) {
           const imagePath = path.join(`public/uploads${folderImage}`, item.image.replace(`/uploads`, ""));

@@ -2,7 +2,7 @@ const MainService = require("../../services/item_service");
 const { ItemValidate } = require("../../validation/item_validates");
 const { validationResult } = require("express-validator");
 const updateItem = require("../../utils/upload");
-const uploadImage = updateItem.upload("items","image");
+const uploadImage = updateItem.uploadImage("items","image");
 const nameController = 'item'
 const linkPrefix = `/admin/${nameController}`
 const folderImage = '/items'
@@ -122,10 +122,6 @@ class ItemController {
     res.redirect(`${linkPrefix}`)
   }
 
-  // deleteByClick = (req, res, next) => {
-  //   console.log(req.body.checkItem)
-  //   res.send()
-  // }
 }
 
 module.exports = new ItemController();

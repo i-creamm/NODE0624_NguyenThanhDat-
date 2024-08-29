@@ -25,6 +25,14 @@ const productSchema = new Schema({
      type: String 
   },
   detail: String,
+  isSpecial: {
+    type: Boolean,
+    default: false
+  },
+  newProduct: {
+    type: Boolean,
+    default: false
+  },
   image: String,
   images : [String],
   idCategory : {

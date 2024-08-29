@@ -20,7 +20,21 @@
         <%- include('./elements/sidebar.ejs')%>
 
           <!-- Content Wrapper. Contains page content -->
-          <%- include('./elements/wrapper.ejs') %>
+          <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <%- include('./elements/header.ejs') %>
+            <!-- /.content-header -->
+        
+            <!-- Main content -->
+            <section class="content">
+                <div class="container-fluid">
+                    <!-- Small boxes (Stat box) -->
+                    <%-body%>
+                        <!-- /.row (main row) -->
+                </div><!-- /.container-fluid -->
+            </section>
+            <!-- /.content -->
+        </div>
             <!-- /.content-wrapper -->
 
             <%- include('./elements/footer.ejs') %>

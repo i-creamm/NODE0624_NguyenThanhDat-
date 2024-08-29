@@ -1,8 +1,8 @@
-const MainModel = require('../models/menu_model')
-const Category = require('../models/category_model')
+const MainModel = require('../models/slider_model')
 
-class MenuService {
+class SliderService {
 
+    //Backend
     getAllItems = async (status , search, pageSkip, pageLimit) =>{
         const query = {};
         if (status) {
@@ -11,11 +11,14 @@ class MenuService {
         if (search) {
             query.name = new RegExp(search, 'ig');
         }
-        return (await MainModel.find(query).skip(pageSkip).limit(pageLimit).sort({'createdAt': -1}))
+        return await MainModel.find(query).skip(pageSkip).limit(pageLimit)
     }
 
-    save = async ({name, ordering, status, link}) => {
-        return await MainModel.create({name, ordering, status, link})
+    save = async ({ name, ordering, status, image }) => {     
+        const data = await MainModel.create({
+            name, ordering, status, image
+        })
+        return data
     }
 
     changeStatusById = async (id, status) => {
@@ -48,9 +51,12 @@ class MenuService {
         return await MainModel.countDocuments()
     }
 
-    getAllOrderingAndStatus = async () => {
-        return await MainModel.find({status : 'active'}).sort({ordering : 1})
+
+    //Frontend
+    findSliderWithStatus = async () => {
+        return await MainModel.find({status: 'active'}).sort({ordering: 1})
     }
+
 }
 
-module.exports = new MenuService();
+module.exports = new SliderService()

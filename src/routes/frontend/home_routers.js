@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const ProductService = require('../../services/product_service');
 const CategoryService = require('../../services/category_service');
-
+const {fetchSlider, fetchProductWithSpecial} = require('../../middleware/Main_Middleware')
 
 router.get('/:slug', async (req , res , next) => {
     const { slug } = req.params
@@ -22,22 +22,29 @@ router.get('/:slug', async (req , res , next) => {
     next()
 })
 
-router.get('/:slug?', (req , res , next) => {
+router.use(fetchSlider)
+
+router.use(fetchProductWithSpecial)
+
+router.get('/:slug?', async (req , res , next) => {
     const { slug } = req.params
+    let link;
     switch (slug) {
         case 'contact':
-            res.render('frontend/pages/contact', {layout: "frontend" })
+            link = 'frontend/pages/contact'
             break;
         case 'about':
-            res.render('frontend/pages/about', {layout: "frontend" })
+            link = 'frontend/pages/about'
             break;
         case 'blog':
-            res.render('frontend/pages/blog', {layout: "frontend" })
+            link = 'frontend/pages/blog'
             break;
-        default:
-            res.render('frontend/pages/home', {layout: "frontend" })
+        default:  
+            link = 'frontend/pages/home'
             break;
     }
+    res.render(link, {layout: "frontend" })
 })
+
     
 module.exports = router;

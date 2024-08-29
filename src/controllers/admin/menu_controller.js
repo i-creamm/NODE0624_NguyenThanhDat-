@@ -12,13 +12,15 @@ class MenuController {
     const { status, search, page = 1} = req.query;
 
     //filter all, active, inactive
-    const allCount = await MainService.countItemWithStatus()
-    const activeCount = await MainService.countItemWithStatus("active")
-    const inactiveCount = await MainService.countItemWithStatus("inactive")
+    const [allCount, activeCount, inactiveCount] = await Promise.all([
+      MainService.countItemWithStatus(),
+      MainService.countItemWithStatus("active"),
+      MainService.countItemWithStatus("inactive")
+    ])
     const countStatus = await generateCountStatus(status, linkPrefix, allCount, activeCount, inactiveCount)
 
     // pagination
-    const totalItems = await MainService.countItemWithStatus(status);
+    let totalItems = status == 'active' ? activeCount : status == 'inactive' ? inactiveCount : allCount;
     const pagination = generatePagination(totalItems, page, 5);
 
     let items = await MainService.getAllItems(status, search, pagination.pageSkip, pagination.pageLimit);
@@ -29,9 +31,9 @@ class MenuController {
   getForm = async (req, res, next) => {
     let title = "Add - Form";
     const {id} = req.params
-    const item = req.params.id ? await MainService.findId(id) : {};
+    const item = req.params.id ? await MainService.findId(id) : {}
     if (id) title = "Edit - Form";
-    res.render(`admin/pages/${nameController}/form`, { item, title, alert: [] });
+    res.render(`admin/pages/${nameController}/form`, { item, title, alert: [] })
   };
 
   changeStatus = async (req, res, next) => {
@@ -50,20 +52,20 @@ class MenuController {
   //save info form (Add or Edit)
   saveForm = async (req, res, next) => {
     const { id } = req.params;
-    await ItemValidate(req);
-    const errors = validationResult(req);
-    const item = id ? await MainService.findId(id) : {};
 
-    if (!errors.isEmpty()) {
-      return res.render(`admin/pages/${nameController}/form`, { item, title: id ? "Edit - Form" : "Add - Form", alert: errors.array()});
-    }
+    // await ItemValidate(req);
+    // const errors = validationResult(req);
+    // const item = id ? await MainService.findId(id) : {}
 
+    // if (!errors.isEmpty()) {
+    //   return res.render(`admin/pages/${nameController}/form`, { item, title: id ? "Edit - Form" : "Add - Form", alert: errors.array()})
+    // }
+  
     if (!id) {
       await MainService.save(req.body)
     } else {
-      const child = req.body.child ==='true'
-      const { name, ordering, status } = req.body;
-      const updateItem = { name, ordering, status, child}
+      const { name, ordering, status, link } = req.body;
+      const updateItem = { name, ordering, status, link }
       await MainService.editById(id, updateItem);
     }
     res.redirect(`${linkPrefix}`);

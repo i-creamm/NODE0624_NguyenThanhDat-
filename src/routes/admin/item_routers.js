@@ -9,7 +9,7 @@ const { asyncHandle } = require('../../utils/asyncHandle')
 
     router.get('/changeStatus/:id/:status', asyncHandle(MainController.changeStatus))
     
-    router.post('/form/:id?', asyncHandle(MainController.saveForm))
+    router.post('/form/:id?', MainController.saveForm)
 
     router.get('/delete/:id', asyncHandle(MainController.deleteItem))
     

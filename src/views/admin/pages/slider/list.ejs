@@ -1,10 +1,12 @@
 <%- include('../../helpers/render_status.ejs') %>
 <%- include('../../helpers/render_pagination.ejs') %>
-<% const collection = 'category' ; const linkPrefix = `/admin/${collection}/`%>
+
+
+<% const collection = 'slider' ; const linkPrefix = `/admin/${collection}/` ; const folderImage = '/sliders/'%>
 
 <div class="row mb-2">
     <div class="col-sm-6">
-        <h1 class="m-0">Danh mục sản phẩm</h1>
+        <h1 class="m-0">Danh sách <%= collection%></h1>
     </div>
 </div>
 
@@ -76,10 +78,10 @@
 						</th>
 
 						<th class="text-center">#</a></th>
+						<th class="text-center">Image</a></th>
 						<th class="text-center">Name</a></th>
 						<th class="text-center">Status</a></th>
 						<th class="text-center">Ordering</a></th>
-						<th class="text-center">GroupMenu</a></th>
 						<th class="text-center">Action</th>
 					</tr>
 				</thead>
@@ -94,21 +96,14 @@
 							</td>
 							<td class="text-center"><%= index + 1  %></td>
 
+							<td class="text-center"><img src="/uploads<%= folderImage%><%= row.image %>" alt="" width="60" height="60" class="img-thumbnail" /></td>
+
 							<td class="text-center"><span><%= row.name%></span></td>
 
 							<%- renderStatus(row._id, row.status, linkPrefix) %>
 
 							<td class="text-center position-relative" >
 								<input data-link="<%= linkPrefix %>changeOrdering/<%= row._id %>" type="number" name="ordering" value="<%= row.ordering %>" class="text-center ordering">
-							</td>
-
-							
-							<td class="text-center">
-								<% if (row.idMenu && row.idMenu.name) { %>
-								<span><%= row.idMenu.name %></span>
-								<% } else { %>
-								<span>No Menu</span>
-								<% } %>
 							</td>
 
 							<td class="text-center">
@@ -157,6 +152,7 @@
             }
             btnCheck.prop('checked',isChecked);
             disableSubmit();
+
         })
     })
 </script>

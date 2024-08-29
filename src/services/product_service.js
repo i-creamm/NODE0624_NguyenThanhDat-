@@ -2,13 +2,16 @@ const MainModel = require('../models/product_model')
 
 class ProductService {
 
-    getAllItems = async (status , search, pageSkip, pageLimit) =>{
+    getAllItems = async (status, category, search, pageSkip, pageLimit) =>{
         const query = {};
         if (status) {
             query.status = status;
         }
         if (search) {
             query.name = new RegExp(search, 'ig');
+        }
+        if (category) {
+            query.idCategory = category;
         }
         return await MainModel.find(query).skip(pageSkip).limit(pageLimit).sort({'createdAt': -1}).populate('idCategory')
     }
@@ -20,12 +23,11 @@ class ProductService {
     //     })
     // }
 
-    save = async ( { name, ordering, status, image, images , price, detail, idCategory}) => {
+    save = async ( { name, ordering, status, image, images, isSpecial, newProduct, price, detail, idCategory}) => {
            
         const data = await MainModel.create({
-            name, ordering, status, image, images , price, detail, idCategory: idCategory
+            name, ordering, status, image, images, isSpecial, newProduct,  price, detail, idCategory: idCategory
         })
-        console.log(data)
         return data
     }
 
@@ -35,6 +37,14 @@ class ProductService {
 
     changeOrderingById = async (id, ordering) => {
         return await MainModel.findByIdAndUpdate(id, {ordering})
+    }
+
+    changeIsSpecial = async (id, isSpecial) => {
+        return await MainModel.findByIdAndUpdate(id, {isSpecial})
+    }
+
+    changeNewProduct = async (id, newProduct) => {
+        return await MainModel.findByIdAndUpdate(id, {newProduct})
     }
 
     findId = async (id) => {
@@ -61,17 +71,16 @@ class ProductService {
 
 
     //Frontend
-
-    // getProductWithSpecial = async () => {
-    //     return await MainModel.countDocuments()
-    // }
-
     findByParam = async (params) => {
         return await MainModel.find(params)
     }
 
     findBySlug = async (slug) => {
         return await MainModel.findOne({slug}).populate('idCategory')
+    }
+
+    getProductWithSpecial = async () => {
+        return await MainModel.find({status: 'active', isSpecial: true}).sort({ordering: 1})
     }
 
 

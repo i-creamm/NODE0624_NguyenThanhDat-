@@ -17,6 +17,7 @@ const menuSchema = new Schema({
       min : 0,
       max : 100
     },
+    link: String,
     slug: String,
   }, {
       collection : ConnectionDocument, 

@@ -1,35 +1,41 @@
 <% let menu=[{
   "name" : 'Dashboard' ,
-  "icon" : "fas fa-th" ,
+  "icon" : "fas fa-tachometer-alt" ,
   "link" : '/admin/' ,
   "child" : [] 
 },
 { 
-  "name": 'Items' ,
-  "icon" : "fas fa-tachometer-alt" ,
+  "name": 'Manage lists' ,
+  "icon" : "fas fa-th" ,
   "link" : '#' ,
   "child" : [{ 
               "name" : 'List' ,
               "icon" : "fas fa-list",
               "link" : '/admin/item' ,
+            },{
+              "name" : 'Menu' ,
+              "icon" : "fas fa-list",
+              "link" : '/admin/menu' ,
+            },{
+              "name" : 'Category' ,
+              "icon" : "fas fa-list",
+              "link" : '/admin/category' ,
+            },{
+              "name" : 'Product' ,
+              "icon" : "fas fa-list",
+              "link" : '/admin/product' ,
             }] 
 },
 {
-  "name": "Menu",
-  "icon": "fas fa-list",
-  "link": "/admin/menu",
+  "name": "Slider",
+  "icon": "fas fa-image",
+  "link": "/admin/slider",
   "child": []
 },
 {
-  "name": "Category",
-  "icon": "fas fa-list",
-  "link": "/admin/category",
-  "child": []
-},
-{
-  "name": "Product",
-  "icon": "fas fa-list",
-  "link": "/admin/product",
+  "name": "Setting",
+  "icon": "far fa-plus-square",
+  "link": "#",
   "child": []
 }
 ]%>
@@ -71,7 +77,7 @@
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
-             with font-awesome or any other icon font library -->
+               with font-awesome or any other icon font library -->
   
           <% menu.forEach(e=> {%>
             <% if(e.child.length==0) {%>
@@ -95,14 +101,14 @@
                   </a>
                   <ul class="nav nav-treeview">
                     <li class="nav-item">
-                      <% e.child.forEach(i => {%>
+                      <% e.child.forEach(i=> {%>
                         <a href="<%= i.link%>" class="nav-link ">
                           <i class="nav-icon <%= i.icon%>"></i>
                           <p>
                             <%= i.name%>
                           </p>
                         </a>
-                      <%})%>
+                        <%})%>
                     </li>
                 </li>
         </ul>

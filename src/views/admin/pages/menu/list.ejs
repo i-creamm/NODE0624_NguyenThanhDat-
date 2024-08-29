@@ -81,6 +81,7 @@
 						<th class="text-center">Name</a></th>
 						<th class="text-center">Status</a></th>
 						<th class="text-center">Ordering</a></th>
+						<th class="text-center">link</a></th>
 						<th class="text-center">Action</th>
 					</tr>
 				</thead>
@@ -110,6 +111,8 @@
 									<span style="color: red;">✖️ No</span>
 								<% } %>
 							</td> -->
+
+							<td class="text-center"><span><%= row.link%></span></td>
 
 							<td class="text-center">
 								<a href="<%= linkPrefix %>form/<%= row._id%>" class="rounded-circle btn btn-sm btn-info " title="Edit">
