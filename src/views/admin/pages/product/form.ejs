@@ -144,7 +144,7 @@
                         <input type="file" name="image" class="form-control form-control-sm" id="image-input" />
                         <% if (item.image) { %>
                             <div id="mainImageContainer">
-                                <img id="main-image-preview" src="/uploads/products/<%= item.image %>" alt="Product Main Image"
+                                <img id="main-image-preview" src="<%= item.image %>" alt="Product Main Image"
                                     style="max-width: 100px; max-height: 100px;" />
                             </div>
                             <% } else { %>
@@ -162,7 +162,7 @@
                             <% if (item.images && item.images.length> 0) { %>
                                 <% item.images.forEach((image, index)=> { %>
                                     <div class="image-preview">
-                                        <img src="/uploads/products/<%= image %>" alt="Product Detail Image <%= index + 1 %>"
+                                        <img src="/uploads<%= folderImage %><%= item.image %>" alt="Product Detail Image <%= index + 1 %>"
                                             style="max-width: 100px; max-height: 100px;" />
                                         <button type="button" class="btn btn-sm btn-danger deleteButton"
                                             data-index="<%= index %>">Delete</button>

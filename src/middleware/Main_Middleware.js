@@ -2,6 +2,7 @@ const MainService = require('../services/menu_service')
 const CategoryService = require('../services/category_service')
 const SliderService = require('../services/slider_service')
 const ProductService = require('../services/product_service')
+const BrandService = require('../services/brand_service')
 
     const fetchMenusAndCategories  = async (req, res, next) => {
         try {
@@ -30,6 +31,13 @@ const ProductService = require('../services/product_service')
         try {
             const specials = await ProductService.getProductWithSpecial()
             res.locals.specials = specials
+
+            const news = await ProductService.getProductWithNewProduct()
+            res.locals.news = news
+
+            const brands = await BrandService.findBrandWithStatus()
+            res.locals.brands = brands
+        
             next()
         } catch (error) {
             next(error)
@@ -39,5 +47,5 @@ const ProductService = require('../services/product_service')
 module.exports = {
     fetchMenusAndCategories,
     fetchSlider,
-    fetchProductWithSpecial
+    fetchProductWithSpecial,
 }

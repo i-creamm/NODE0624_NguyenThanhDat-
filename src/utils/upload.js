@@ -6,14 +6,19 @@ var randomstring = require("randomstring");
 let uploadFile = (
   nameController,
   field,
-  folderDes = __pathImage,
+  folderDes = __pathImage + "/" + `${nameController}`,
   fileNameLength = 10,
   fileSizeMb = 5,
   fileExtension = "jpeg|jpg|png|gif"
 ) => {
   const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-      return cb(null, folderDes + "/" + nameController); // Set the destination folder for uploaded files
+
+      const uploadDir = path.join(folderDes);
+      if (!fs.existsSync(uploadDir)) {
+        fs.mkdirSync(uploadDir, { recursive: true });
+      }
+      cb(null, uploadDir);
     },
     filename: (req, file, cb) => {
       return cb(
@@ -88,24 +93,27 @@ let uploadFile = (
 const uploadFiles = (
   nameController,
   fields,
-  folderDes = __pathImage,
+  folderDes = __pathImage + "/" + `${nameController}`,
   fileNameLength = 10,
   fileSizeMb = 1,
   fileExtension = "jpeg|jpg|png|gif"
 ) => {
   const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-      const destinationPath = path.join(folderDes, nameController);
-      console.log("Destination Path:", destinationPath); // Kiểm tra đường dẫn thư mục
-      if (!fs.existsSync(destinationPath)) {
-        fs.mkdirSync(destinationPath, { recursive: true }); // Tạo thư mục nếu không tồn tại
+
+      const uploadDir = path.join(folderDes);
+
+      console.log("Destination Path:", uploadDir);
+      if (!fs.existsSync(uploadDir)) {
+        fs.mkdirSync(uploadDir, { recursive: true });
       }
-      cb(null, destinationPath); // Thiết lập thư mục lưu trữ file
+      cb(null, uploadDir);
     },
     filename: (req, file, cb) => {
-      const uniqueSuffix = randomstring.generate(fileNameLength);
-      const extname = path.extname(file.originalname).toLowerCase();
-      cb(null, `${uniqueSuffix}${extname}`); // Tạo tên file độc nhất
+      return cb(
+        null,
+        randomstring.generate(fileNameLength) + path.extname(file.originalname)
+      ); // Use a unique filename
     },
   });
 
@@ -122,7 +130,7 @@ const uploadFiles = (
       if (mimetype && extname) {
         cb(null, true);
       } else {
-        cb(new Error("Sai định dạng ảnh")); // Thay đổi từ chuỗi sang Error
+        cb("Error: Images Only!"); // Thay đổi từ chuỗi sang Error
       }
     },
   }).fields(fields);

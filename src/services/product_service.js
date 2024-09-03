@@ -83,6 +83,10 @@ class ProductService {
         return await MainModel.find({status: 'active', isSpecial: true}).sort({ordering: 1})
     }
 
+    getProductWithNewProduct = async () => {
+        return await MainModel.find({status: 'active', newProduct: true}).sort({ordering: 1})
+    }
+
 
 }
 

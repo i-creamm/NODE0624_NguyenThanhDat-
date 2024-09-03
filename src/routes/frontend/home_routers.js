@@ -4,6 +4,9 @@ const ProductService = require('../../services/product_service');
 const CategoryService = require('../../services/category_service');
 const {fetchSlider, fetchProductWithSpecial} = require('../../middleware/Main_Middleware')
 
+router.use(fetchSlider);
+router.use(fetchProductWithSpecial);
+
 router.get('/:slug', async (req , res , next) => {
     const { slug } = req.params
 
@@ -22,9 +25,8 @@ router.get('/:slug', async (req , res , next) => {
     next()
 })
 
-router.use(fetchSlider)
 
-router.use(fetchProductWithSpecial)
+
 
 router.get('/:slug?', async (req , res , next) => {
     const { slug } = req.params

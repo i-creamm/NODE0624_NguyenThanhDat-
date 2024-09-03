@@ -1,5 +1,6 @@
 const MainService = require("../../services/product_service");
 const CategoryService = require("../../services/category_service");
+const mongoose = require('mongoose')
 
 const {generateCountStatus, generatePagination} = require('../../utils/helper')
 const { ItemValidate } = require("../../validation/item_validates");
@@ -15,7 +16,8 @@ const nameController = 'product'
 const linkPrefix = `/admin/${nameController}`
 const folderImage = '/products'
 const path = require('path')
-const fs = require('fs')
+const fs = require('fs');
+const { data } = require("jquery");
 
 
 class ProductController {
@@ -32,6 +34,7 @@ class ProductController {
 
     //filter category
     const categories = await CategoryService.getAllItems()
+
     // pagination
     let totalItems = status == 'active' ? activeCount : status == 'inactive' ? inactiveCount : allCount;
     const pagination = generatePagination(totalItems, page, 5);
@@ -44,7 +47,14 @@ class ProductController {
   getForm = async (req, res, next) => {
     let title = "Add - Form";
     const {id} = req.params
-    const item = req.params.id ? await MainService.findId(id) : {};
+    const item = req.params.id ? await MainService.findId(id) : {
+      name: 'dat',
+      status: 'active', // Giá trị mặc định là active
+      ordering: 1,
+      price: 100,
+      detail: 'heloo' 
+    };
+    
     const categories = await CategoryService.getAllItems()
     if (id) title = "Edit - Form";
     res.render(`admin/pages/${nameController}/form`, { item, categories, title, alert: [] });
@@ -130,23 +140,23 @@ class ProductController {
         });
       }
 
-      console.log('Files:', req.files); // Kiểm tra các tệp tin đã được tải lên
+      // console.log('Files:', req.files); // Kiểm tra các tệp tin đã được tải lên
   
       if (req.files) {
         if (req.files['image']) {
           req.body.image = req.files['image'][0].filename;
+
         }
         if (req.files['images']) {
           req.body.images = req.files['images'].map(file => file.filename);
         }
       }
-  
+
       if (!id) {
         await MainService.save(req.body);
       } else {
-        const { name, ordering, status, image, images, isSpecial, newProduct, price, detail, idCategory } = req.body;
         const updateItem = { name, ordering, status, image, images, isSpecial, newProduct, price, detail, idCategory };
-  
+        const { name, ordering, status, image, images, isSpecial, newProduct, price, detail, idCategory } = req.body;
         if (req.files['image'] && item.image) {
           const imagePath = path.join(`public/uploads${folderImage}`, item.image.replace(`/uploads`, ""));
           fs.unlink(imagePath, (err) => {
@@ -168,7 +178,8 @@ class ProductController {
     const item = await MainService.findId(id)
 
     if (item && item.image) {
-      const imagePath = path.join(`public/uploads${folderImage}`, item.image.replace(`/uploads`, ""))
+      const imagePath = path.join(`public/uploads${folderImage}`+ "/" + `${id}`, item.image.replace(`/uploads`, ""))
+      console.log(imagePath)
       fs.unlink(imagePath, (err) => {
         if (err) {
           console.error("Error deleting image:", err)
