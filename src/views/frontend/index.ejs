@@ -1,42 +1,25 @@
 <!DOCTYPE html>
-<html dir="ltr" lang="en-US">
+<html lang="en">
+<head>
+    <%- include('./elements/head.ejs') %>
+</head>
+<body>
+    <div class="page-wrapper">
+        <%- include('./elements/header.ejs') %>
 
-<%- include('./elements/head.ejs') %>
+        <main class="main">
 
-<body class="stretched">
+            <%- body%>
 
-	<!-- Document Wrapper
-	============================================= -->
-	<div id="wrapper">
+        </main><!-- End .main -->
 
-		<!-- Login Modal -->
-		<%- include('./elements/login.ejs') %>
 
-		<!-- Top Bar============================================= -->
-		<%- include('./elements/topbar.ejs') %>
+        <%- include('./elements/footer.ejs') %>
+    </div><!-- End .page-wrapper -->
 
-		<!-- Header============================================= -->
-		<%- include('./elements/header.ejs') %>
-		<!-- #header end -->
+    
+    <%- include('./elements/scripts.ejs') %>
 
-		<!-- Slider============================================= -->
-		<%- body %>
-		<!-- #content end -->
-
-		<!-- Footer============================================= -->
-		<%- include('./elements/footer.ejs') %>
-		<!-- #footer end -->
-
-	</div><!-- #wrapper end -->
-
-	<!-- Go To Top
-	============================================= -->
-	<div id="gotoTop" class="bi-arrow-up"></div>
-
-	<!-- JavaScripts
-	============================================= -->
-	<%- include('./elements/scripts.ejs') %>
-
+    
 </body>
-
 </html>

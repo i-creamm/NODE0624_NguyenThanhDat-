@@ -1,68 +1,19 @@
-<section id="slider" class="slider-element swiper_wrapper" data-autoplay="6000" data-speed="800"
-			data-loop="true" data-grab="true" data-effect="fade" data-arrow="false" style="height: 600px;">
-
-			<div class="swiper swiper-parent">
-				<div class="swiper-wrapper">
-
-					<% sliders.forEach(slider => { %>
-						<div class="swiper-slide dark">
-							<!-- <div class="container">
-								<div class="slider-caption slider-caption-center">
-									<div>
-										<div class="h5 mb-2 font-secondary">Fresh Arrivals</div>
-										<h2 class="mb-4 text-white">Winter / 2021</h2>
-										<a href="#" class="button bg-white text-dark button-light">Shop Menswear</a>
-									</div>
-								</div>
-							</div> -->
-							<div class="swiper-slide-bg" style="background-image: url('/uploads/sliders/<%= slider.image%>');"></div>
-						</div>
-					<% }) %>
-
-					<!-- <div class="swiper-slide dark">
-						<div class="container">
-							<div class="slider-caption slider-caption-center">
-								<div>
-									<div class="h5 mb-2 font-secondary">Fresh Arrivals</div>
-									<h2 class="mb-4 text-white">Winter / 2021</h2>
-									<a href="#" class="button bg-white text-dark button-light">Shop Menswear</a>
-								</div>
-							</div>
-						</div>
-						<div class="swiper-slide-bg" style="background-image: url('/frontend/demos/shop/images/slider/1.jpg');"></div>
-					</div>
-
-					<div class="swiper-slide dark">
-						<div class="container">
-							<div class="slider-caption slider-caption-center">
-								<div>
-									<div class="h5 mb-2 font-secondary">Summer Collections</div>
-									<h2 class="mb-4 text-white">Sale 40% Off</h2>
-									<a href="#" class="button bg-white text-dark button-light">Shop Beachwear</a>
-								</div>
-							</div>
-						</div>
-						<div class="swiper-slide-bg"
-							style="background-image: url('/frontend/demos/shop/images/slider/3.jpg'); background-position: center 20%;">
-						</div>
-					</div>
-
-					<div class="swiper-slide dark">
-						<div class="container">
-							<div class="slider-caption slider-caption-center">
-								<div>
-									<h2 class="mb-4 text-white">New Arrivals / 18</h2>
-									<a href="#" class="button bg-white text-dark button-light">Shop Womenswear</a>
-								</div>
-							</div>
-						</div>
-						<div class="swiper-slide-bg"
-							style="background-image: url('/frontend/demos/shop/images/slider/2.jpg'); background-position: center 40%;">
-						</div>
-					</div> -->
-
-				</div>
-				<div class="swiper-pagination"></div>
-			</div>
-
-		</section>
+<div class="home-slider-container">
+	<div class="home-slider owl-carousel">
+		<% sliders.forEach(slider => { %>
+			<div class="home-slide">
+				<div class="slide-bg owl-lazy"  data-src="/uploads/sliders/<%= slider.image %>"></div><!-- End .slide-bg -->
+				<div class="home-slide-content container">
+					<div class="row">
+						<div class="col-md-6 offset-md-6 col-lg-5 offset-lg-7">
+							<h4>Premium</h4>
+							<h1><%= slider.name %></h1>
+							<!-- <a href="category.html" class="btn btn-primary">Shop Now</a> -->
+						</div><!-- End .col-lg-5 -->
+					</div><!-- End .row -->
+				</div><!-- End .home-slide-content -->
+			</div><!-- End .home-slide -->
+		<% }) %>
+		<!-- End .home-slide -->
+	</div><!-- End .home-slider -->
+</div><!-- End .home-slider-container -->

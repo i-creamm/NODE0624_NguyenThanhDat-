@@ -1,124 +1,486 @@
-<section id="content">
-    <div class="content-wrap">
 
-        <div class="container">
-            <!-- Featured Carousel
-            ============================================= -->
-            <div class="fancy-title title-border mt-4 title-center">
-                <h4>Weekly Product Special For You</h4>
-            </div>
 
-            <div id="oc-products" class="owl-carousel products-carousel carousel-widget" data-loop="true" data-margin="20" data-autoplay="5000" data-nav="true" data-pagi="false">
-                <!-- Shop Item 5
-                ============================================= -->
-                <% specials.forEach(special => { %>
-                    <div class="oc-item">
+<div class="info-boxes-container">
+    <div class="container">
+        <div class="info-box">
+            <i class="icon-shipping"></i>
+
+            <div class="info-box-content">
+                <h4>FREE SHIPPING & RETURN</h4>
+                <p>Free shipping on all orders over $99.</p>
+            </div><!-- End .info-box-content -->
+        </div><!-- End .info-box -->
+
+        <div class="info-box">
+            <i class="icon-us-dollar"></i>
+
+            <div class="info-box-content">
+                <h4>MONEY BACK GUARANTEE</h4>
+                <p>100% money back guarantee</p>
+            </div><!-- End .info-box-content -->
+        </div><!-- End .info-box -->
+
+        <div class="info-box">
+            <i class="icon-support"></i>
+
+            <div class="info-box-content">
+                <h4>ONLINE SUPPORT 24/7</h4>
+                <p>Lorem ipsum dolor sit amet.</p>
+            </div><!-- End .info-box-content -->
+        </div><!-- End .info-box -->
+    </div><!-- End .container -->
+</div><!-- End .info-boxes-container -->
+
+<div class="home-product-tabs">
+    <div class="container">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="featured-products-tab" data-toggle="tab" href="#featured-products" role="tab" aria-controls="featured-products" aria-selected="true">Featured Products</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="latest-products-tab" data-toggle="tab" href="#latest-products" role="tab" aria-controls="latest-products" aria-selected="false">Latest Products</a>
+            </li>
+        </ul>
+    </div><!-- End .container -->
+    <div class="tab-content">
+        <div class="tab-pane fade show active" id="featured-products" role="tabpanel" aria-labelledby="featured-products-tab">
+            <div class="container">
+                <div class="tab-products-carousel owl-carousel owl-theme">
+                    <% specials.forEach(special => { %>
                         <div class="product">
-                            <div class="product-image">
-                                <a href="#"><img src="/uploads/products/<%= special.image%>" alt="T-shirts"></a>
-                                <div class="bg-overlay">
-                                    <div class="bg-overlay-content align-items-end justify-content-between"
-                                        data-hover-animate="fadeIn" data-hover-speed="400">
-                                        <a href="#" class="btn btn-dark me-2" title="Add to Cart"><i
-                                                class="bi-bag-plus"></i></a>
-                                        <a href="/frontend/demos/shop/ajax/shop-item.html" class="btn btn-dark"
-                                            data-lightbox="ajax"><i class="bi-eye"></i></a>
-                                    </div>
-                                    <div class="bg-overlay-bg bg-transparent"></div>
-                                </div>
-                            </div>
+                            <figure class="product-image-container">
+                                <a href="product.html" class="product-image">
+                                    <img src="/uploads/products/<%= special.image%>" alt="product">
+                                </a>
+                                <a href="/frontend/ajax/product-quick-view.html" class="btn-quickview">Quick View</a>
+                            </figure>
+                            <div class="product-details">
+                                <div class="ratings-container">
+                                    <div class="product-ratings">
+                                        <span class="ratings" style="width:80%"></span><!-- End .ratings -->
+                                    </div><!-- End .product-ratings -->
+                                </div><!-- End .product-container -->
+                                <h2 class="product-title">
+                                    <a href="product.html"><%= special.name%></a>
+                                </h2>
+                                <div class="price-box">
+                                    <span class="product-price">$<%= special.price%></span>
+                                </div><!-- End .price-box -->
     
-                            <div class="product-desc">
-                                <div class="product-title mb-1">
-                                    <h3><a href="#"><%= special.name%></a></h3>
-                                </div>
-                                <div class="product-price font-primary"><ins>$<%= special.price%></ins></div>
-                                <div class="product-rating">
-                                    <i class="bi-star-fill"></i>
-                                    <i class="bi-star-fill"></i>
-                                    <i class="bi-star-fill"></i>
-                                    <i class="bi-star-fill"></i>
-                                    <i class="bi-star"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                <% }) %>
-            </div>
-        </div>
+                                <div class="product-action">
+                                    <a href="#" class="paction add-wishlist" title="Add to Wishlist">
+                                        <span>Add to Wishlist</span>
+                                    </a>
+    
+                                    <a href="product.html" class="paction add-cart" title="Add to Cart">
+                                        <span>Add to Cart</span>
+                                    </a>
+    
+                                    <a href="#" class="paction add-compare" title="Add to Compare">
+                                        <span>Add to Compare</span>
+                                    </a>
+                                </div><!-- End .product-action -->
+                            </div><!-- End .product-details -->
+                        </div><!-- End .product -->
+                    <% }) %>
+                </div><!-- End .products-carousel -->
+            </div><!-- End .container -->
+        </div><!-- End .tab-pane -->
 
-        <!-- New Arrivals Men
-        ============================================= -->
-        <div class="container">
-
-            <div class="fancy-title title-border mt-4 mb-4 title-center">
-                <h4>New Arrivals: Men</h4>
-            </div>
-
-            <div class="row col-mb-30">
-                <!-- Shop Item 12
-                ============================================= -->
-                <% news.forEach(e => { %>
-                    <div class="col-lg-2 col-md-3 col-6 px-2">
+        <div class="tab-pane fade" id="latest-products" role="tabpanel" aria-labelledby="latest-products-tab">
+            <div class="container">
+                <div class="tab-products-carousel owl-carousel owl-theme">
+                    <% news.forEach(e => { %>
                         <div class="product">
-                            <div class="product-image">
-                                <a href="#"><img src="/uploads/products/<%= e.image %>" alt="Image 6"></a>
-                                <div class="bg-overlay">
-                                    <div class="bg-overlay-content align-items-end justify-content-between" data-hover-animate="fadeIn"
-                                        data-hover-speed="400">
-                                        <a href="#" class="btn btn-dark me-2" title="Add to Cart"><i class="bi-bag-plus"></i></a>
-                                        <a href="/frontend/demos/shop/ajax/shop-item.html" class="btn btn-dark" data-lightbox="ajax"><i
-                                                class="bi-eye"></i></a>
-                                    </div>
-                                    <div class="bg-overlay-bg bg-transparent"></div>
-                                </div>
-                            </div>
-                            <div class="product-desc">
-                                <div class="product-title mb-1">
-                                    <h3><a href="#"><%= e.name%></a></h3>
-                                </div>
-                                <div class="product-price font-primary"><ins>$<%= e.price%></ins></div>
-                                <div class="product-rating">
-                                    <i class="bi-star-fill"></i>
-                                    <i class="bi-star-fill"></i>
-                                    <i class="bi-star-fill"></i>
-                                    <i class="bi-star-fill"></i>
-                                    <i class="bi-star-fill"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                <% }) %>
-                    
-            </div>
+                            <figure class="product-image-container">
+                                <a href="product.html" class="product-image">
+                                    <img src="/uploads/products/<%= e.image %>" alt="product">
+                                </a>
+                                <a href="/frontend/ajax/product-quick-view.html" class="btn-quickview">Quick View</a>
+                                <span class="product-label label-sale">-20%</span>
+                                <span class="product-label label-hot">New</span>
+                            </figure>
+                            <div class="product-details">
+                                <div class="ratings-container">
+                                    <div class="product-ratings">
+                                        <span class="ratings" style="width:0%"></span><!-- End .ratings -->
+                                    </div><!-- End .product-ratings -->
+                                </div><!-- End .product-container -->
+                                <h2 class="product-title">
+                                    <a href="product.html"><%= e.name %></a>
+                                </h2>
+                                <div class="price-box">
+                                    <span class="old-price">$60.00</span>
+                                    <span class="product-price">$<%= e.price %></span>
+                                </div><!-- End .price-box -->
+    
+                                <div class="product-action">
+                                    <a href="#" class="paction add-wishlist" title="Add to Wishlist">
+                                        <span>Add to Wishlist</span>
+                                    </a>
+                                    
+                                    <a href="product.html" class="paction add-cart" title="Add to Cart">
+                                        <span>Add to Cart</span>
+                                    </a>
+    
+                                    <a href="#" class="paction add-compare" title="Add to Compare">
+                                        <span>Add to Compare</span>
+                                    </a>
+                                </div><!-- End .product-action -->
+                            </div><!-- End .product-details -->
+                        </div><!-- End .product -->
+                    <% }) %>
+                        
+                </div><!-- End .products-carousel -->
+            </div><!-- End .container -->
+        </div><!-- End .tab-pane -->
+    </div><!-- End .tab-content -->
+</div><!-- End .home-product-tabs -->
 
-        </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="feature-box">
+                <i class="icon-star"></i>
 
+                <div class="feature-box-content">
+                    <h3>Dedicated Service</h3>
+                    <p>Consult our specialists for help with an order, customization, or design advice</p>
+                    <a href="#" class="btn btn-sm btn-outline-dark">Get in touch</a>
+                </div><!-- End .feature-box-content -->
+            </div><!-- End .feature-box -->
+        </div><!-- End .col-md-4 -->
+        
+        <div class="col-md-4">
+            <div class="feature-box">
+                <i class="icon-reply"></i>
 
-        <div class="container">
+                <div class="feature-box-content">
+                    <h3>Free returns</h3>
+                    <p>We stand behind our goods and services and want you to be satisfied with them.</p>
+                    <a href="#" class="btn btn-sm btn-outline-dark">Return Policy</a>
+                </div><!-- End .feature-box-content -->
+            </div><!-- End .feature-box -->
+        </div><!-- End .col-md-4 -->
 
+        <div class="col-md-4">
+            <div class="feature-box">
+                <i class="icon-paper-plane"></i>
 
-            <div class="clear"></div>
+                <div class="feature-box-content">
+                    <h3>international shipping</h3>
+                    <p>Currently over 50 countries qualify for express international shipping.</p>
+                    <a href="#" class="btn btn-sm btn-outline-dark">Learn More</a>
+                </div><!-- End .feature-box-content -->
+            </div><!-- End .feature-box -->
+        </div><!-- End .col-md-4 -->
+    </div><!-- End .row -->
+</div><!-- End .container -->
 
-            <!-- Brands
-            ============================================= -->
-            <div class="row mt-5">
-                <div class="col-12">
-                    <div class="fancy-title title-border title-center mb-4">
-                        <h4>Brands who give Flat <span class="text-danger">40%</span> Off</h4>
-                    </div>
+<div class="mb-1"></div><!-- margin -->
 
-                    <ul class="clients-grid row mb-0 justify-content-center">
-                        <% brands.forEach(brand => { %>
-                            <li class="grid-item"><a href="#"><img src="/uploads/brands/<%= brand.image %>"
-                                alt="Clients"></a></span></li>
-                        <% }) %>
-                    </ul>
-                </div>
-            </div>
+<div class="promo-section" style="background-image: url(/frontend/assets/images/promo-bg.jpg)">
+    <div class="container">
+        <h3>the perfect gift</h3>
+        <h4>Check off your list with our best gifts</h4>
+        <a href="#" class="btn btn-primary">Shop Now</a>
+    </div><!-- End .container -->
+</div><!-- End .promo-section -->
 
-        </div>
+<div class="partners-container">
+    <div class="container">
+        <div class="partners-carousel owl-carousel owl-theme">
+            <% brands.forEach(brand => { %>
+                <a href="#" class="partner">
+                    <img src="/uploads/brands/<%= brand.image %>" alt="logo <%= brand.name %>">
+                </a>
+            <% }) %>   
+        </div><!-- End .partners-carousel -->
+    </div><!-- End .container -->
+</div><!-- End .partners-container -->
 
-        <div class="clear"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-6 col-lg-3">
+            <div class="product-column">
+                <h3 class="h4 title">Featured</h3>
 
-</section>
+                <div class="product product-sm">
+                    <figure class="product-image-container">
+                        <a href="product.html" class="product-image">
+                            <img src="/frontend/assets/images/products/small/product-1.jpg" alt="product">
+                        </a>
+                    </figure>
+                    <div class="product-details">
+                        <h2 class="product-title">
+                            <a href="product.html">Ring</a>
+                        </h2>
+                        <div class="ratings-container">
+                            <div class="product-ratings">
+                                <span class="ratings" style="width:80%"></span><!-- End .ratings -->
+                            </div><!-- End .product-ratings -->
+                        </div><!-- End .product-container -->
+                        <div class="price-box">
+                            <span class="product-price">$45.00</span>
+                        </div><!-- End .price-box -->
+                    </div><!-- End .product-details -->
+                </div><!-- End .product -->
+
+                <div class="product product-sm">
+                    <figure class="product-image-container">
+                        <a href="product.html" class="product-image">
+                            <img src="/frontend/assets/images/products/small/product-2.jpg" alt="product">
+                        </a>
+                    </figure>
+                    <div class="product-details">
+                        <h2 class="product-title">
+                            <a href="product.html">Headphone</a>
+                        </h2>
+                        <div class="ratings-container">
+                            <div class="product-ratings">
+                                <span class="ratings" style="width:20%"></span><!-- End .ratings -->
+                            </div><!-- End .product-ratings -->
+                        </div><!-- End .product-container -->
+                        <div class="price-box">
+                            <span class="old-price">$60.00</span>
+                            <span class="product-price">$45.00</span>
+                        </div><!-- End .price-box -->
+                    </div><!-- End .product-details -->
+                </div><!-- End .product -->
+
+                <div class="product product-sm">
+                    <figure class="product-image-container">
+                        <a href="product.html" class="product-image">
+                            <img src="/frontend/assets/images/products/small/product-3.jpg" alt="product">
+                        </a>
+                    </figure>
+                    <div class="product-details">
+                        <h2 class="product-title">
+                            <a href="product.html">Shoes</a>
+                        </h2>
+                        <div class="ratings-container">
+                            <div class="product-ratings">
+                                <span class="ratings" style="width:100%"></span><!-- End .ratings -->
+                            </div><!-- End .product-ratings -->
+                        </div><!-- End .product-container -->
+                        <div class="price-box">
+                            <span class="product-price">$50.00</span>
+                        </div><!-- End .price-box -->
+                    </div><!-- End .product-details -->
+                </div><!-- End .product -->
+            </div><!-- End .product-column -->
+        </div><!-- End .col-lg-3 -->
+
+        <div class="col-6 col-lg-3">
+            <div class="product-column">
+                <h3 class="h4 title">New</h3>
+
+                <div class="product product-sm">
+                    <figure class="product-image-container">
+                        <a href="product.html" class="product-image">
+                            <img src="/frontend/assets/images/products/small/product-1.jpg" alt="product">
+                        </a>
+                    </figure>
+                    <div class="product-details">
+                        <h2 class="product-title">
+                            <a href="product.html">Ring</a>
+                        </h2>
+                        <div class="ratings-container">
+                            <div class="product-ratings">
+                                <span class="ratings" style="width:20%"></span><!-- End .ratings -->
+                            </div><!-- End .product-ratings -->
+                        </div><!-- End .product-container -->
+                        <div class="price-box">
+                            <span class="product-price">$13.00</span>
+                        </div><!-- End .price-box -->
+                    </div><!-- End .product-details -->
+                </div><!-- End .product -->
+
+                <div class="product product-sm">
+                    <figure class="product-image-container">
+                        <a href="product.html" class="product-image">
+                            <img src="/frontend/assets/images/products/small/product-3.jpg" alt="product">
+                        </a>
+                    </figure>
+                    <div class="product-details">
+                        <h2 class="product-title">
+                            <a href="product.html">Headphone</a>
+                        </h2>
+                        <div class="ratings-container">
+                            <div class="product-ratings">
+                                <span class="ratings" style="width:50%"></span><!-- End .ratings -->
+                            </div><!-- End .product-ratings -->
+                        </div><!-- End .product-container -->
+                        <div class="price-box">
+                            <span class="old-price">$42.00</span>
+                            <span class="product-price">$27.00</span>
+                        </div><!-- End .price-box -->
+                    </div><!-- End .product-details -->
+                </div><!-- End .product -->
+
+                <div class="product product-sm">
+                    <figure class="product-image-container">
+                        <a href="product.html" class="product-image">
+                            <img src="/frontend/assets/images/products/small/product-2.jpg" alt="product">
+                        </a>
+                    </figure>
+                    <div class="product-details">
+                        <h2 class="product-title">
+                            <a href="product.html">Shoes</a>
+                        </h2>
+                        <div class="ratings-container">
+                            <div class="product-ratings">
+                                <span class="ratings" style="width:0%"></span><!-- End .ratings -->
+                            </div><!-- End .product-ratings -->
+                        </div><!-- End .product-container -->
+                        <div class="price-box">
+                            <span class="product-price">$35.00</span>
+                        </div><!-- End .price-box -->
+                    </div><!-- End .product-details -->
+                </div><!-- End .product -->
+            </div><!-- End .product-column -->
+        </div><!-- End .col-lg-3 -->
+
+        <div class="col-6 col-lg-3">
+            <div class="product-column">
+                <h3 class="h4 title">Hot</h3>
+
+                <div class="product product-sm">
+                    <figure class="product-image-container">
+                        <a href="product.html" class="product-image">
+                            <img src="/frontend/assets/images/products/small/product-4.jpg" alt="product">
+                        </a>
+                    </figure>
+                    <div class="product-details">
+                        <h2 class="product-title">
+                            <a href="product.html">Ring</a>
+                        </h2>
+                        <div class="ratings-container">
+                            <div class="product-ratings">
+                                <span class="ratings" style="width:20%"></span><!-- End .ratings -->
+                            </div><!-- End .product-ratings -->
+                        </div><!-- End .product-container -->
+                        <div class="price-box">
+                            <span class="product-price">$13.00</span>
+                        </div><!-- End .price-box -->
+                    </div><!-- End .product-details -->
+                </div><!-- End .product -->
+
+                <div class="product product-sm">
+                    <figure class="product-image-container">
+                        <a href="product.html" class="product-image">
+                            <img src="/frontend/assets/images/products/small/product-5.jpg" alt="product">
+                        </a>
+                    </figure>
+                    <div class="product-details">
+                        <h2 class="product-title">
+                            <a href="product.html">Headphone</a>
+                        </h2>
+                        <div class="ratings-container">
+                            <div class="product-ratings">
+                                <span class="ratings" style="width:50%"></span><!-- End .ratings -->
+                            </div><!-- End .product-ratings -->
+                        </div><!-- End .product-container -->
+                        <div class="price-box">
+                            <span class="old-price">$42.00</span>
+                            <span class="product-price">$27.00</span>
+                        </div><!-- End .price-box -->
+                    </div><!-- End .product-details -->
+                </div><!-- End .product -->
+
+                <div class="product product-sm">
+                    <figure class="product-image-container">
+                        <a href="product.html" class="product-image">
+                            <img src="/frontend/assets/images/products/small/product-6.jpg" alt="product">
+                        </a>
+                    </figure>
+                    <div class="product-details">
+                        <h2 class="product-title">
+                            <a href="product.html">Shoes</a>
+                        </h2>
+                        <div class="ratings-container">
+                            <div class="product-ratings">
+                                <span class="ratings" style="width:0%"></span><!-- End .ratings -->
+                            </div><!-- End .product-ratings -->
+                        </div><!-- End .product-container -->
+                        <div class="price-box">
+                            <span class="product-price">$35.00</span>
+                        </div><!-- End .price-box -->
+                    </div><!-- End .product-details -->
+                </div><!-- End .product -->
+            </div><!-- End .product-column -->
+        </div><!-- End .col-lg-3 -->
+
+        <div class="col-6 col-lg-3">
+            <div class="product-column">
+                <h3 class="h4 title">Sale</h3>
+
+                <div class="product product-sm">
+                    <figure class="product-image-container">
+                        <a href="product.html" class="product-image">
+                            <img src="/frontend/assets/images/products/small/product-7.jpg" alt="product">
+                        </a>
+                    </figure>
+                    <div class="product-details">
+                        <h2 class="product-title">
+                            <a href="product.html">Ring</a>
+                        </h2>
+                        <div class="ratings-container">
+                            <div class="product-ratings">
+                                <span class="ratings" style="width:20%"></span><!-- End .ratings -->
+                            </div><!-- End .product-ratings -->
+                        </div><!-- End .product-container -->
+                        <div class="price-box">
+                            <span class="product-price">$13.00</span>
+                        </div><!-- End .price-box -->
+                    </div><!-- End .product-details -->
+                </div><!-- End .product -->
+
+                <div class="product product-sm">
+                    <figure class="product-image-container">
+                        <a href="product.html" class="product-image">
+                            <img src="/frontend/assets/images/products/small/product-8.jpg" alt="product">
+                        </a>
+                    </figure>
+                    <div class="product-details">
+                        <h2 class="product-title">
+                            <a href="product.html">Headphone</a>
+                        </h2>
+                        <div class="ratings-container">
+                            <div class="product-ratings">
+                                <span class="ratings" style="width:50%"></span><!-- End .ratings -->
+                            </div><!-- End .product-ratings -->
+                        </div><!-- End .product-container -->
+                        <div class="price-box">
+                            <span class="old-price">$42.00</span>
+                            <span class="product-price">$27.00</span>
+                        </div><!-- End .price-box -->
+                    </div><!-- End .product-details -->
+                </div><!-- End .product -->
+
+                <div class="product product-sm">
+                    <figure class="product-image-container">
+                        <a href="product.html" class="product-image">
+                            <img src="/frontend/assets/images/products/small/product-9.jpg" alt="product">
+                        </a>
+                    </figure>
+                    <div class="product-details">
+                        <h2 class="product-title">
+                            <a href="product.html">Shoes</a>
+                        </h2>
+                        <div class="ratings-container">
+                            <div class="product-ratings">
+                                <span class="ratings" style="width:0%"></span><!-- End .ratings -->
+                            </div><!-- End .product-ratings -->
+                        </div><!-- End .product-container -->
+                        <div class="price-box">
+                            <span class="product-price">$35.00</span>
+                        </div><!-- End .price-box -->
+                    </div><!-- End .product-details -->
+                </div><!-- End .product -->
+            </div><!-- End .product-column -->
+        </div><!-- End .col-lg-3 -->
+    </div><!-- End .container -->
+</div><!-- End .container -->
+
+<div class="mb-6"></div><!-- margin -->

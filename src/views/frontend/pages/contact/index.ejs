@@ -1,52 +1,98 @@
-<section class="page-title bg-transparent">
-    <div class="container">
-        <div class="page-title-row">
-            <div class="page-title-content">
-                <h1>Contact</h1>
-            </div>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Contact</li>
-                </ol>
-            </nav>
-        </div>
-    </div>
-</section>
 
-<div class="card-body row">
-    <div class="col-5 text-center d-flex align-items-center justify-content-center">
-        <div class="">
-            <h2>Canvas <strong>HeHeboiz</strong></h2>
+    <nav aria-label="breadcrumb" class="breadcrumb-nav">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html"><i class="icon-home"></i></a></li>
+                <li class="breadcrumb-item active" aria-current="page">Contact Us</li>
+            </ol>
+        </div><!-- End .container -->
+    </nav>
+    
+    <div class="container">
+        <div id="map" style="position: relative; overflow: hidden;">
+            <!-- <div
+                style="height: 100%; width: 100%; position: absolute; top: 0px; left: 0px; background-color: rgb(229, 227, 223);">
+                <div class="gm-err-container">
+                    <div class="gm-err-content">
+                        <div class="gm-err-icon"><img src="https://maps.gstatic.com/mapfiles/api-3/images/icon_error.png"
+                                alt="" draggable="false" style="user-select: none;"></div>
+                        <div class="gm-err-title">Rất tiếc! Đã xảy ra lỗi.</div>
+                        <div class="gm-err-message">Trang này đã không tải Google Maps đúng cách. Hãy xem bảng điều khiển
+                            JavaScript để biết chi tiết kỹ thuật.</div>
+                    </div>
+
+                </div>
+
+            </div> -->
             <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.6696584625106!2d106.6796780102116!3d10.759922359454512!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f1b7c3ed289%3A0xa06651894598e488!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBTw6BpIEfDsm4!5e0!3m2!1svi!2s!4v1725045734051!5m2!1svi!2s"
-            width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+            width="2000" height="450" style="border:0;" allowfullscreen="" loading="lazy"
             referrerpolicy="no-referrer-when-downgrade">
         </iframe>
-            <p class="lead mb-5">123 Testing Ave, Testtown, 9876 NA<br>
-                Phone: +84906127540
-            </p>
-        </div>
-    </div>
-    <div class="col-7">
-        <div class="form-group">
-            <label for="inputName">Name</label>
-            <input type="text" id="inputName" class="form-control">
-        </div>
-        <div class="form-group">
-            <label for="inputEmail">E-Mail</label>
-            <input type="email" id="inputEmail" class="form-control">
-        </div>
-        <div class="form-group">
-            <label for="inputSubject">Subject</label>
-            <input type="text" id="inputSubject" class="form-control">
-        </div>
-        <div class="form-group">
-            <label for="inputMessage">Message</label>
-            <textarea id="inputMessage" class="form-control" rows="4"></textarea>
-        </div>
-        <div class="form-group">
-            <input type="submit" class="btn btn-primary" value="Send message">
-        </div>
-    </div>
-</div>
+        </div><!-- End #map -->
+    
+        <div class="row">
+            <div class="col-md-8">
+                <h2 class="light-title">Write <strong>Us</strong></h2>
+    
+                <form action="#">
+                    <div class="form-group required-field">
+                        <label for="contact-name">Name</label>
+                        <input type="text" class="form-control" id="contact-name" name="contact-name" required="">
+                    </div><!-- End .form-group -->
+    
+                    <div class="form-group required-field">
+                        <label for="contact-email">Email</label>
+                        <input type="email" class="form-control" id="contact-email" name="contact-email" required="">
+                    </div><!-- End .form-group -->
+    
+                    <div class="form-group">
+                        <label for="contact-phone">Phone Number</label>
+                        <input type="tel" class="form-control" id="contact-phone" name="contact-phone">
+                    </div><!-- End .form-group -->
+    
+                    <div class="form-group required-field">
+                        <label for="contact-message">What’s on your mind?</label>
+                        <textarea cols="30" rows="1" id="contact-message" class="form-control" name="contact-message"
+                            required=""></textarea>
+                    </div><!-- End .form-group -->
+    
+                    <div class="form-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div><!-- End .form-footer -->
+                </form>
+            </div><!-- End .col-md-8 -->
+    
+            <div class="col-md-4">
+                <h2 class="light-title">Contact <strong>Details</strong></h2>
+    
+                <div class="contact-info">
+                    <div>
+                        <i class="icon-phone"></i>
+                        <p><a href="tel:">0201 203 2032</a></p>
+                        <p><a href="tel:">0201 203 2032</a></p>
+                    </div>
+                    <div>
+                        <i class="icon-mobile"></i>
+                        <p><a href="tel:">201-123-3922</a></p>
+                        <p><a href="tel:">302-123-3928</a></p>
+                    </div>
+                    <div>
+                        <i class="icon-mail-alt"></i>
+                        <p><a href="mailto:#">porto@gmail.com</a></p>
+                        <p><a href="mailto:#">porto@portotemplate.com</a></p>
+                    </div>
+                    <div>
+                        <i class="icon-skype"></i>
+                        <p>porto_skype</p>
+                        <p>porto_template</p>
+                    </div>
+                </div><!-- End .contact-info -->
+            </div><!-- End .col-md-4 -->
+        </div><!-- End .row -->
+    </div><!-- End .container -->
+    
+    <div class="mb-8"></div><!-- margin -->
+
+
+

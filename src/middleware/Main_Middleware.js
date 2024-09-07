@@ -37,7 +37,23 @@ const BrandService = require('../services/brand_service')
 
             const brands = await BrandService.findBrandWithStatus()
             res.locals.brands = brands
+
+            const products = await ProductService.findProductWithStatus()
+            res.locals.products = products
+
+            const detail = await ProductService.findOneProuductWithDetail()
+            res.locals.detail = detail
         
+            next()
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    const detailProduct = async (req, res, next) => {
+        try {
+            const detail = await ProductService.findOneProuductWithDetail()
+            res.locals.detail = detail
             next()
         } catch (error) {
             next(error)
@@ -48,4 +64,5 @@ module.exports = {
     fetchMenusAndCategories,
     fetchSlider,
     fetchProductWithSpecial,
+    detailProduct
 }
