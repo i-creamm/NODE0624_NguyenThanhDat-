@@ -4,6 +4,8 @@ const MainController = require('../../controllers/admin/setting_controller')
 const { asyncHandle } =  require('../../utils/asyncHandle')
 
     router.get('/', asyncHandle(MainController.getAll))
+    
+    router.post('/', MainController.setting)
 
     router.get('/form/:id?', asyncHandle(MainController.getForm))
 

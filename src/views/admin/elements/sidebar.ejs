@@ -2,6 +2,7 @@
   "name" : 'Dashboard' ,
   "icon" : "fas fa-tachometer-alt" ,
   "link" : '/admin/' ,
+  "active" : 'dashboard',
   "child" : [] 
 },
 { 
@@ -10,36 +11,43 @@
   "link" : '#' ,
   "child" : [{ 
               "name" : 'List' ,
+              "active" : 'item',
               "icon" : "fas fa-list",
               "link" : '/admin/item' ,
             },{
               "name" : 'Menu' ,
+              "active" : 'menu',
               "icon" : "fas fa-list",
               "link" : '/admin/menu' ,
             },{
               "name" : 'Category' ,
+              "active" : 'category',
               "icon" : "fas fa-list",
               "link" : '/admin/category' ,
             },{
               "name" : 'Product' ,
+              "active" : 'product',
               "icon" : "fas fa-list",
               "link" : '/admin/product' ,
             }] 
 },
 {
   "name": "Slider",
+  "active" : 'slider',
   "icon": "fas fa-image",
   "link": "/admin/slider",
   "child": []
 },
 {
   "name": "Brand",
+  "active" : 'brand',
   "icon": "fas fa-image",
   "link": "/admin/brand",
   "child": []
 },
 {
   "name": "Setting",
+  "active" : 'setting',
   "icon": "far fa-plus-square",
   "link": "/admin/setting",
   "child": []
@@ -89,7 +97,7 @@
             <% if(e.child.length==0) {%>
   
               <li class="nav-item">
-                <a href="<%= e.link %>" class="nav-link">
+                <a href="<%= e.link %>" id="<%= e.active%>" class="nav-link ">
                   <i class="nav-icon <%= e.icon%>"></i>
                   <p>
                     <%= e.name %>
@@ -97,8 +105,8 @@
                 </a>
               </li>
               <% } else { %>
-                <li class="nav-item ">
-                  <a href="<%= e.link %>" class="nav-link ">
+                <li class="nav-item">
+                  <a href="<%= e.link %>" id="<%= e.active%>" class="nav-link ">
                     <i class="nav-icon <%= e.icon%>"></i>
                     <p>
                       <%= e.name %>
@@ -108,7 +116,7 @@
                   <ul class="nav nav-treeview">
                     <li class="nav-item">
                       <% e.child.forEach(i=> {%>
-                        <a href="<%= i.link%>" class="nav-link ">
+                        <a href="<%= i.link%>" id="<%= i.active%>" class="nav-link ">
                           <i class="nav-icon <%= i.icon%>"></i>
                           <p>
                             <%= i.name%>

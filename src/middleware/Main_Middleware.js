@@ -3,6 +3,7 @@ const CategoryService = require('../services/category_service')
 const SliderService = require('../services/slider_service')
 const ProductService = require('../services/product_service')
 const BrandService = require('../services/brand_service')
+const SettingService = require('../services/setting_service')
 
     const fetchMenusAndCategories  = async (req, res, next) => {
         try {
@@ -43,7 +44,11 @@ const BrandService = require('../services/brand_service')
 
             const detail = await ProductService.findOneProuductWithDetail()
             res.locals.detail = detail
-        
+
+            const setting = await SettingService.findIdAndChangeInfo()
+            let stringParse = JSON.parse(setting.name)
+            res.locals.settings = stringParse
+
             next()
         } catch (error) {
             next(error)

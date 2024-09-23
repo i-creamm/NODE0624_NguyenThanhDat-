@@ -1,6 +1,4 @@
 const MainService = require("../../services/slider_service");
-// const { ItemValidate } = require("../../validation/item_validates");
-// const { validationResult } = require("express-validator");
 const {generateCountStatus, generatePagination} = require('../../utils/helper')
 
 const nameController = 'slider'
@@ -84,6 +82,7 @@ class SliderController {
       }
       await MainService.editById(id, updateItem);
     }
+   
     res.redirect(`${linkPrefix}`);
   })];
 

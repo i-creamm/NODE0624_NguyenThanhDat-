@@ -1,0 +1,30 @@
+.ordering {
+    width: 60px;
+    border: 1px solid #ccc; /* Đường viền */
+    padding: 5px;
+    text-align: center;
+  }
+
+.img-thumbnail {
+  padding: 0.25rem;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 0.25rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.075);
+  width: 80px;
+  height: 45px;
+}
+
+.logo img {
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 0.25rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.075);
+  width: auto; 
+  height: 200px; 
+  max-width: 100%; 
+  object-fit: contain;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}

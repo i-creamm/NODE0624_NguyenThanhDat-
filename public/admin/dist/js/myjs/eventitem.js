@@ -34,6 +34,12 @@ const clickToChangeStatus = (url) => {
 
 $(document).ready(function () {
 
+    const url = window.location.href
+    const arrUrl = url.split('/')
+    let activeName = arrUrl[4] ||  'dashboard'
+    $(`#${activeName}`).parent().parent().parent().addClass('menu-open');
+    $(`#${activeName}`).addClass('active');
+
     $('.ordering').change(function (e) { 
 
         e.preventDefault(); 
@@ -58,6 +64,27 @@ $(document).ready(function () {
         });
 
     $('#edit').summernote({
+        height: 200,
+        minHeight: null,
+        maxHeight: null,
+        focus: true,
+    })
+
+    $('#service').summernote({
+        height: 200,
+        minHeight: null,
+        maxHeight: null,
+        focus: true,
+    })
+
+    $('#return').summernote({
+        height: 200,
+        minHeight: null,
+        maxHeight: null,
+        focus: true,
+    })
+
+    $('#shipping').summernote({
         height: 200,
         minHeight: null,
         maxHeight: null,

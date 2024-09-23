@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 
+
 var expressLayouts = require('express-ejs-layouts');
 var MainDB = require('./src/apps/database/init_main_db');
 
@@ -14,25 +15,14 @@ MainDB.connection();
 
 var app = express();
 
+
+
 // view engine setup
 app.set('views', path.join(__dirname, './src/views'));
 app.set('view engine', 'ejs');
 
 
 app.set('layout', 'admin')
-
-// app.use(session({
-//   secret: 'your-secret-key', // Replace with your secret
-//   resave: false,
-//   saveUninitialized: true
-// }));
-
-// app.use(flash());
-
-// app.use((req, res, next) => {
-//   res.locals.messages = req.flash();
-//   next();
-// })
 
 app.use(expressLayouts);
 __pathImage = __dirname + '/public/uploads'

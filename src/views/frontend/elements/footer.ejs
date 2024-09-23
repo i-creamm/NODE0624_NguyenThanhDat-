@@ -11,17 +11,17 @@
                             <div class="widget">
                                 <ul class="contact-info">
                                     <li>
-                                        <span class="contact-info-label">Address:</span>123 Street Name, City, England
+                                        <span class="contact-info-label">Address:</span><%= settings.address%>
                                     </li>
                                     <li>
-                                        <span class="contact-info-label">Phone:</span>Toll Free <a href="tel:">(123) 456-7890</a>
+                                        <span class="contact-info-label">Phone:</span>Toll Free <a href="tel:"><%= settings.phone%></a>
                                     </li>
                                     <li>
-                                        <span class="contact-info-label">Email:</span> <a href="mailto:mail@example.com">mail@example.com</a>
+                                        <span class="contact-info-label">Email:</span> <a href="mailto:mail@example.com"><%= settings.email%></a>
                                     </li>
                                     <li>
                                         <span class="contact-info-label">Working Days/Hours:</span>
-                                        Mon - Sun / 9:00AM - 8:00PM
+                                        <%= settings.work%>
                                     </li>
                                 </ul>
                             </div><!-- End .widget -->
@@ -61,7 +61,7 @@
                     <div class="widget widget-newsletter">
                         <h4 class="widget-title">Subscribe newsletter</h4>
                         <p>Get all the latest information on Events,Sales and Offers. Sign up for newsletter today</p>
-                        <form action="#">
+                        <form method="post" action="#">
                             <input type="email" class="form-control" placeholder="Email address" required>
 
                             <input type="submit" class="btn" value="Subscribe">
@@ -74,13 +74,13 @@
 
     <div class="container">
         <div class="footer-bottom">
-            <p class="footer-copyright">Porto eCommerce. &copy;  2018.  All Rights Reserved</p>
+            <p class="footer-copyright"><%= settings.copyright%></p>
             <img src="/frontend/assets/images/payments.png" alt="payment methods" class="footer-payments">
 
             <div class="social-icons">
-                <a href="#" class="social-icon" target="_blank"><i class="icon-facebook"></i></a>
-                <a href="#" class="social-icon" target="_blank"><i class="icon-twitter"></i></a>
-                <a href="#" class="social-icon" target="_blank"><i class="icon-linkedin"></i></a>
+                <a href="<%= settings.facebook%>" class="social-icon" target="_blank"><i class="icon-facebook"></i></a>
+                <a href="<%= settings.twitter%>" class="social-icon" target="_blank"><i class="icon-twitter"></i></a>
+                <a href="<%= settings.instagram%>" class="social-icon" target="_blank"><i class="icon-linkedin"></i></a>
             </div><!-- End .social-icons -->
         </div><!-- End .footer-bottom -->
     </div><!-- End .containr -->

@@ -27,8 +27,6 @@ router.get('/:slug', async (req , res , next) => {
 })
 
 
-
-
 router.get('/:slug?', async (req , res , next) => {
     const { slug } = req.params
     let link;

@@ -4,14 +4,18 @@ class SettingService {
 
     //Backend
     getAllSetting = async () => {
-        return await MainModel.find()
+        let id = '66cd8f8868b596b19fcdd0dc'
+        return await MainModel.findById(id)
     }
 
-    save = async ({name}) => {
-        return await MainModel.create({name})
+    update = async (data) => {
+        let id = '66cd8f8868b596b19fcdd0dc'
+        return await MainModel.findByIdAndUpdate(id,{name : data})
     }
 
-    findId = async (id) => {
+    //frontend
+    findIdAndChangeInfo = async () => {
+        let id = '66cd8f8868b596b19fcdd0dc'
         return await MainModel.findById(id)
     }
 
