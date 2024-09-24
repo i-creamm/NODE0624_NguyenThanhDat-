@@ -53,14 +53,6 @@ class MenuController {
   saveForm = async (req, res, next) => {
     const { id } = req.params;
 
-    // await ItemValidate(req);
-    // const errors = validationResult(req);
-    // const item = id ? await MainService.findId(id) : {}
-
-    // if (!errors.isEmpty()) {
-    //   return res.render(`admin/pages/${nameController}/form`, { item, title: id ? "Edit - Form" : "Add - Form", alert: errors.array()})
-    // }
-  
     if (!id) {
       await MainService.save(req.body)
     } else {
@@ -78,7 +70,6 @@ class MenuController {
     await MainService.deleteById(id)
     res.redirect(`${linkPrefix}`)
   }
-
 
 }
 

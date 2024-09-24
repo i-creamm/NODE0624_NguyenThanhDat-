@@ -9,5 +9,6 @@ router.use('/menu',require('./menu_router'))
 router.use('/slider',require('./slider_routers'))
 router.use('/setting',require('./setting_routers'))
 router.use('/brand',require('./brand_routers'))
+router.use('/subscribe',require('./subscribe_routers'))
 
 module.exports = router
