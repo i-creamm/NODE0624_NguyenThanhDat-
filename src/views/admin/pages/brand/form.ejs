@@ -36,10 +36,10 @@
 
                 <div class="form-group row">
                     <label for="image" class="col-sm-2 col-form-label text-sm-right">Image</label>
-                    <div class="col-xs-12 col-sm-8">
-                        <input type="file" name="image" class="form-control form-control-sm" id="imgInp" />
-                        <img id="blah" src="/uploads<%= folderImage%><%= item.image %>" alt="" class="img-thumbnail mt-1" width="500"  />
-                        <input type="hidden" name="old_image" value="<%= item.image  %>">
+                    <div class="col-xs-12 col-sm-8" upload-image>
+                        <input type="file" name="image" class="form-control-file form-control-sm"  upload-image-input/>
+                        <img src="/uploads<%= folderImage%><%= item.image %>" alt="" class="img-preview" upload-image-preview/>
+                        <!-- <input type="hidden" name="old_image" value="<%= item.image  %>"> -->
                     </div>
                 </div>
 

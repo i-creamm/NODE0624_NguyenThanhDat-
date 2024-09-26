@@ -100,10 +100,10 @@
 
                     <div class="form-group row">
                         <label for="image" class="col-sm-2 col-form-label text-sm-right">Logo</label>
-                        <div class="col-xs-12 col-sm-8 logo">
-                            <input type="file" name="logo" class="form-control form-control-sm" id="imgInp" />
-                            <img id="blah" src="/uploads<%= folderImage%><%= setting.image %>" alt="" class="img-thumbnail mt-1" />
-                            <input type="hidden" name="old_image" value="<%= setting.image  %>">
+                        <div class="col-xs-12 col-sm-8 logo" upload-image>
+                        <input type="file" name="logo" class="form-control-file form-control-sm" accept="image/*" upload-image-input/>
+                            <img src="/uploads<%= folderImage%><%= setting.image %>" alt="" class="img-thumbnail mt-1"  upload-image-preview />
+                            <!-- <input type="hidden" name="old_image" value="<%= setting.image  %>"> -->
                         </div>
                     </div>
 
@@ -151,29 +151,14 @@
 
                 <div class="tab-pane fade" id="custom-tabs-one-settings" role="tabpanel"
                     aria-labelledby="custom-tabs-one-settings-tab">
-                    <!-- for about -->
-                    <!-- <div class="form-group row">
-                        <label for="service" class="col-sm-2 col-form-label text-sm-right">Service</label>
-                        <div class="col-xs-12 col-sm-8">
-                          <textarea name="service" id="service" class="form-control form-control-sm"><%= setting.service%></textarea>
-                        </div>
-                    </div>
 
                     <div class="form-group row">
-                        <label for="return" class="col-sm-2 col-form-label text-sm-right">Free Returns</label>
-                        <div class="col-xs-12 col-sm-8">
-                          <textarea name="return" id="return" class="form-control form-control-sm"><%= setting.return%></textarea>
-                        </div>
-                    </div> -->
-
-                    <div class="form-group row">
-                        <!-- Cột thứ nhất -->
+                        
                         <div class="col-md-4 ">
                             <label for="service" class="col-form-label text-sm-right">Service</label>
                             <textarea name="service" id="service" class="form-control form-control-sm"><%= setting.service %></textarea>
                         </div>
                     
-                        <!-- Cột thứ hai -->
                         <div class="col-md-4">
                             <label for="return" class="col-form-label text-sm-right">Free Returns</label>
                             <textarea name="return" id="return" class="form-control form-control-sm"><%= setting.return %></textarea>

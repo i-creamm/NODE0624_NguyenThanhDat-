@@ -43,6 +43,12 @@ router.get('/:slug?', async (req , res , next) => {
         case 'category':
             link = 'frontend/pages/category'
             break;
+        case 'cart':
+            link = 'frontend/pages/cart'
+            break;
+        case 'checkout':
+            link = 'frontend/pages/checkout'
+            break;
         default:  
             link = 'frontend/pages/home'
             break;

@@ -42,12 +42,12 @@ const SettingService = require('../services/setting_service')
             const products = await ProductService.findProductWithStatus()
             res.locals.products = products
 
-            const detail = await ProductService.findOneProuductWithDetail()
-            res.locals.detail = detail
-
             const setting = await SettingService.findIdAndChangeInfo()
             let stringParse = JSON.parse(setting.name)
             res.locals.settings = stringParse
+
+            const categories = await CategoryService.findCategoryWithStatus()
+            res.locals.categories = categories
 
             next()
         } catch (error) {

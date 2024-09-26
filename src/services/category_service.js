@@ -61,6 +61,10 @@ class CategoryService {
             }).sort({ordering: 1})
         };
 
+    findCategoryWithStatus = async () => {
+        return await MainModel.find({status: 'active'}).sort({ordering: 1})
+    }
+
 }
 
 module.exports = new CategoryService();

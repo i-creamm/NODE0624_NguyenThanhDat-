@@ -49,7 +49,7 @@
                     <% specials.forEach(special => { %>
                         <div class="product">
                             <figure class="product-image-container">
-                                <a href="product.html" class="product-image">
+                                <a href="/<%= special.slug%>" class="product-image">
                                     <img src="/uploads/products/<%= special.image%>" alt="product">
                                 </a>
                                 <a href="/frontend/ajax/product-quick-view.html" class="btn-quickview">Quick View</a>
@@ -61,7 +61,7 @@
                                     </div><!-- End .product-ratings -->
                                 </div><!-- End .product-container -->
                                 <h2 class="product-title">
-                                    <a href="product.html"><%= special.name%></a>
+                                    <a href="/<%= special.slug%>"><%= special.name%></a>
                                 </h2>
                                 <div class="price-box">
                                     <span class="product-price">$<%= special.price%></span>
@@ -93,7 +93,7 @@
                     <% news.forEach(e => { %>
                         <div class="product">
                             <figure class="product-image-container">
-                                <a href="product.html" class="product-image">
+                                <a href="/<%= e.slug %>" class="product-image">
                                     <img src="/uploads/products/<%= e.image %>" alt="product">
                                 </a>
                                 <a href="/frontend/ajax/product-quick-view.html" class="btn-quickview">Quick View</a>
@@ -107,7 +107,7 @@
                                     </div><!-- End .product-ratings -->
                                 </div><!-- End .product-container -->
                                 <h2 class="product-title">
-                                    <a href="product.html"><%= e.name %></a>
+                                    <a href="/<%= e.slug %>"><%= e.name %></a>
                                 </h2>
                                 <div class="price-box">
                                     <span class="old-price">$60.00</span>

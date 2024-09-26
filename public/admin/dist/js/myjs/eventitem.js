@@ -31,6 +31,21 @@ const clickToChangeStatus = (url) => {
       })
 }
 
+// Preview image
+const uploadImage = document.querySelector("[upload-image]")
+if(uploadImage){
+    const uploadImageInput = document.querySelector("[upload-image-input]")
+    const uploadImagePreview = document.querySelector("[upload-image-preview]")
+
+    uploadImageInput.addEventListener("change", (e) => {
+        const file = e.target.files[0]
+        if(file) {
+            uploadImagePreview.src = URL.createObjectURL(file)
+        }
+    })
+}
+// End preview image
+
 
 $(document).ready(function () {
 
@@ -92,6 +107,13 @@ $(document).ready(function () {
         focus: true,
     })
 
+    $('#mail').summernote({
+        height: 300,
+        minHeight: null,
+        maxHeight: null,
+        focus: true,
+    })
+
     //check Special
     $('input[name="isSpecial"]').on('click', function () {
 
@@ -138,27 +160,6 @@ $(document).ready(function () {
         });
     });
 
-    imgInp.onchange = evt => {
-        const [file] = imgInp.files
-        if (file) {
-            blah.src = URL.createObjectURL(file)
-        }
-    }
-
-
-    // const inputElement = $('#filepond')
-    // FilePond.registerPlugin(
-    //     FilePondPluginImagePreview,
-    //     FilePondPluginImageExifOrientation
-    //   );
-    // const pond = FilePond.create(inputElement[0])
-    // pond.setOptions({
-    //     imagePreviewMinHeight : 50,
-    //     imagePreviewMaxWidth : 50,
-    //     maxFiles: 5,
-    //     maxFileSize: '5MB',
-    //     acceptedFileTypes: ['image/*'],
-    // });
 });
 
 

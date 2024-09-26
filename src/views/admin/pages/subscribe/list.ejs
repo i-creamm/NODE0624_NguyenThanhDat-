@@ -1,0 +1,148 @@
+<%- include('../../helpers/render_status.ejs') %>
+<%- include('../../helpers/render_pagination.ejs') %>
+
+
+<% const collection = 'subscribe' ; const linkPrefix = `/admin/${collection}/` ; const folderImage = '/sliders/'%>
+
+<div class="row mb-2">
+    <div class="col-sm-6">
+        <h1 class="m-0">Danh sách <%= collection%></h1>
+    </div>
+</div>
+
+<div class="card card-info card-outline">
+	<div class="card-header">
+		<h6 class="card-title">Search & Filter</h6>
+		<div class="card-tools">
+			<button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fas fa-minus"></i></button>
+		</div>
+	</div>
+	<div class="card-body">
+		<div class="row justify-content-between">
+			<div class="mb-1">
+				<div class="btn-search">
+					<% countStatus.forEach(e => { %>
+						<a href="<%= e.link %>">
+							<button type="button" class="btn btn-<%= e.active ? 'success' : 'default' %>">
+								<%= e.name %> (<span><%= e.count %></span>)
+							</button>
+						</a>
+					<% }) %>
+				</div>
+			</div>
+			<div class="mb-1">
+				<form action="<%= linkPrefix %>" method="get">
+					<input type="hidden" name="status" value="<%= status %>">
+					<div class="input-group">
+						<input type="text" class="form-control form-control-sm" name="search" value="<%= search %>" placeholder="Search for..." style="min-width: 300px">
+						<div class="input-group-append">
+							<a type="button" class="btn btn-sm btn-danger"  href="<%= linkPrefix %>">Clear</a>
+							<button type="submit" class="btn btn-sm btn-info" id="btn-search">Search</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<!-- Content -->
+<form action="/admin/category/multipleAction" method="post" name="multipleForm" id = "multiForm">
+	<div class="card card-info card-outline">
+		<div class="card-header">
+			<h4 class="card-title">List</h4>
+
+		</div>
+
+
+	<div class="card-body">
+		<!-- Control -->
+		<!-- <form action="" method="get" class="table-responsive" id="zt-form"> -->
+
+			<!-- List Content -->
+		
+			
+
+			<table class="table table-bordered table-hover text-nowrap btn-table mb-0">
+				<thead class="table-dark">
+					<tr>
+						<th class="text-center">
+							<div class="custom-control custom-checkbox">
+								<input class="custom-control-input cbAll" type="checkbox" id="checkAll">
+								<label for="checkAll" class="custom-control-label"></label>
+							</div>
+						</th>
+
+						<th class="text-center">#</a></th>
+						<th class="text-center">Email</a></th>
+						<th class="text-center">Action</th>
+					</tr>
+				</thead>
+				<tbody>
+                    <% items.forEach((row, index) => { %>
+						<tr>
+							<td class="text-center">
+								<div class="custom-control custom-checkbox">
+									<input class="custom-control-input" type="checkbox" name="cid" id="check-<%= index+1  %>" value="<%= row._id  %>">
+									<label for="check-<%= index + 1  %>" class="custom-control-label"></label>
+								</div>
+							</td>
+							<td class="text-center"><%= index + 1  %></td>
+
+							<td class="text-center"><span><%= row.email%></span></td>
+
+							<td class="text-center">
+								<a href="<%= linkPrefix %>form/<%= row._id%>" class="rounded-circle btn btn-sm btn-info " title="Send">
+									<i class="fas fa-pencil-alt"></i>
+								</a>
+			 
+								<a href="javascript:clickToDeleteId('<%= linkPrefix %>delete/<%= row._id%>')" class="rounded-circle btn btn-sm btn-danger">
+									<i class="fas fa-trash-alt"></i>
+								</a>
+							</td> 
+						</tr>
+					<% }) %>
+				</tbody>
+			</table>
+		<!-- </form> -->
+	</div>
+	<!-- pagination -->
+	<div class="card-footer clearfix">
+		<ul class="pagination pagination-sm m-0 float-right">
+			<%- renderPagination(pagination , status, collection) %>	
+		</ul>
+	</div>
+</div>
+<form>
+
+<script>
+	    document.addEventListener('DOMContentLoaded', function () {
+        let deletedID;
+        let btnDeleted = document.getElementById('buttonDeleted');
+        let deleteForm = document.forms['deletedForm'];
+        let submitAllForm = document.forms['multipleForm'];
+        let btnCheckAll = $('#checkAll');
+        let btnCheck    = $('input[name="cid"]');
+        let btnSubmitAll = $('#buttonSubmitAll');
+        let isChecked;
+
+        // button check all has been checked
+        btnCheckAll.change(function (){
+            isChecked = btnCheckAll.prop('checked');
+            if(isChecked === false){
+                $('input[class="ordering"]').removeAttr('name');
+            }
+            else {
+                $('input[class="ordering"]').attr('name', 'ordering');
+            }
+            btnCheck.prop('checked',isChecked);
+            disableSubmit();
+
+        })
+    })
+</script>
+
+
+

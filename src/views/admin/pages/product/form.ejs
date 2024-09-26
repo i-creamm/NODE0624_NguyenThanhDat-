@@ -89,67 +89,12 @@
                     </div>
                 </div>
 
-
-                <!-- <div class="form-group row">
-                    <label for="isSpecial" class="col-sm-2 col-form-label text-sm-right">Images</label>
-                    <div class="col-xs-12 col-sm-8">
-                        <input type="file" 
-                            id="filepond"
-                            class="filepond"
-                            name="images" 
-                            multiple 
-                            data-allow-reorder="true"
-                            data-max-file-size="3MB"
-                            data-max-files="3">
-                    </div>
-                </div>
-                
-                <div class="form-group row">
-                    <label for="image" class="col-sm-2 col-form-label text-sm-right">Image</label>
-                    <div class="col-xs-12 col-sm-8">
-                        <input type="file" name="image" class="form-control form-control-sm" id="imgInp" />
-                        <img id="blah" src="/uploads<%= folderImage%><%= item.image %>" alt="" class="img-thumbnail mt-1 " width="200px" height="200px" />
-                        <input type="hidden" name="old_image" value="<%= item.image %>">                
-                    </div>
-                </div> -->
-
-                <!-- <div class="form-group row">
-                    <label for="images" class="col-sm-2 col-form-label text-sm-right">Images</label>
-                    <div class="col-xs-12 col-sm-8">
-                        <input type="file" 
-                            id="filepond-images"
-                            name="images[]" 
-                            class="filepond"
-                            multiple 
-                            data-max-file-size="3MB"
-                            data-max-files="3">
-                    </div>
-                </div>
-                
-                <div class="form-group row">
-                    <label for="image" class="col-sm-2 col-form-label text-sm-right">Image</label>
-                    <div class="col-xs-12 col-sm-8">
-                        <input type="file" 
-                            id="filepond-image"
-                            name="image" 
-                            class="filepond">
-                        <img id="image-preview" src="/uploads<%= folderImage %><%= item.image %>" alt="" class="img-thumbnail mt-1" width="200px" height="200px" />
-                    </div>
-                </div> -->
-
                 <!-- Image Upload Field for Main Image -->
                 <div class="form-group row">
-                    <label for="image" class="col-sm-2 col-form-label text-sm-right">Main Image</label>
-                    <div class="col-xs-12 col-sm-8">
-                        <input type="file" name="image" class="form-control form-control-sm" id="image-input" />
-                        <% if (item.image) { %>
-                            <div id="mainImageContainer">
-                                <img id="main-image-preview" src="<%= item.image %>" alt="Product Main Image"
-                                    style="max-width: 100px; max-height: 100px;" />
-                            </div>
-                            <% } else { %>
-                                <div id="main-image-preview"></div>
-                            <% } %>
+                    <label for="image" class="col-sm-2 col-form-label text-sm-right">Image</label>
+                    <div class="col-xs-12 col-sm-8" upload-image>
+                        <input type="file" name="image" class="form-control-file form-control-sm"  upload-image-input/>
+                        <img src="/uploads<%= folderImage%><%= item.image %>" alt="" class="img-preview" upload-image-preview/>
                     </div>
                 </div>
                 

@@ -17,7 +17,7 @@ const linkPrefix = `/admin/${nameController}`
 const folderImage = '/products'
 const path = require('path')
 const fs = require('fs');
-const { data } = require("jquery");
+
 
 
 class ProductController {
@@ -47,13 +47,7 @@ class ProductController {
   getForm = async (req, res, next) => {
     let title = "Add - Form";
     const {id} = req.params
-    const item = req.params.id ? await MainService.findId(id) : {
-      name: 'dat',
-      status: 'active', // Giá trị mặc định là active
-      ordering: 1,
-      price: 100,
-      detail: 'heloo' 
-    };
+    const item = req.params.id ? await MainService.findId(id) : {status: "active"};
     
     const categories = await CategoryService.getAllItems()
     if (id) title = "Edit - Form";
