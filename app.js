@@ -2,19 +2,24 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
-
+const flash = require('express-flash');
+const session = require('express-session')
 
 var expressLayouts = require('express-ejs-layouts');
 var MainDB = require('./src/apps/database/init_main_db');
 
-// const flash = require('connect-flash');
-// const session = require('express-session');
-
-
 MainDB.connection();
-
 var app = express();
 
+app.use(express.urlencoded({ extended: true }));
+
+// Configure session and flash middleware
+app.use(session({
+    secret: 'your-secret-key',
+    resave: false,
+    saveUninitialized: true
+}));
+app.use(flash());
 
 
 // view engine setup
@@ -29,7 +34,6 @@ __pathImage = __dirname + '/public/uploads'
 app.use('/uploads', express.static(path.join(__dirname, '/public/uploads')));
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 

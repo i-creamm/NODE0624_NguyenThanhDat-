@@ -20,6 +20,20 @@ const productSchema = new Schema({
     type: Number, 
     min: 0 
   },
+  type_discount: {
+    type: String,
+    enum: ['%', 'price'],
+    default: '%'
+  },
+  discount: { 
+    type: Number, 
+    min: 0,
+    max: 100,
+  },
+  price_discount: { 
+    type: Number, 
+    min: 0 
+  },
   description: {
      type: String 
   },

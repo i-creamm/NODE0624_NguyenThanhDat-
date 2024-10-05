@@ -1,6 +1,5 @@
 const MainService = require("../../services/product_service");
 const CategoryService = require("../../services/category_service");
-const mongoose = require('mongoose')
 
 const {generateCountStatus, generatePagination} = require('../../utils/helper')
 const { ItemValidate } = require("../../validation/item_validates");
@@ -17,6 +16,7 @@ const linkPrefix = `/admin/${nameController}`
 const folderImage = '/products'
 const path = require('path')
 const fs = require('fs');
+const { set } = require("mongoose");
 
 
 
@@ -47,7 +47,7 @@ class ProductController {
   getForm = async (req, res, next) => {
     let title = "Add - Form";
     const {id} = req.params
-    const item = req.params.id ? await MainService.findId(id) : {status: "active"};
+    const item = req.params.id ? await MainService.findId(id) : {};
     
     const categories = await CategoryService.getAllItems()
     if (id) title = "Edit - Form";
@@ -123,6 +123,20 @@ class ProductController {
       const errors = validationResult(req);
       const item = id ? await MainService.findId(id) : {};
 
+      //calc
+
+      if (req.body.type_discount === '%') {
+        req.body.price_discount = 0
+        req.body.price_discount = req.body.price - (req.body.price * (req.body.discount / 100));
+      } else if (req.body.type_discount === 'price') {
+        req.body.discount = 0;
+        req.body.discount = Math.round(((req.body.price - req.body.price_discount) * 100) / req.body.price, 2) 
+      } else {
+        return res.status(400).json({ message: 'Loại chiết khấu không hợp lệ.' });
+      }
+
+      //end calc
+
       req.body.isSpecial = req.body.isSpecial === 'on';
       req.body.newProduct = req.body.newProduct === 'on';
 
@@ -134,8 +148,6 @@ class ProductController {
         });
       }
 
-      // console.log('Files:', req.files); // Kiểm tra các tệp tin đã được tải lên
-  
       if (req.files) {
         if (req.files['image']) {
           req.body.image = req.files['image'][0].filename;
@@ -148,9 +160,11 @@ class ProductController {
 
       if (!id) {
         await MainService.save(req.body);
+        req.flash("success", "added successfully")
       } else {
-        const updateItem = { name, ordering, status, image, images, isSpecial, newProduct, price, detail, idCategory };
-        const { name, ordering, status, image, images, isSpecial, newProduct, price, detail, idCategory } = req.body;
+        const {name, ordering, status, image, images, isSpecial, newProduct, price, discount, type_discount, price_discount, detail, idCategory } = req.body;
+        const updateItem = {name, ordering, status, image, images, isSpecial, newProduct, price, discount, type_discount, price_discount, detail, idCategory };
+
         if (req.files['image'] && item.image) {
           const imagePath = path.join(`public/uploads${folderImage}`, item.image.replace(`/uploads`, ""));
           fs.unlink(imagePath, (err) => {

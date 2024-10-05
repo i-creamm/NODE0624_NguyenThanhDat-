@@ -3,8 +3,8 @@
         <div class="container">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="index.html"><i class="icon-home"></i></a></li>
-                <li class="breadcrumb-item"><a href="#">Electronics</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Headsets</li>
+                <li class="breadcrumb-item"><a href="#">category</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><%= products.idCategory.name%></li>
             </ol>
         </div><!-- End .container -->
     </nav>
@@ -25,7 +25,7 @@
                                     <div class="zoomContainer" style="-webkit-transform: translateZ(0);position:absolute;left:0px;top:0px;height:470.038px;width:470.038px;"><div class="zoomWindowContainer" style="width: 400px;"><div style="z-index: 999; overflow: hidden; margin-left: 0px; margin-top: 0px; background-position: 0px 0px; width: 470.038px; height: 470.038px; float: left; display: none; cursor: grab; background-repeat: no-repeat; position: absolute; background-image: url(&quot;/frontend/assets/images/products/zoom/product-3-big.jpg&quot;);" class="zoomWindow">&nbsp;</div></div></div></div></div><div class="owl-item cloned" style="width: 470.038px;"><div class="product-item">
                                         <img class="product-single-image" src="/frontend/assets/images/products/zoom/product-4.jpg" data-zoom-image="/frontend/assets/images/products/zoom/product-4-big.jpg">
                                     <div class="zoomContainer" style="-webkit-transform: translateZ(0);position:absolute;left:0px;top:0px;height:470.038px;width:470.038px;"><div class="zoomWindowContainer" style="width: 400px;"><div style="z-index: 999; overflow: hidden; margin-left: 0px; margin-top: 0px; background-position: 0px 0px; width: 470.038px; height: 470.038px; float: left; display: none; cursor: grab; background-repeat: no-repeat; position: absolute; background-image: url(&quot;/frontend/assets/images/products/zoom/product-4-big.jpg&quot;);" class="zoomWindow">&nbsp;</div></div></div></div></div><div class="owl-item active" style="width: 470.038px;"><div class="product-item">
-                                        <img class="product-single-image" src="/uploads/products/<%= detail.image%>" data-zoom-image="/uploads/products/<%= detail.image%>">
+                                        <img class="product-single-image" src="/uploads/products/<%= products.image%>" data-zoom-image="/uploads/products/<%= products.image%>">
                                     <div class="zoomContainer" style="-webkit-transform: translateZ(0);position:absolute;left:0px;top:0px;height:470.038px;width:470.038px;"><div class="zoomWindowContainer" style="width: 400px;"><div style="z-index: 999; overflow: hidden; margin-left: 0px; margin-top: 0px; background-position: -262.856px -329.962px; width: 470.038px; height: 470.038px; float: left; cursor: grab; background-repeat: no-repeat; position: absolute; background-image: url(&quot;/frontend/assets/images/products/zoom/product-1-big.jpg&quot;); top: 0px; left: 0px; display: none;" class="zoomWindow">&nbsp;</div></div></div></div></div><div class="owl-item" style="width: 470.038px;"><div class="product-item">
                                         <img class="product-single-image" src="/frontend/assets/images/products/zoom/product-2.jpg" data-zoom-image="/frontend/assets/images/products/zoom/product-2-big.jpg">
                                     <div class="zoomContainer" style="-webkit-transform: translateZ(0);position:absolute;left:0px;top:0px;height:470.038px;width:470.038px;"><div class="zoomWindowContainer" style="width: 400px;"><div style="z-index: 999; overflow: hidden; margin-left: 0px; margin-top: 0px; background-position: 0px 0px; width: 470.038px; height: 470.038px; float: left; display: none; cursor: grab; background-repeat: no-repeat; position: absolute; background-image: url(&quot;/frontend/assets/images/products/zoom/product-2-big.jpg&quot;);" class="zoomWindow">&nbsp;</div></div></div></div></div><div class="owl-item" style="width: 470.038px;"><div class="product-item">
@@ -44,7 +44,7 @@
                             </div>
                             <div class="prod-thumbnail row owl-dots" id="carousel-custom-dots">
                                 <div class="col-3 owl-dot active">
-                                    <img src="/uploads/products/<%= detail.image%>">
+                                    <img src="/uploads/products/<%= products.image%>">
                                 </div>
                                 <div class="col-3 owl-dot">
                                     <img src="/frontend/assets/images/products/zoom/product-2.jpg">
@@ -60,7 +60,7 @@
 
                         <div class="col-lg-5 col-md-6">
                             <div class="product-single-details">
-                                <h1 class="product-title"><%= detail.name%></h1>
+                                <h1 class="product-title"><%= products.name%></h1>
 
                                 <div class="ratings-container">
                                     <div class="product-ratings">
@@ -71,15 +71,11 @@
                                 </div><!-- End .product-container -->
 
                                 <div class="price-box">
-                                    <span class="old-price">$81.00</span>
-                                    <span class="product-price">$<%= detail.price%></span>
+                                    <span class="old-price"><%= products.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) %></span>
+                                    <span class="product-price"><%= products.price_discount.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) %></span>
                                 </div><!-- End .price-box -->
 
-                                <div class="product-desc">
-                                    <%- detail.detail%>
-                                </div><!-- End .product-desc -->
-
-                                <div class="product-filters-container">
+                                <!-- <div class="product-filters-container">
                                     <div class="product-single-filter">
                                         <label>Colors:</label>
                                         <ul class="config-swatch-list">
@@ -96,8 +92,8 @@
                                                 <a href="#" style="background-color: #11426b;"></a>
                                             </li>
                                         </ul>
-                                    </div><!-- End .product-single-filter -->
-                                </div><!-- End .product-filters-container -->
+                                    </div>
+                                </div> -->
 
                                 <div class="product-action product-all-icons">
                                     <div class="product-single-qty">
@@ -140,13 +136,7 @@
                     <div class="tab-content">
                         <div class="tab-pane fade show active" id="product-desc-content" role="tabpanel" aria-labelledby="product-tab-desc">
                             <div class="product-desc-content">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat.</p>
-                                <ul>
-                                    <li><i class="icon-ok"></i>Any Product types that You want - Simple, Configurable</li>
-                                    <li><i class="icon-ok"></i>Downloadable/Digital Products, Virtual Products</li>
-                                    <li><i class="icon-ok"></i>Inventory Management with Backordered items</li>
-                                </ul>
-                                <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, <br>quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+                                <%- products.detail%>
                             </div><!-- End .product-desc-content -->
                         </div><!-- End .tab-pane -->
 
@@ -294,13 +284,13 @@
                         </ul>
                     </div><!-- End .widget -->
 
-                    <div class="widget widget-banner">
+                    <!-- <div class="widget widget-banner">
                         <div class="banner banner-image">
                             <a href="#">
                                 <img src="/frontend/assets/images/banners/banner-sidebar.jpg" alt="Banner Desc">
                             </a>
-                        </div><!-- End .banner -->
-                    </div><!-- End .widget -->
+                        </div>
+                    </div> -->
 
                     <div class="widget widget-featured">
                         <h3 class="widget-title">Featured Products</h3>
@@ -702,190 +692,3 @@
         </div><!-- End .row -->
     </div><!-- End .container -->
 
-    <div class="featured-section">
-        <div class="container">
-            <h2 class="carousel-title">Featured Products</h2>
-
-            <div class="featured-products owl-carousel owl-theme owl-dots-top owl-loaded owl-drag">
-                <!-- End .product -->
-
-                <!-- End .product -->
-
-                <!-- End .product -->
-
-                <!-- End .product -->
-
-                <!-- End .product -->
-            <div class="owl-stage-outer"><div class="owl-stage" style="transform: translate3d(0px, 0px, 0px); transition: all 0s ease 0s; width: 1500px;"><div class="owl-item active" style="width: 270px; margin-right: 30px;"><div class="product">
-                    <figure class="product-image-container">
-                        <a href="product.html" class="product-image">
-                            <img src="/frontend/assets/images/products/product-1.jpg" alt="product">
-                        </a>
-                        <a href="ajax/product-quick-view.html" class="btn-quickview">Quick View</a>
-                    </figure>
-                    <div class="product-details">
-                        <div class="ratings-container">
-                            <div class="product-ratings">
-                                <span class="ratings" style="width:80%"></span><!-- End .ratings -->
-                            </div><!-- End .product-ratings -->
-                        </div><!-- End .product-container -->
-                        <h2 class="product-title">
-                            <a href="product.html">Brown Watch</a>
-                        </h2>
-                        <div class="price-box">
-                            <span class="product-price">$189.00</span>
-                        </div><!-- End .price-box -->
-
-                        <div class="product-action">
-                            <a href="#" class="paction add-wishlist" title="Add to Wishlist">
-                                <span>Add to Wishlist</span>
-                            </a>
-
-                            <a href="product.html" class="paction add-cart" title="Add to Cart">
-                                <span>Add to Cart</span>
-                            </a>
-
-                            <a href="#" class="paction add-compare" title="Add to Compare">
-                                <span>Add to Compare</span>
-                            </a>
-                        </div><!-- End .product-action -->
-                    </div><!-- End .product-details -->
-                </div></div><div class="owl-item active" style="width: 270px; margin-right: 30px;"><div class="product">
-                    <figure class="product-image-container">
-                        <a href="product.html" class="product-image">
-                            <img src="/frontend/assets/images/products/product-2.jpg" alt="product">
-                        </a>
-                        <a href="ajax/product-quick-view.html" class="btn-quickview">Quick View</a>
-                    </figure>
-                    <div class="product-details">
-                        <div class="ratings-container">
-                            <div class="product-ratings">
-                                <span class="ratings" style="width:100%"></span><!-- End .ratings -->
-                            </div><!-- End .product-ratings -->
-                        </div><!-- End .product-container -->
-                        <h2 class="product-title">
-                            <a href="product.html">Black Watch</a>
-                        </h2>
-                        <div class="price-box">
-                            <span class="product-price">$55.00</span>
-                        </div><!-- End .price-box -->
-
-                        <div class="product-action">
-                            <a href="#" class="paction add-wishlist" title="Add to Wishlist">
-                                <span>Add to Wishlist</span>
-                            </a>
-
-                            <a href="product.html" class="paction add-cart" title="Add to Cart">
-                                <span>Add to Cart</span>
-                            </a>
-
-                            <a href="#" class="paction add-compare" title="Add to Compare">
-                                <span>Add to Compare</span>
-                            </a>
-                        </div><!-- End .product-action -->
-                    </div><!-- End .product-details -->
-                </div></div><div class="owl-item active" style="width: 270px; margin-right: 30px;"><div class="product">
-                    <figure class="product-image-container">
-                        <a href="product.html" class="product-image">
-                            <img src="/frontend/assets/images/products/product-3.jpg" alt="product">
-                        </a>
-                        <a href="ajax/product-quick-view.html" class="btn-quickview">Quick View</a>
-                    </figure>
-                    <div class="product-details">
-                        <div class="ratings-container">
-                            <div class="product-ratings">
-                                <span class="ratings" style="width:40%"></span><!-- End .ratings -->
-                            </div><!-- End .product-ratings -->
-                        </div><!-- End .product-container -->
-                        <h2 class="product-title">
-                            <a href="product.html">Computer Mouse</a>
-                        </h2>
-                        <div class="price-box">
-                            <span class="product-price">$31.00</span>
-                        </div><!-- End .price-box -->
-
-                        <div class="product-action">
-                            <a href="#" class="paction add-wishlist" title="Add to Wishlist">
-                                <span>Add to Wishlist</span>
-                            </a>
-
-                            <a href="product.html" class="paction add-cart" title="Add to Cart">
-                                <span>Add to Cart</span>
-                            </a>
-
-                            <a href="#" class="paction add-compare" title="Add to Compare">
-                                <span>Add to Compare</span>
-                            </a>
-                        </div><!-- End .product-action -->
-                    </div><!-- End .product-details -->
-                </div></div><div class="owl-item active" style="width: 270px; margin-right: 30px;"><div class="product">
-                    <figure class="product-image-container">
-                        <a href="product.html" class="product-image">
-                            <img src="/frontend/assets/images/products/product-4.jpg" alt="product">
-                        </a>
-                        <a href="ajax/product-quick-view.html" class="btn-quickview">Quick View</a>
-                    </figure>
-                    <div class="product-details">
-                        <div class="ratings-container">
-                            <div class="product-ratings">
-                                <span class="ratings" style="width:0%"></span><!-- End .ratings -->
-                            </div><!-- End .product-ratings -->
-                        </div><!-- End .product-container -->
-                        <h2 class="product-title">
-                            <a href="product.html">Phillips</a>
-                        </h2>
-                        <div class="price-box">
-                            <span class="product-price">$335.00</span>
-                        </div><!-- End .price-box -->
-
-                        <div class="product-action">
-                            <a href="#" class="paction add-wishlist" title="Add to Wishlist">
-                                <span>Add to Wishlist</span>
-                            </a>
-
-                            <a href="product.html" class="paction add-cart" title="Add to Cart">
-                                <span>Add to Cart</span>
-                            </a>
-
-                            <a href="#" class="paction add-compare" title="Add to Compare">
-                                <span>Add to Compare</span>
-                            </a>
-                        </div><!-- End .product-action -->
-                    </div><!-- End .product-details -->
-                </div></div><div class="owl-item" style="width: 270px; margin-right: 30px;"><div class="product">
-                    <figure class="product-image-container">
-                        <a href="product.html" class="product-image">
-                            <img src="/frontend/assets/images/products/product-5.jpg" alt="product">
-                        </a>
-                        <a href="ajax/product-quick-view.html" class="btn-quickview">Quick View</a>
-                    </figure>
-                    <div class="product-details">
-                        <div class="ratings-container">
-                            <div class="product-ratings">
-                                <span class="ratings" style="width:50%"></span><!-- End .ratings -->
-                            </div><!-- End .product-ratings -->
-                        </div><!-- End .product-container -->
-                        <h2 class="product-title">
-                            <a href="product.html">Skullcanddy</a>
-                        </h2>
-                        <div class="price-box">
-                            <span class="product-price">$60.00</span>
-                        </div><!-- End .price-box -->
-
-                        <div class="product-action">
-                            <a href="#" class="paction add-wishlist" title="Add to Wishlist">
-                                <span>Add to Wishlist</span>
-                            </a>
-
-                            <a href="product.html" class="paction add-cart" title="Add to Cart">
-                                <span>Add to Cart</span>
-                            </a>
-
-                            <a href="#" class="paction add-compare" title="Add to Compare">
-                                <span>Add to Compare</span>
-                            </a>
-                        </div><!-- End .product-action -->
-                    </div><!-- End .product-details -->
-                </div></div></div></div><div class="owl-nav disabled"><button type="button" role="presentation" class="owl-prev"><i class="icon-left-open-big"></i></button><button type="button" role="presentation" class="owl-next"><i class="icon-right-open-big"></i></button></div><div class="owl-dots"><button role="button" class="owl-dot active"><span></span></button><button role="button" class="owl-dot"><span></span></button></div></div><!-- End .featured-proucts -->
-        </div><!-- End .container -->
-    </div><!-- End .featured-section -->

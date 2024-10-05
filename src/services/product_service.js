@@ -23,11 +23,12 @@ class ProductService {
     //     })
     // }
 
-    save = async ( { name, ordering, status, image, images, isSpecial, newProduct, price, detail, idCategory}) => {
+    save = async ( { name, ordering, status, image, images, isSpecial, newProduct, price, discount, type_discount, price_discount, detail, idCategory}) => {
            
         const data = await MainModel.create({
-            name, ordering, status, image, images, isSpecial, newProduct,  price, detail, idCategory: idCategory
+            name, ordering, status, image, images, isSpecial, newProduct,  price, discount, type_discount, price_discount, detail, idCategory: idCategory
         })
+
         return data
     }
 
@@ -89,10 +90,6 @@ class ProductService {
 
     findProductWithStatus = async () => {
         return await MainModel.find({status: 'active'}).sort({ordering: 1})
-    }
-
-    findOneProuductWithDetail = async () => {
-        return await MainModel.findOne()
     }
 
 

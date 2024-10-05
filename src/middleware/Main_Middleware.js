@@ -55,19 +55,8 @@ const SettingService = require('../services/setting_service')
         }
     }
 
-    const detailProduct = async (req, res, next) => {
-        try {
-            const detail = await ProductService.findOneProuductWithDetail()
-            res.locals.detail = detail
-            next()
-        } catch (error) {
-            next(error)
-        }
-    }
-
 module.exports = {
     fetchMenusAndCategories,
     fetchSlider,
     fetchProductWithSpecial,
-    detailProduct
 }

@@ -64,7 +64,8 @@
                                     <a href="/<%= special.slug%>"><%= special.name%></a>
                                 </h2>
                                 <div class="price-box">
-                                    <span class="product-price">$<%= special.price%></span>
+                                    <!-- <span class="old-price"><%= special.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) %></span> -->
+                                    <span class="product-price"><%= special.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) %></span>
                                 </div><!-- End .price-box -->
     
                                 <div class="product-action">
@@ -97,7 +98,7 @@
                                     <img src="/uploads/products/<%= e.image %>" alt="product">
                                 </a>
                                 <a href="/frontend/ajax/product-quick-view.html" class="btn-quickview">Quick View</a>
-                                <span class="product-label label-sale">-20%</span>
+                                <span class="product-label label-sale">-<%= e.discount %>%</span>
                                 <span class="product-label label-hot">New</span>
                             </figure>
                             <div class="product-details">
@@ -110,8 +111,8 @@
                                     <a href="/<%= e.slug %>"><%= e.name %></a>
                                 </h2>
                                 <div class="price-box">
-                                    <span class="old-price">$60.00</span>
-                                    <span class="product-price">$<%= e.price %></span>
+                                    <span class="old-price"><%= e.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) %></span>
+                                    <span class="product-price"><%= e.price_discount.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) %></span>
                                 </div><!-- End .price-box -->
     
                                 <div class="product-action">

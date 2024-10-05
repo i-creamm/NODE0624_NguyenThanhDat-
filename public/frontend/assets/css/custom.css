@@ -5,6 +5,13 @@
     object-fit: contain;
 }
 
+.product-image-cart img {
+  display: block;
+  height: 67px;
+  width: 80px;
+  object-fit: contain;
+}
+
 img {
     display: block;
     max-width: 100%;

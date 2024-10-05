@@ -74,7 +74,7 @@
                                     <a href="/<%= product.slug%>"><%= product.name%></a>
                                 </h2>
                                 <div class="price-box">
-                                    <span class="product-price">$<%= product.price%></span>
+                                    <span class="product-price"><%= product.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) %></span>
                                 </div><!-- End .price-box -->
     
                                 <div class="product-action">
