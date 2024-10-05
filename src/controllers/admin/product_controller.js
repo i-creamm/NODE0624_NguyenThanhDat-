@@ -158,8 +158,10 @@ class ProductController {
         }
       }
 
+
+      let dataAdd;
       if (!id) {
-        await MainService.save(req.body);
+        dataAdd = await MainService.save(req.body);
         req.flash("success", "added successfully")
       } else {
         const {name, ordering, status, image, images, isSpecial, newProduct, price, discount, type_discount, price_discount, detail, idCategory } = req.body;
@@ -176,6 +178,17 @@ class ProductController {
   
         await MainService.editById(id, updateItem);
       }
+
+      if(!fs.existsSync(`public/uploads${folderImage}/${id ? id : dataAdd.id}`)) {
+        fs.mkdirSync(`public/uploads${folderImage}/${id ? id : dataAdd.id}`)
+      }
+      if(req.files.image) {
+        fs.rename(`public/uploads${folderImage}/${req.files.image[0].filename}`, `public/uploads${folderImage}/${id ? id : dataAdd.id}/${req.files.image[0].filename}` , (e) =>  {
+          console.log('succ')
+        })
+      }
+
+
       res.redirect(`${linkPrefix}`);
     })
   ];

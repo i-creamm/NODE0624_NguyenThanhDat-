@@ -69,6 +69,8 @@ class CategoryController {
       const updateItem = { name, ordering, status, idMenu}
       await MainService.editById(id, updateItem);
     }
+    req.flash('info', 'them moi thanh cong');
+
     res.redirect(`${linkPrefix}`);
   };
 

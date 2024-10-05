@@ -2,6 +2,15 @@
 <%- include('../../helpers/render_pagination.ejs') %>
 <% const collection = 'category' ; const linkPrefix = `/admin/${collection}/`%>
 
+<% 
+	console.log(messages)
+
+%>
+
+<% if(messages?.info) { %>
+	<h1><%= messages.info[0] %></h1>
+<% } %>
+
 <div class="row mb-2">
     <div class="col-sm-6">
         <h1 class="m-0">Danh mục sản phẩm</h1>
