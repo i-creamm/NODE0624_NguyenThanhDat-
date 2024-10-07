@@ -3,9 +3,11 @@ var router = express.Router();
 const ProductService = require('../../services/product_service');
 const CategoryService = require('../../services/category_service');
 const {fetchSlider, fetchProductWithSpecial} = require('../../middleware/Main_Middleware')
+const {cartId} = require('../../middleware/frontend/cart_middleware')
 
 router.use(fetchSlider);
 router.use(fetchProductWithSpecial);
+router.use(cartId);
 
 router.get('/:slug', async (req , res , next) => {
     const { slug } = req.params

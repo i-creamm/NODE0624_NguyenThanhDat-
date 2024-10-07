@@ -1,8 +1,10 @@
 <%- include('../../helpers/render_status.ejs') %>
 <%- include('../../helpers/render_pagination.ejs') %>
-
+<%- include('../../helpers/render_alert.ejs') %>
 
 <% const collection = 'product' ; const linkPrefix = `/admin/${collection}/`; const folderImage = '/products/' %>
+
+<%- alertSuccess(messages, 2000)%>
 
 <div class="row mb-2">
     <div class="col-sm-6">

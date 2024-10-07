@@ -16,7 +16,7 @@ const linkPrefix = `/admin/${nameController}`
 const folderImage = '/products'
 const path = require('path')
 const fs = require('fs');
-const { set } = require("mongoose");
+
 
 
 
@@ -80,42 +80,6 @@ class ProductController {
     res.redirect(`${linkPrefix}`);
   }
 
-  //save info form (Add or Edit)
-  // saveForm = [uploadImage ,
-  //   asyncHandle( async (req, res, next) => {
-
-  //   const { id } = req.params;
-  //   await ItemValidate(req);
-  //   const errors = validationResult(req);
-  //   const item = id ? await MainService.findId(id) : {};
-
-  //   if (!errors.isEmpty()) {
-  //     return res.render(`admin/pages/${nameController}/form`, { item, title: id ? "Edit - Form" : "Add - Form", alert: errors.array()});
-  //   }
-
-  //   if (req.file) {
-  //     req.body.image = req.file.filename;
-  //   }
-    
-  //   if (!id) {
-  //     await MainService.save(req.body)
-  //   } else {
-  //     const {name, ordering, status, image , price, detail, idCategory} = req.body;
-  //     const updateItem = { name, ordering, status, image , price, detail, idCategory};
-
-  //     if (req.file && item.image) {
-  //       const imagePath = path.join(`public/uploads${folderImage}`, item.image.replace(`/uploads`, ""))
-  //       fs.unlink(imagePath, (err) => {
-  //         if (err) {
-  //           console.error("Error deleting image:", err);
-  //         }
-  //       })
-  //     }
-  //     await MainService.editById(id, updateItem);
-  //   }
-  //   res.redirect(`${linkPrefix}`);
-  // })];
-
   saveForm = [uploadFiles,
     asyncHandle(async (req, res, next) => {
       const { id } = req.params;
@@ -132,6 +96,8 @@ class ProductController {
         req.body.discount = 0;
         req.body.discount = Math.round(((req.body.price - req.body.price_discount) * 100) / req.body.price, 2) 
       } else {
+        req.body.price_discount = 0
+        req.body.price_discount = 0
         return res.status(400).json({ message: 'Loại chiết khấu không hợp lệ.' });
       }
 
@@ -177,16 +143,17 @@ class ProductController {
         }
   
         await MainService.editById(id, updateItem);
+        req.flash("success", "edited successfully")
       }
 
-      if(!fs.existsSync(`public/uploads${folderImage}/${id ? id : dataAdd.id}`)) {
-        fs.mkdirSync(`public/uploads${folderImage}/${id ? id : dataAdd.id}`)
-      }
-      if(req.files.image) {
-        fs.rename(`public/uploads${folderImage}/${req.files.image[0].filename}`, `public/uploads${folderImage}/${id ? id : dataAdd.id}/${req.files.image[0].filename}` , (e) =>  {
-          console.log('succ')
-        })
-      }
+      // if(!fs.existsSync(`public/uploads${folderImage}/${id ? id : dataAdd.id}`)) {
+      //   fs.mkdirSync(`public/uploads${folderImage}/${id ? id : dataAdd.id}`)
+      // }
+      // if(req.files.image) {
+      //   fs.rename(`public/uploads${folderImage}/${req.files.image[0].filename}`, `public/uploads${folderImage}/${id ? id : dataAdd.id}/${req.files.image[0].filename}` , (e) =>  {
+      //     console.log('succ')
+      //   })
+      // }
 
 
       res.redirect(`${linkPrefix}`);

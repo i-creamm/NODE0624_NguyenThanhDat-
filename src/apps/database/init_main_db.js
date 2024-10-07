@@ -1,5 +1,6 @@
 const { default: mongoose } = require("mongoose");
 
+
 class MainDB{
     // connection(){
     //     mongoose.connect('mongodb+srv://ntdat3120411046:gcqk3jxjcBnuyqoW@project.ruflakt.mongodb.net/test').then(() => {

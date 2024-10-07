@@ -1,4 +1,5 @@
 
+
 const clickToDeleteId = (url) => {
     Swal.fire({
         title: "Are you sure?",
@@ -160,6 +161,17 @@ $(document).ready(function () {
         });
     });
 
+    setTimeout(() => {
+        var alert = document.querySelector('.alert[show-alert]');
+        if (alert) {
+            alert.style.display = 'none';
+        }
+    }, 2000);
+    
+    document.querySelector('.close-alert').addEventListener('click', function() {
+        var alert = this.parentElement;
+        alert.style.display = 'none';
+    });
 });
 
 
