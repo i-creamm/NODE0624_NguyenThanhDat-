@@ -16,13 +16,6 @@ class ProductService {
         return await MainModel.find(query).skip(pageSkip).limit(pageLimit).sort({'createdAt': -1}).populate('idCategory')
     }
 
-    // save = async ( { name, ordering, status, image , price, detail, isSpecial, idCategory }) => {
-
-    //     return await MainModel.create({
-    //         name, ordering, status, image , price, detail, isSpecial, idCategory: idCategory
-    //     })
-    // }
-
     save = async ( { name, ordering, status, image, images, isSpecial, newProduct, price, discount, type_discount, price_discount, detail, idCategory}) => {
            
         const data = await MainModel.create({

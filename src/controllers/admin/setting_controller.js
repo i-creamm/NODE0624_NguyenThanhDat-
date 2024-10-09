@@ -35,6 +35,7 @@ class SettingController {
     }
 
     await MainService.update(JSON.stringify(req.body))
+    req.flash("success", "Updated Content Settings")
     res.redirect('/admin/setting')
   })]
 }

@@ -5,6 +5,7 @@ const CategoryService = require('../../services/category_service');
 const {fetchSlider, fetchProductWithSpecial} = require('../../middleware/Main_Middleware')
 const {cartId} = require('../../middleware/frontend/cart_middleware')
 
+
 router.use(fetchSlider);
 router.use(fetchProductWithSpecial);
 router.use(cartId);
