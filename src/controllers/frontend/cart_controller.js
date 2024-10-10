@@ -1,9 +1,9 @@
-
 const Cart = require('../../models/cart_model')
 const ProductModel = require('../../models/product_model')
 
 
 class CartController {
+
     addCart = async (req, res, next) => {
 
         const productId = req.params.productId
@@ -57,18 +57,56 @@ class CartController {
                 const productId = item.product_id
                 const productInfo = await ProductModel.findOne({
                     _id: productId
-                }).select("name image slug price_discount discount")
+                }).select("name image slug price discount")
+
+                productInfo.priceNew = ((productInfo.price * (100 - productInfo.discount)) / 100)
+
                 item.productInfo = productInfo
 
-                item.totalPrice = productInfo.price_discount * item.quantity
+
+                item.totalPrice = productInfo.priceNew * item.quantity
             }
         }
 
+        cart.totalPrice = cart.products.reduce((sum, item) => sum + item.totalPrice, 0)
 
         res.render('frontend/pages/cart/index',{
             cartDetail: cart, 
-            layout: "frontend"
+            layout: "frontend",
         })
+    }
+
+    deleteProductInCart = async (req, res, next) => {
+        const cartId = req.cookies.cartId
+        const productId = req.params.productId
+
+        await Cart.updateOne({
+            _id: cartId
+        },
+        {
+            $pull: {products: {product_id: productId}}
+        })
+
+        req.flash("success", "delete thanh cong")
+
+        res.redirect("back")
+    }
+
+    updateProductInCart = async (req, res, next) => {
+        const cartId = req.cookies.cartId
+        const productId = req.params.productId
+        const quantity = req.params.quantity
+
+        await Cart.updateOne({
+            _id: cartId,
+            "products.product_id": productId
+        },
+        {
+            $set: {
+                "products.$.quantity": quantity
+            }
+        })
+        res.redirect("back")
     }
 }
 

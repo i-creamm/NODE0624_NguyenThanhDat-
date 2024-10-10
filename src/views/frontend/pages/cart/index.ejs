@@ -17,7 +17,7 @@
                         <tr>
                             <th class="product-col">Product</th>
                             <th class="price-col">Price</th>
-                            <th class="qty-col">Qty</th>
+                            <th>Qty</th>
                             <th>Subtotal</th>
                         </tr>
                     </thead>
@@ -35,15 +35,11 @@
                                             <a href="/<%= item.productInfo.slug %>"><%= item.productInfo.name %></a>
                                         </h2>
                                     </td>
-                                    <td><%= item.productInfo.price_discount.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) %></td>
+                                    <td><%= item.productInfo.priceNew.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) || 0 %></td>
                                     <td>
-                                        <div class="product-single-qty">
-                                            <div class="input-group bootstrap-touchspin bootstrap-touchspin-injected">
-                                                <input class="horizontal-quantity form-control" type="text" name="quantity" value="<%= item.quantity %>" item-id="<%= item.product_id %>">
-                                            </div>
-                                        </div>
+                                        <input class="text-center" type="number" name="quantity" value="<%= item.quantity %>" item-id="<%= item.product_id %>" style="width: 60px;">
                                     </td>
-                                    <td><%= item.totalPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) %></td>
+                                    <td><%= item.totalPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) || 0%></td>
                                 </tr>
                                 <tr class="product-action-row">
                                     <td colspan="4" class="clearfix">
@@ -54,7 +50,7 @@
                                         <div class="float-right">
                                             <a href="#" title="Edit product" class="btn-edit"><span
                                                     class="sr-only">Edit</span><i class="icon-pencil"></i></a>
-                                            <a href="#" title="Remove product" class="btn-remove"><span
+                                            <a href="/cart/delete/<%= item.product_id %>" title="Remove product" class="btn-remove"><span
                                                     class="sr-only">Remove</span></a>
                                         </div><!-- End .float-right -->
                                     </td>
@@ -168,7 +164,7 @@
                     <tfoot>
                         <tr>
                             <td>Order Total</td>
-                            <td><%= cartDetail.totalPrice%></td>
+                            <td><%= cartDetail.totalPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) || 0%></td>
                         </tr>
                     </tfoot>
                 </table>

@@ -121,13 +121,13 @@
 
                 <div class="dropdown cart-dropdown">
                     <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
-                        <span class="cart-count"><%= miniCart.totalQuantity || 0 %></span>
+                        <span class="cart-count"><%= miniCart.totalQuantity ? miniCart.totalQuantity : 0 %></span>
                     </a>
 
                     <div class="dropdown-menu" >
                         <div class="dropdownmenu-wrapper">
                             <div class="dropdown-cart-header">
-                                <span><%= miniCart.totalQuantity || 0 %> Items</span>
+                                <span><%= miniCart.totalQuantity ? miniCart.totalQuantity : 0 %> Items</span>
 
                                 <a href="/cart/view">View Cart</a>
                             </div><!-- End .dropdown-cart-header -->

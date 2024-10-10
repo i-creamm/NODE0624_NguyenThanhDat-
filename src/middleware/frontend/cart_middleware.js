@@ -6,7 +6,7 @@ const cartId = async (req, res, next) => {
     if(!cartId){
         const cart =  new Cart()
         await cart.save()
-        const expiresCookie = 60 * 60 * 1000 
+        const expiresCookie =   12 * 24 * 60 * 60 * 1000 
         res.cookie('cartId', cart.id, {
             expires: new Date(Date.now() + expiresCookie)
         })
