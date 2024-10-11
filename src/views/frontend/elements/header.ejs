@@ -131,53 +131,38 @@
 
                                 <a href="/cart/view">View Cart</a>
                             </div><!-- End .dropdown-cart-header -->
-                            <div class="dropdown-cart-products">
-                                <div class="product">
-                                    <div class="product-details">
-                                        <h4 class="product-title">
-                                            <a href="product.html">Woman Ring</a>
-                                        </h4>
-
-                                        <span class="cart-product-info">
-                                            <span class="cart-product-qty">1</span>
-                                            x $99.00
-                                        </span>
-                                    </div><!-- End .product-details -->
-
-                                    <figure class="product-image-container">
-                                        <a href="product.html" class="product-image-cart">
-                                            <img src="/frontend/assets/images/products/cart/product-1.jpg" alt="product">
-                                        </a>
-                                        <a href="#" class="btn-remove" title="Remove Product"><i class="icon-cancel"></i></a>
-                                    </figure>
-                                </div><!-- End .product -->
-
-                                <div class="product">
-                                    <div class="product-details">
-                                        <h4 class="product-title">
-                                            <a href="product.html">Woman Necklace</a>
-                                        </h4>
-
-                                        <span class="cart-product-info">
-                                            <span class="cart-product-qty">1</span>
-                                            x $35.00
-                                        </span>
-                                    </div><!-- End .product-details -->
-
-                                    <figure class="product-image-container">
-                                        <a href="product.html" class="product-image-cart">
-                                            <img src="/frontend/assets/images/products/cart/product-2.jpg" alt="product">
-                                        </a>
-                                        <a href="#" class="btn-remove" title="Remove Product"><i class="icon-cancel"></i></a>
-                                    </figure>
-                                </div><!-- End .product -->
-                            </div><!-- End .cart-product -->
+                            <% if (miniCart.products.length > 0) { %>
+                             <% miniCart.products.forEach(item => { %>
+                                <div class="dropdown-cart-products">
+                                    <div class="product">
+                                        <div class="product-details">
+                                            <h4 class="product-title">
+                                                <a href="/<%= item.productInfo.slug %>"><%= item.productInfo.name %></a>
+                                            </h4>
+    
+                                            <span class="cart-product-info">
+                                                <span class="cart-product-qty"><%= item.quantity %></span>
+                                                x <%= item.productInfo.priceNew.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) || 0 %>
+                                            </span>
+                                        </div><!-- End .product-details -->
+    
+                                        <figure class="product-image-container">
+                                            <a href="/<%= item.productInfo.slug %>" class="product-image-cart">
+                                                <img src="/uploads/products/<%= item.productInfo.image %>" alt="<%= item.productInfo.name %>">
+                                            </a>
+                                            <a href="/cart/delete/<%= item.product_id %>" class="btn-remove" title="Remove Product"><i class="icon-cancel"></i></a>
+                                        </figure>
+                                    </div>
+                                </div>
+                             <% }) %>
+                            <% } %>
 
                             <div class="dropdown-cart-total">
                                 <span>Total</span>
 
-                                <span class="cart-total-price">$134.00</span>
+                                <span class="cart-total-price"><%= miniCart.totalPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) || 0%></span>
                             </div><!-- End .dropdown-cart-total -->
+                            
 
                             <div class="dropdown-cart-action">
                                 <a href="/checkout" class="btn btn-block">Checkout</a>

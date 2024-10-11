@@ -1,5 +1,6 @@
 const Cart = require('../../models/cart_model')
 const ProductModel = require('../../models/product_model')
+const idCartPrefix = '6708e681645e3efe6b966461'
 
 
 class CartController {
@@ -8,7 +9,8 @@ class CartController {
 
         const productId = req.params.productId
         const quantity = parseInt(req.body.quantity)
-        const cartId = req.cookies.cartId
+        // const cartId = req.cookies.cartId
+        const cartId = idCartPrefix
 
         const cart = await Cart.findOne({
             _id: cartId
@@ -46,7 +48,7 @@ class CartController {
     }
 
     getCart = async (req, res, next) => {
-        const cartId = req.cookies.cartId
+        const cartId = idCartPrefix
 
         const cart = await Cart.findOne({
             _id: cartId
@@ -77,7 +79,7 @@ class CartController {
     }
 
     deleteProductInCart = async (req, res, next) => {
-        const cartId = req.cookies.cartId
+        const cartId = idCartPrefix
         const productId = req.params.productId
 
         await Cart.updateOne({
@@ -93,7 +95,7 @@ class CartController {
     }
 
     updateProductInCart = async (req, res, next) => {
-        const cartId = req.cookies.cartId
+        const cartId = idCartPrefix
         const productId = req.params.productId
         const quantity = req.params.quantity
 
