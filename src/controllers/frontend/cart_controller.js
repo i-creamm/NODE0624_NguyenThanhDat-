@@ -15,6 +15,8 @@ class CartController {
         const cart = await Cart.findOne({
             _id: cartId
         })
+
+        const product = await  ProductModel.findById(productId)
     
         const existProductInCart = cart.products.find(item => item.product_id == productId)
 
@@ -32,7 +34,8 @@ class CartController {
         } else {
             const objectCart = {
                 product_id: productId,
-                quantity: quantity
+                quantity: quantity,
+                priceAtTime: product.price_discount
             }
             await Cart.updateOne(
                 {
@@ -66,7 +69,9 @@ class CartController {
                 item.productInfo = productInfo
 
 
-                item.totalPrice = productInfo.priceNew * item.quantity
+                // item.totalPrice = productInfo.priceNew * item.quantity
+
+                item.totalPrice = item.priceAtTime * item.quantity
             }
         }
 

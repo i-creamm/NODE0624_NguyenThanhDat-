@@ -35,7 +35,7 @@
                                             <a href="/<%= item.productInfo.slug %>"><%= item.productInfo.name %></a>
                                         </h2>
                                     </td>
-                                    <td><%= item.productInfo.priceNew.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) || 0 %></td>
+                                    <td><%= item.priceAtTime.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) || 0 %></td>
                                     <td>
                                         <input class="text-center" type="number" name="quantity" value="<%= item.quantity %>" item-id="<%= item.product_id %>" style="width: 60px;">
                                     </td>
@@ -170,7 +170,7 @@
                 </table>
 
                 <div class="checkout-methods">
-                    <a href="checkout-shipping.html" class="btn btn-block btn-sm btn-primary">Go to Checkout</a>
+                    <a href="/checkout/info" class="btn btn-block btn-sm btn-primary">Go to Checkout</a>
                     <a href="#" class="btn btn-link btn-block">Check Out with Multiple Addresses</a>
                 </div><!-- End .checkout-methods -->
             </div><!-- End .cart-summary -->

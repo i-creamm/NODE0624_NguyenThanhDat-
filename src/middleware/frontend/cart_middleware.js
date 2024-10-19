@@ -7,7 +7,7 @@ const cartId = async (req, res, next) => {
     const cartId = "6708e681645e3efe6b966461"
     
     if(!cartId){
-        const cart =  new Cart()
+        const cart = new Cart()
         await cart.save()
         const expiresCookie =   12 * 24 * 60 * 60 * 1000 
         res.cookie('cartId', cart.id, {
@@ -23,14 +23,13 @@ const cartId = async (req, res, next) => {
                 const productId = item.product_id
                 const productInfo = await ProductModel.findOne({
                     _id: productId
-                }).select("name image slug price discount")
+                }).select("name image slug discount")
 
                 productInfo.priceNew = ((productInfo.price * (100 - productInfo.discount)) / 100)
 
                 item.productInfo = productInfo
 
-
-                item.totalPrice = productInfo.priceNew * item.quantity
+                item.totalPrice = item.priceAtTime * item.quantity
             }
         }
 

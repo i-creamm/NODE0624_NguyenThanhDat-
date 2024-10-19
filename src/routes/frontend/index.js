@@ -8,4 +8,6 @@ router.use('/', require('./home_routers'))
 
 router.use('/cart', require('./cart_routers'))
 
+router.use('/checkout', require('./checkout_routers'))
+
 module.exports = router

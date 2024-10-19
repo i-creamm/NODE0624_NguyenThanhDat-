@@ -142,7 +142,7 @@
     
                                             <span class="cart-product-info">
                                                 <span class="cart-product-qty"><%= item.quantity %></span>
-                                                x <%= item.productInfo.priceNew.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) || 0 %>
+                                                x <%= item.priceAtTime.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) || 0 %>
                                             </span>
                                         </div><!-- End .product-details -->
     
@@ -165,7 +165,7 @@
                             
 
                             <div class="dropdown-cart-action">
-                                <a href="/checkout" class="btn btn-block">Checkout</a>
+                                <a href="/checkout/info" class="btn btn-block">Checkout</a>
                             </div><!-- End .dropdown-cart-total -->
                         </div><!-- End .dropdownmenu-wrapper -->
                     </div><!-- End .dropdown-menu -->

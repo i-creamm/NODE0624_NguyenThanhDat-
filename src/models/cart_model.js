@@ -1,3 +1,4 @@
+const { type } = require('jquery');
 const { Schema, model, default: mongoose } = require('mongoose')
 const ConnectionDocument = 'carts'
 const ModelDocument = 'cart'
@@ -7,7 +8,8 @@ const cartSchema = new Schema({
     products: [
         {
             product_id: String,
-            quantity: Number
+            quantity: Number,
+            priceAtTime: Number,
         }
     ]
 }, {

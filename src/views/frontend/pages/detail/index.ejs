@@ -75,26 +75,6 @@
                                     <span class="product-price"><%= products.price_discount.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) %></span>
                                 </div><!-- End .price-box -->
 
-                                <!-- <div class="product-filters-container">
-                                    <div class="product-single-filter">
-                                        <label>Colors:</label>
-                                        <ul class="config-swatch-list">
-                                            <li class="active">
-                                                <a href="#" style="background-color: #6085a5;"></a>
-                                            </li>
-                                            <li>
-                                                <a href="#" style="background-color: #ab6e6e;"></a>
-                                            </li>
-                                            <li>
-                                                <a href="#" style="background-color: #b19970;"></a>
-                                            </li>
-                                            <li>
-                                                <a href="#" style="background-color: #11426b;"></a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div> -->
-
                                 <form action="/cart/add/<%= products.id %>" method="post">
                                     <div class="product-action product-all-icons">
                                         <div class="product-single-qty">

@@ -10,7 +10,6 @@ const updateItem = require("../../utils/upload");
 // const uploadImage = updateItem.upload("products","image");
 const uploadFiles = updateItem.upload("products", [{ name: 'image', maxCount: 1 }, { name: 'images', maxCount: 5 }])
 
-
 const nameController = 'product'
 const linkPrefix = `/admin/${nameController}`
 const folderImage = '/products'
@@ -18,9 +17,8 @@ const path = require('path')
 const fs = require('fs');
 
 
-
-
 class ProductController {
+
   getAll = async (req, res, next) => {
     const { status, category, search, page = 1} = req.query;
 
@@ -91,7 +89,7 @@ class ProductController {
 
       if (req.body.type_discount === '%') {
         req.body.price_discount = 0
-        req.body.price_discount = req.body.price - (req.body.price * (req.body.discount / 100));
+        req.body.price_discount = ((req.body.price * (100 - req.body.discount)) / 100)
       } else if (req.body.type_discount === 'price') {
         req.body.discount = 0;
         req.body.discount = Math.round(((req.body.price - req.body.price_discount) * 100) / req.body.price, 2) 
