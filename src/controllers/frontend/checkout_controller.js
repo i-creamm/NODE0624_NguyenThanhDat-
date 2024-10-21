@@ -5,6 +5,7 @@ const Order = require('../../models/order_model')
 
 
 class CheckoutController {
+
     getCheckout = async (req, res, next) => {
         const cartId = idCartPrefix
 
@@ -22,7 +23,6 @@ class CheckoutController {
                 productInfo.priceNew = ((productInfo.price * (100 - productInfo.discount)) / 100)
 
                 item.productInfo = productInfo
-
 
                 // item.totalPrice = productInfo.priceNew * item.quantity
 
@@ -74,14 +74,34 @@ class CheckoutController {
             products: []
         })
 
-        // res.redirect(`/checkout/success/${order.id}`)
-
-        res.send("ok")
+        res.redirect(`/checkout/success/${order.id}`)
     }
 
     success = async (req, res, next) => {
+        const {orderId} = req.params
+        const order = await Order.findOne({
+            _id: orderId
+        })
 
+        for (const product of order.products) {
+            const productInfo = await ProductModel.findOne({
+                _id: product.product_id
+            }).select("name image")
+
+            product.productInfo = productInfo
+
+            product.totalPrice = product.priceAtTime * product.quantity
+        }
+
+        order.totalPrice =  order.products.reduce((sum, item) => sum + item.totalPrice, 0 )
+
+
+        res.render("frontend/pages/checkout/success", {
+            layout: "frontend",
+            orderDetail: order
+        })
     }
+
 }
 
 module.exports = new CheckoutController()

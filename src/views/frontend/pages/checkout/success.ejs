@@ -1,0 +1,59 @@
+<div class="container">
+    <div class="success-message">
+        Chúc mừng bạn đã đặt hàng thành công! Chúng tôi sẽ xử lý đơn hàng trong thời gian sớm nhất.
+    </div>
+    
+    
+<div>
+
+<div class="card-body">
+    <h2>Personal information</h2>
+    <table class="table table-bordered">
+        <thead class="table-info">
+          <tr>
+            <th scope="col"><strong>Fullname</strong></th>
+            <th scope="col"><strong>Phone</strong></th>
+            <th scope="col"><strong>Address</strong></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><%= orderDetail.userInfo.fullname %></td>
+            <td><%= orderDetail.userInfo.phone %></td>
+            <td><%= orderDetail.userInfo.address %></td>
+          </tr>
+        </tbody>
+      </table>
+</div>
+
+<div class="card-body">
+    <h2>Order information</h2>
+    <table class="table table-sm table-striped text-nowrap btn-table mb-0">
+        <thead class="table-dark">
+        <tr>
+            <th class="text-center">Image</th>
+            <th class="text-center">Name</th>
+            <th class="text-center">Price</th>
+            <th class="text-center">Quantity</th>
+            <th class="text-center">Total Price</th>
+        </tr>
+        </thead>
+        <tbody>
+            <% if (orderDetail.products.length > 0) { %>
+                <% orderDetail.products.forEach(( item) => { %>
+                    <tr >
+                        <td class="text-center"><img src="/uploads/products/<%= item.productInfo.image %>" alt="iPhone 14 Pro" class="product-image"></td>
+                        <td class="text-center"><%= item.productInfo.name %></td>
+                        <td class="text-center"><%= item.priceAtTime.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) || 0 %></td>
+                        <td class="text-center"><%= item.quantity %></td>
+                        <td class="text-center"><%= item.totalPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) || 0 %></td>
+                    </tr>
+                <% }) %>
+            <% } %>
+        </tbody>
+    </table>
+</div>
+ 
+<div class="order-summary">
+    Total: <%= orderDetail.totalPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) || 0 %>
+</div>
