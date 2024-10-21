@@ -66,7 +66,7 @@ h2 {
   border: none;
 }
 
-.product-image {
+.product-image-success img {
   padding: 0.25rem;
   background-color: #fff;
   border: 1px solid #dee2e6;
@@ -79,3 +79,79 @@ h2 {
   display: block; 
   margin: 0 auto;
 }
+
+/* Login form */
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 30vh; /* vh stands for viewport height */
+}
+
+.body-login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+  background-color: #f0f0f0;
+  font-family: Arial, sans-serif;
+}
+
+.login-container {
+  background-color: #58e568;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 350px;
+  text-align: center;
+}
+/* End Login form */
+
+
+
+ /* Register form */
+
+
+.body-register {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  background-color: #f0f0f0;
+  font-family: Arial, sans-serif;
+}
+
+.form-register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh; /* vh stands for viewport height */
+}
+
+.register-container {
+  background-color: #58e568;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 350px;
+  text-align: center;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-bottom: 5px;
+  text-align: left;
+}
+
+input {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+
+}
+/* End Register form */
