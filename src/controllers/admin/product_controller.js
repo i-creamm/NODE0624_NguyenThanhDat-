@@ -126,7 +126,7 @@ class ProductController {
       let dataAdd;
       if (!id) {
         dataAdd = await MainService.save(req.body);
-        req.flash("success", "added successfully")
+        req.flash("success", "Added successfully")
       } else {
         const {name, ordering, status, image, images, isSpecial, newProduct, price, discount, type_discount, price_discount, detail, idCategory } = req.body;
         const updateItem = {name, ordering, status, image, images, isSpecial, newProduct, price, discount, type_discount, price_discount, detail, idCategory };
@@ -141,7 +141,7 @@ class ProductController {
         }
   
         await MainService.editById(id, updateItem);
-        req.flash("success", "edited successfully")
+        req.flash("success", "Edited successfully")
       }
 
       // if(!fs.existsSync(`public/uploads${folderImage}/${id ? id : dataAdd.id}`)) {

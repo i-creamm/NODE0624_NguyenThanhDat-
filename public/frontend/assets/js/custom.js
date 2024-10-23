@@ -29,4 +29,23 @@ $(document).ready(function () {
         })
     }
     //End update Cart
+
+
+    // Show Alert Success
+    const showAlert = document.querySelector('[show-alert]')
+    if (showAlert) {
+        const time = parseInt(showAlert.getAttribute('data-time'))
+        const success = showAlert.getAttribute('data-msg')
+        if (success) {
+            toastr.options = {
+                "closeButton": true,
+                "timeOut": time || 2000, // Sử dụng time từ data-time, nếu không có thì mặc định là 2000ms
+                "extendedTimeOut": 1000,
+                "positionClass": "toast-top-right",
+                "progressBar": true,
+            };
+            toastr.success(success, "Success");
+        }
+    }
+    // End Show Alert
 });

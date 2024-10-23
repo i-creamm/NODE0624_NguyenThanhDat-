@@ -3,8 +3,8 @@
 <%- include('../../helpers/render_alert.ejs') %>
 
 <% const collection = 'product' ; const linkPrefix = `/admin/${collection}/`; const folderImage = '/products/' %>
-
-<%- alertSuccess(messages, 2000)%>
+	
+<%- alertSuccess(messages, 4000)%>
 
 <div class="row mb-2">
     <div class="col-sm-6">
@@ -98,7 +98,6 @@
 						<th class="text-center">Percent</th>
 						<th class="text-center">Price_Discount</th>
 						<th class="text-center">GroupCategory</th>
-						<th class="text-center">Details Product</th>
 						<th class="text-center">Show To</th>
 						<th class="text-center">Action</th>
 					</tr>
@@ -149,13 +148,6 @@
 									<% } else { %>
 									<span>No Menu</span>
 									<% } %>
-								</td>
-	
-	
-								<td class="text-center">
-									<span class="d-inline-block text-truncate" style="max-width: 150px; max-height: 50px; overflow: hidden; text-overflow: ellipsis; word-wrap: break-word;">
-										<%- row.detail || "" %>
-									</span>
 								</td>
 	
 								<td class="text-center">
@@ -222,7 +214,6 @@
         })
     })
 </script>
-
 
 
 

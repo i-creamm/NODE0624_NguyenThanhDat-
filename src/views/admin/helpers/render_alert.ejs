@@ -1,11 +1,11 @@
 <% alertSuccess = (messages, time) => {
     let xhtml;
-    if (messages.success) { 
-      xhtml =`<div class="alert alert-success" show-alert data-time=${messages.time}>
-        ${messages.success}
-        <span class="close-alert">x</span>
-      </div>`
+    if (messages.success) {
+      xhtml = `<div class="showmsg" show-alert data-msg="${messages.success}" data-time=${time} >
+        </div>`
     }
     return xhtml
 }
 %>
+
+

@@ -24,9 +24,13 @@
                     <a href="#">Links</a>
                     <div class="header-menu">
                         <ul>
-                            <li><a href="my-account.html">MY ACCOUNT </a></li>
-                            <li><a href="/user/login">LOG IN</a></li>
-                            <li><a href="/user/register">SIGN IN</a></li>
+                            <% if (user) { %>
+                                <li><a href="#"><% user.name %></a></li>
+                                <li><a href="/user/logout">LOG OUT</a></li>
+                            <% } else { %>
+                                <li><a href="/user/login">LOG IN</a></li>
+                                <li><a href="/user/register">SIGN IN</a></li>
+                            <% }%>   
                         </ul>
                     </div><!-- End .header-menu -->
                 </div><!-- End .header-dropown -->

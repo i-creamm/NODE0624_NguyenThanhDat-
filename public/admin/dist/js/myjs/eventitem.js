@@ -48,6 +48,8 @@ if(uploadImage){
 // End preview image
 
 
+
+
 $(document).ready(function () {
 
     const url = window.location.href
@@ -161,17 +163,25 @@ $(document).ready(function () {
         });
     });
 
-    setTimeout(() => {
-        var alert = document.querySelector('.alert[show-alert]');
-        if (alert) {
-            alert.style.display = 'none';
+
+
+// Show Alert
+const showAlert = document.querySelector('[show-alert]')
+    if(showAlert){
+        const time = parseInt(showAlert.getAttribute('data-time'))
+        const success = showAlert.getAttribute('data-msg')
+        if (success) {
+            toastr.options = {
+                "closeButton": true,
+                "timeOut": time || 2000, // Sử dụng time từ data-time, nếu không có thì mặc định là 2000ms
+                "extendedTimeOut": 1000,
+                "positionClass": "toast-top-right",
+                "progressBar": true,
+            };
+            toastr.success(success, "success");
         }
-    }, 2000);
-    
-    document.querySelector('.close-alert').addEventListener('click', function() {
-        var alert = this.parentElement;
-        alert.style.display = 'none';
-    });
+    }
+// End Show Alert
 });
 
 

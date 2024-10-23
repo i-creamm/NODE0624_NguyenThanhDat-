@@ -46,7 +46,7 @@ class CartController {
                 }
             )
         }        
-        req.flash("success", "Them thanh cong")
+        req.flash("success", "Product added successfully")
         res.redirect("back")
     }
 
@@ -94,7 +94,7 @@ class CartController {
             $pull: {products: {product_id: productId}}
         })
 
-        req.flash("success", "delete thanh cong")
+        req.flash("success", "Product removed")
 
         res.redirect("back")
     }

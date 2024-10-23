@@ -15,15 +15,14 @@
                         <h2 class="title">Login</h2>
                     </div><!-- End .heading -->
                 
-                    <form action="#" method="post">
+                    <form action="/user/login" method="post">
     
-                            <input type="email" class="form-control" placeholder="Email" required="">
-    
-                            <input type="password" class="form-control" placeholder="Password" required="">
+                            <input type="email" name="email" class="form-control" placeholder="Email" required="">
+                            <input type="password" name="password" class="form-control" placeholder="Password" required="">
                         
                             <div class="form-footer">
                                 <button type="submit" class="btn btn-primary">LOGIN</button>
-                                <a href="#" class="forget-pass"> Forgot your password?</a>
+                                <a href="/user/password/forgot" class="forget-pass"> Forgot your password?</a>
                             </div>
                     </form>
                 </div>
