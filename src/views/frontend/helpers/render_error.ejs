@@ -1,0 +1,9 @@
+<% alertError = (messages, time) => {
+    let xhtml;
+    if (messages.error) {
+      xhtml = `<div class="showmsg" show-alert-error data-msg-error="${messages.error}" data-time=${time} >
+        </div>`
+    }
+    return xhtml
+  }
+%>

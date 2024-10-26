@@ -12,7 +12,7 @@ const { asyncHandle } =  require('../../utils/asyncHandle')
 
     router.post('/register', validate.registerPost, asyncHandle(MainController.registerPost))
 
-    router.post('/login', validate.loginPost, asyncHandle(MainController.LoginPost))
+    router.post('/login', validate.demo, asyncHandle(MainController.LoginPost))
 
     router.get('/password/forgot', asyncHandle(MainController.forgotPassword))
 

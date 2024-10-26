@@ -1,3 +1,8 @@
+<%- include('../../helpers/render_error.ejs') %>
+
+    <%- alertError(messages, 4000)%>
+    <% console.log(messages.error) %>
+
 <nav aria-label="breadcrumb" class="breadcrumb-nav">
     <div class="container">
         <ol class="breadcrumb">
@@ -17,8 +22,8 @@
                 
                     <form action="/user/login" method="post">
     
-                            <input type="email" name="email" class="form-control" placeholder="Email" required="">
-                            <input type="password" name="password" class="form-control" placeholder="Password" required="">
+                            <input type="email" name="email" class="form-control" placeholder="Email">
+                            <input type="password" name="password" class="form-control" placeholder="Password" >
                         
                             <div class="form-footer">
                                 <button type="submit" class="btn btn-primary">LOGIN</button>

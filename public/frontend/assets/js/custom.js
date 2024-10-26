@@ -48,4 +48,23 @@ $(document).ready(function () {
         }
     }
     // End Show Alert
+
+
+    // Show Alert Success
+    const showError = document.querySelector('[show-alert-error]')
+    if (showError) {
+        const time = parseInt(showError.getAttribute('data-time'))
+        const error = showError.getAttribute('data-msg-error')
+        if (error) {
+            toastr.options = {
+                "closeButton": true,
+                "timeOut": time || 2000, // Sử dụng time từ data-time, nếu không có thì mặc định là 2000ms
+                "extendedTimeOut": 1000,
+                "positionClass": "toast-top-right",
+                "progressBar": true,
+            };
+            toastr.error(error, "error");
+        }
+    }
+    // End Show Alert
 });

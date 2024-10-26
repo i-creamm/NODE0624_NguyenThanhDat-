@@ -15,7 +15,6 @@ class UserController {
     }
 
     getLogOut = async (req, res, next) => {
-
        res.clearCookie("tokenUser")
        res.redirect("/")
     }
@@ -71,6 +70,7 @@ class UserController {
         }
 
         res.cookie("tokenUser", user.tokenUser)
+        req.flash("success", `Login accout ${user.fullname} successfully`)
         res.redirect("/")
     }
 
