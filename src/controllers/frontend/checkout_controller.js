@@ -5,6 +5,10 @@ const Order = require('../../models/order_model')
 
 
 class CheckoutController {
+    test = async (req, res, next) => {
+        console.log(req.body)
+        res.send("ok")
+    } 
 
     getCheckout = async (req, res, next) => {
         const cartId = idCartPrefix
@@ -40,41 +44,59 @@ class CheckoutController {
         })
     }
 
-    order = async (req, res, next) => {
-        const cartId = idCartPrefix
-        const userInfo = req.body
+    // order = async (req, res, next) => {
+    //     const cartId = idCartPrefix
+    //     const userInfo = req.body
 
-        const cart = await Cart.findOne({
-            _id: cartId
-        })
+    //     const cart = await Cart.findOne({
+    //         _id: cartId
+    //     })
 
-        const products = []
-        for (const product of cart.products) {
-            const objectProduct = {
-                product_id: product.product_id,
-                priceAtTime: product.priceAtTime,
-                quantity: product.quantity
-            }
+    //     const products = []
+    //     for (const product of cart.products) {
+    //         const objectProduct = {
+    //             product_id: product.product_id,
+    //             priceAtTime: product.priceAtTime,
+    //             quantity: product.quantity
+    //         }
 
-            products.push(objectProduct)
-        }
+    //         products.push(objectProduct)
+    //     }
         
+    //     const orderInfo = {
+    //         cart_id: cartId,
+    //         userInfo: userInfo,
+    //         products: products
+    //     }
+
+    //     const order = new Order(orderInfo)
+    //     await order.save()
+
+    //     await Cart.updateOne({
+    //         _id: cartId
+    //     },{
+    //         products: []
+    //     })
+
+    //     res.redirect(`/checkout/success/${order.id}`)
+    // }
+
+    orderDetail = async (req, res, next) => {
+        const { fullname, phone, address, ...products} = req.body;
+
+        const userInfo = {
+            fullname,
+            phone,
+            address,
+        };
+
         const orderInfo = {
-            cart_id: cartId,
             userInfo: userInfo,
             products: products
         }
-
         const order = new Order(orderInfo)
         await order.save()
-
-        await Cart.updateOne({
-            _id: cartId
-        },{
-            products: []
-        })
-
-        res.redirect(`/checkout/success/${order.id}`)
+        res.send("ok")
     }
 
     success = async (req, res, next) => {

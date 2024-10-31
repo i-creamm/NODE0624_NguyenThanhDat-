@@ -49,7 +49,6 @@ if(uploadImage){
 
 
 
-
 $(document).ready(function () {
 
     const url = window.location.href

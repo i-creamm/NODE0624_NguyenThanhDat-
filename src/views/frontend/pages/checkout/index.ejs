@@ -22,7 +22,7 @@
                 <li>
                     <h2 class="step-title">Shipping Address</h2>
 
-                    <form action="#">
+                    <!-- <form action="#">
                         <div class="form-group required-field">
                             <label>Email Address </label>
                             <div class="form-control-tooltip">
@@ -30,22 +30,20 @@
                                 <span class="input-tooltip" data-toggle="tooltip" title="" data-placement="right"
                                     data-original-title="We'll send your order confirmation here."><i
                                         class="icon-question-circle"></i></span>
-                            </div><!-- End .form-control-tooltip -->
-                        </div><!-- End .form-group -->
+                            </div>
+                        </div>
 
                         <div class="form-group required-field">
                             <label>Password </label>
                             <input type="password" class="form-control" required="">
-                        </div><!-- End .form-group -->
+                        </div>
 
                         <p>You already have an account with us. Sign in or continue as guest.</p>
                         <div class="form-footer">
                             <button type="submit" class="btn btn-primary">LOGIN</button>
                             <a href="forgot-password.html" class="forget-pass"> Forgot your password?</a>
-                        </div><!-- End .form-footer -->
-                    </form>
-
-                    <% if (cartDetail.products.length > 0) { %>
+                        </div>
+                    </form> -->
                         <form action="/checkout/order" method="post">
                             <div class="form-group required-field">
                                 <label for="fullname">Fullname </label>
@@ -63,12 +61,9 @@
                             </div>
 
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-success btn-block">Place Order</button>
+                                <button onclick="sendBackEnd('/checkout/order')" type="submit" class="btn btn-success btn-block">Place Order</button>
                             </div>
                         </form>
-                    <% } else { %>
-                        
-                    <% } %>
                 </li>
             </ul>
         </div><!-- End .col-lg-8 -->
@@ -84,7 +79,7 @@
 
                 <div class="collapse" id="order-cart-section">
                     <table class="table table-mini-cart">
-                        <tbody>
+                        <tbody id="body-cart-summary">
                             <% if (cartDetail.products.length > 0) { %>
                                 <% cartDetail.products.forEach((item) => { %>
                                     <tr>

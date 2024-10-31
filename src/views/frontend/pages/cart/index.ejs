@@ -21,7 +21,7 @@
                             <th>Subtotal</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="body-cart">
                         <% if (cartDetail.products.length > 0) { %>
                             <% cartDetail.products.forEach((item) => { %>
                                 <tr class="product-row">
@@ -37,7 +37,7 @@
                                     </td>
                                     <td><%= item.priceAtTime.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) || 0 %></td>
                                     <td>
-                                        <input class="text-center" type="number" name="quantity" value="<%= item.quantity %>" item-id="<%= item.product_id %>" style="width: 60px;">
+                                        <input class="text-center" type="number" name="quantity"  value="<%= item.quantity %>" item-id="<%= item.product_id %>" style="width: 60px;">
                                     </td>
                                     <td><%= item.totalPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) || 0%></td>
                                 </tr>
@@ -164,7 +164,7 @@
                     <tfoot>
                         <tr>
                             <td>Order Total</td>
-                            <td><%= cartDetail.totalPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) || 0%></td>
+                            <td id="total-price"><%= cartDetail.totalPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) || 0%></td>
                         </tr>
                     </tfoot>
                 </table>

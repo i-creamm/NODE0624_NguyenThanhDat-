@@ -115,6 +115,9 @@ class CartController {
         })
         res.redirect("back")
     }
+
+
+
 }
 
 module.exports = new CartController()

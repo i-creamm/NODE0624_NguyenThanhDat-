@@ -55,7 +55,7 @@
             </nav>
 
             <div class="row row-sm">
-                <% products.forEach(product => { %>
+                <% products.forEach(product=> { %>
                     <div class="col-6 col-md-4">
                         <div class="product">
                             <figure class="product-image-container">
@@ -71,34 +71,34 @@
                                     </div><!-- End .product-ratings -->
                                 </div><!-- End .product-container -->
                                 <h2 class="product-title">
-                                    <a href="/<%= product.slug%>"><%= product.name%></a>
+                                    <a href="/<%= product.slug%>">
+                                        <%= product.name%>
+                                    </a>
                                 </h2>
                                 <div class="price-box">
-                                    <span class="product-price"><%= product.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) %></span>
+                                    <span class="product-price">
+                                        <%= product.price.toLocaleString('vi-VN', { style: 'currency' , currency: 'VND'}) %>
+                                    </span>
                                 </div><!-- End .price-box -->
-                                
-                                <form action="/cart/add/<%= product.id %>" method="post">
-                                    <div class="product-action">
-                                        <a href="#" class="paction add-wishlist" title="Add to Wishlist">
-                                            <span>Add to Wishlist</span>
-                                        </a>
 
-                                        <!-- <button class="paction add-cart" title="Add to Cart" type="submit"><span>Add to Cart</span></button> -->
-        
-                                        <a href="#" class="paction add-cart" title="Add to Cart">
-                                            <span>Add to Cart</span>
-                                        </a>
-        
-                                        <a href="#" class="paction add-compare" title="Add to Compare">
-                                            <span>Add to Compare</span>
-                                        </a>
-                                    </div>
-                                </form>
-                                
+                                <div class="product-action">
+                                    <a href="#" class="paction add-wishlist" title="Add to Wishlist">
+                                        <span>Add to Wishlist</span>
+                                    </a>
+
+
+                                    <a href="javascript:handleAddCart('<%= product._id%>','<%= product.price%>', '<%= product.name%>', '<%= product.image%>')" class="paction add-cart" title="Add to Cart">
+                                        <span>Add to Cart</span>
+                                    </a>
+
+                                    <a href="#" class="paction add-compare" title="Add to Compare">
+                                        <span>Add to Compare</span>
+                                    </a>
+                                </div>
                             </div><!-- End .product-details -->
                         </div><!-- End .product -->
                     </div><!-- End .col-xl-3 -->
-                <% }) %>              
+                    <% }) %>
             </div><!-- End .row -->
 
             <nav class="toolbox toolbox-pagination">
@@ -145,9 +145,11 @@
                         <div class="collapse show" id="widget-body-1">
                             <div class="widget-body">
                                 <ul class="cat-list">
-                                    <% categories.forEach(category => { %>
-                                        <li><a href="/<%= category.slug %>"><%= category.name %></a></li>
-                                    <% }) %>
+                                    <% categories.forEach(category=> { %>
+                                        <li><a href="/<%= category.slug %>">
+                                                <%= category.name %>
+                                            </a></li>
+                                        <% }) %>
                                 </ul>
                             </div><!-- End .widget-body -->
                         </div><!-- End .collapse -->
@@ -210,9 +212,11 @@
                         <div class="collapse show" id="widget-body-4">
                             <div class="widget-body">
                                 <ul class="cat-list">
-                                    <% brands.forEach(brand => { %>
-                                        <li><a href="#"><%= brand.name%><span>18</span></a></li>
-                                    <% }) %>
+                                    <% brands.forEach(brand=> { %>
+                                        <li><a href="#">
+                                                <%= brand.name%><span>18</span>
+                                            </a></li>
+                                        <% }) %>
                                 </ul>
                             </div><!-- End .widget-body -->
                         </div><!-- End .collapse -->

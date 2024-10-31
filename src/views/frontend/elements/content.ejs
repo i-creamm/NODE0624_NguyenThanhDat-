@@ -73,7 +73,7 @@
                                         <span>Add to Wishlist</span>
                                     </a>
     
-                                    <a href="product.html" class="paction add-cart" title="Add to Cart">
+                                    <a href="javascript:handleAddCart('<%= special._id%>','<%= special.price%>', '<%= special.name%>', '<%= special.image%>')" class="paction add-cart" title="Add to Cart">
                                         <span>Add to Cart</span>
                                     </a>
     
@@ -120,7 +120,7 @@
                                         <span>Add to Wishlist</span>
                                     </a>
                                     
-                                    <a href="product.html" class="paction add-cart" title="Add to Cart">
+                                    <a href="javascript:handleAddCart('<%= e._id%>','<%= e.price%>', '<%= e.name%>', '<%= e.image%>')" class="paction add-cart" title="Add to Cart">
                                         <span>Add to Cart</span>
                                     </a>
     

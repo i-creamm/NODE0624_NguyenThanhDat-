@@ -25,12 +25,14 @@
                     <div class="header-menu">
                         <ul>
                             <% if (user) { %>
-                                <li><a href="#"><% user.name %></a></li>
+                                <li><a href="#">
+                                        <% user.name %>
+                                    </a></li>
                                 <li><a href="/user/logout">LOG OUT</a></li>
-                            <% } else { %>
-                                <li><a href="/user/login">LOG IN</a></li>
-                                <li><a href="/user/register">SIGN IN</a></li>
-                            <% }%>   
+                                <% } else { %>
+                                    <li><a href="/user/login">LOG IN</a></li>
+                                    <li><a href="/user/register">SIGN IN</a></li>
+                                    <% }%>
                         </ul>
                     </div><!-- End .header-menu -->
                 </div><!-- End .header-dropown -->
@@ -80,58 +82,24 @@
                     <div class="dropdown-menu">
                         <div class="dropdownmenu-wrapper">
                             <div class="dropdown-cart-header">
-                                <span>
-                                    <%= miniCart.totalQuantity ? miniCart.totalQuantity : 0 %> Items
-                                </span>
-
                                 <a href="/cart/view">View Cart</a>
                             </div><!-- End .dropdown-cart-header -->
-                            <% if (miniCart.products.length> 0) { %>
-                                <% miniCart.products.forEach(item=> { %>
-                                    <div class="dropdown-cart-products">
-                                        <div class="product">
-                                            <div class="product-details">
-                                                <h4 class="product-title">
-                                                    <a href="/<%= item.productInfo.slug %>">
-                                                        <%= item.productInfo.name %>
-                                                    </a>
-                                                </h4>
+                            <div class="dropdown-cart-products">
+                                
+                            </div>
 
-                                                <span class="cart-product-info">
-                                                    <span class="cart-product-qty">
-                                                        <%= item.quantity %>
-                                                    </span>
-                                                    x <%= item.priceAtTime.toLocaleString('vi-VN', { style: 'currency' ,
-                                                        currency: 'VND' }) || 0 %>
-                                                </span>
-                                            </div><!-- End .product-details -->
+                            <div class="dropdown-cart-total">
+                                <span>Total</span>
 
-                                            <figure class="product-image-container">
-                                                <a href="/<%= item.productInfo.slug %>" class="product-image-cart">
-                                                    <img src="/uploads/products/<%= item.productInfo.image %>"
-                                                        alt="<%= item.productInfo.name %>">
-                                                </a>
-                                                <a href="/cart/delete/<%= item.product_id %>" class="btn-remove"
-                                                    title="Remove Product"><i class="icon-cancel"></i></a>
-                                            </figure>
-                                        </div>
-                                    </div>
-                                    <% }) %>
-                                        <% } %>
+                                <span class="cart-total-price">
 
-                                            <div class="dropdown-cart-total">
-                                                <span>Total</span>
-
-                                                <span class="cart-total-price">
-                                                    <%= miniCart.totalPrice.toLocaleString('vi-VN', { style: 'currency'
-                                                        , currency: 'VND' }) || 0%>
-                                                </span>
-                                            </div><!-- End .dropdown-cart-total -->
+                                </span>
+                            </div><!-- End .dropdown-cart-total -->
 
 
-                                            <div class="dropdown-cart-action">
-                                                <a href="/checkout/info" class="btn btn-block">Checkout</a>
-                                            </div><!-- End .dropdown-cart-total -->
+                            <div class="dropdown-cart-action">
+                                <a href="/checkout/info" class="btn btn-block">Checkout</a>
+                            </div><!-- End .dropdown-cart-total -->
                         </div><!-- End .dropdownmenu-wrapper -->
                     </div><!-- End .dropdown-menu -->
                 </div><!-- End .dropdown -->
@@ -168,11 +136,13 @@
                                 </div><!-- End .megamenu -->
                             </li>
                             <% } else { %>
-                                <li><a href="<%= menu.link%>">
+                                <li>
+                                    <a href="<%= menu.link%>">
                                         <%= menu.name%>
-                                    </a></li>
-                                <% } %>
-                                    <% }) %>
+                                    </a>
+                                </li>
+                            <% } %>
+                    <% }) %>
                 </ul>
             </nav>
         </div><!-- End .header-bottom -->
