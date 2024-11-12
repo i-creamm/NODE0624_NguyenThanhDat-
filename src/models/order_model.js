@@ -4,7 +4,6 @@ const ModelDocument = 'order'
 
 const orderSchema = new Schema({
     // user_id: String,
-    cart_id: String,
     userInfo: {
         fullname: String,
         phone: String,
@@ -13,11 +12,13 @@ const orderSchema = new Schema({
     products: [
         {
             product_id: String,
+            name: String,
             quantity: Number,
             priceAtTime: Number,
-            discountPercentage: Number
+            image: String
         }
     ],
+    total: Number,
     deleted: {
         type: Boolean,
         default: false

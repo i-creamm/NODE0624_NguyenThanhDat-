@@ -1,6 +1,15 @@
 var express = require('express');
 var router = express.Router();
 
+// router.use((req, res, next) => {
+//     let token = req.cookies.tokenUser
+//     if(token){
+//         next()
+//     } else {
+//         res.redirect("/login")
+//     }
+// })
+
 router.use('/item',require('./item_routers'))
 router.use('/',require('./dashboard_router'))
 router.use('/product',require('./product_routers'))

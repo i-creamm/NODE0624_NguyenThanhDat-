@@ -28,6 +28,12 @@ router.get('/:slug', async (req , res , next) => {
     next()
 })
 
+router.get('/search', async(req, res, next) => {
+    const {q} = req.query
+    const keyword = await ProductService.searchProductWithKeyword(q)
+    res.render(`frontend/pages/search`, {layout: "frontend", keyword})
+})
+
 
 router.get('/:slug?', async (req , res , next) => {
     const { slug } = req.params

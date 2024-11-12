@@ -2,13 +2,11 @@ const Cart = require('../../models/cart_model')
 const ProductModel = require('../../models/product_model')
 const idCartPrefix = '6708e681645e3efe6b966461'
 const Order = require('../../models/order_model')
+const ProductService = require('../../services/product_service')
+
 
 
 class CheckoutController {
-    test = async (req, res, next) => {
-        console.log(req.body)
-        res.send("ok")
-    } 
 
     getCheckout = async (req, res, next) => {
         const cartId = idCartPrefix
@@ -82,21 +80,47 @@ class CheckoutController {
     // }
 
     orderDetail = async (req, res, next) => {
-        const { fullname, phone, address, ...products} = req.body;
+        const { item , info } = req.body;
+        const userInfo = info
 
-        const userInfo = {
-            fullname,
-            phone,
-            address,
-        };
+    
+        const products = []
+        let total = 0;
+        for (const product of item) {
+            let piceProductNow = await ProductService.findId(product.productID)
+            if(product.price != piceProductNow.price) {
+                console.log('error')
+                throw new Error('piceProductNow')
+            }
+
+            const objectProduct = {
+                product_id: product.productID,
+                priceAtTime: product.price,
+                quantity: product.quantity,
+                name: product.name,
+                image: product.image
+            }
+
+            products.push(objectProduct)
+
+            total += product.price * product.quantity;
+        }
+
+        
 
         const orderInfo = {
-            userInfo: userInfo,
-            products: products
+            userInfo : userInfo,
+            products : products,
+            total: total
         }
+
+        console.log(orderInfo)
+
         const order = new Order(orderInfo)
         await order.save()
-        res.send("ok")
+
+
+        res.json({ redirectUrl: `/checkout/success/${order.id}`});
     }
 
     success = async (req, res, next) => {
@@ -106,17 +130,8 @@ class CheckoutController {
         })
 
         for (const product of order.products) {
-            const productInfo = await ProductModel.findOne({
-                _id: product.product_id
-            }).select("name image")
-
-            product.productInfo = productInfo
-
             product.totalPrice = product.priceAtTime * product.quantity
         }
-
-        order.totalPrice =  order.products.reduce((sum, item) => sum + item.totalPrice, 0 )
-
 
         res.render("frontend/pages/checkout/success", {
             layout: "frontend",

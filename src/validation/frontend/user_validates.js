@@ -69,7 +69,39 @@ const demo = async (req, res, next) => {
 };
 
 
+const infoUserCheckout = async (req, res, next) => {
+
+    await check(req.body.fullname)
+        .isEmpty()
+        .withMessage("Không được để trống").run(req)
+
+        
+    await check(req.body.phone)
+        .isLength({ min: 10 , max: 10})
+        .withMessage("Số điện thoại phải 10 số").run(req)
+
+    await check(req.body.address)
+        .isEmpty()
+        .withMessage("Không được để trống").run(req)
+
+
+    const errors = validationResult(req);
+
+
+    if (!errors.isEmpty()) {
+
+        errors.array().forEach(error => {
+            req.flash('error', error.msg);
+        });
+        res.redirect('back');
+        return 
+    }
+    next();
+};
+
+
 module.exports = {
     registerPost,
-    demo
+    demo,
+    infoUserCheckout
 }

@@ -85,6 +85,14 @@ class ProductService {
         return await MainModel.find({status: 'active'}).sort({ordering: 1})
     }
 
+    //frontend
+    searchProductWithKeyword = async (q) => {
+        let query = {}
+        if (q) {
+            query.name = new RegExp(q, 'ig');
+        }
+        return await MainModel.find(query)
+    }
 
 }
 

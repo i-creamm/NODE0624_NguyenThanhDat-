@@ -196,16 +196,93 @@ const updateQuantity = (idProduct, newQuantity) => {
 
 
 //Send local to backend
-const sendBackEnd = (url) => {
+// $('#card-footer-btn').click(function (e) { 
+//     e.preventDefault();
+//     let fullname = $('input[name="fullname"]').val();
+//     let phone = $('input[name="phone"]').val();
+//     let address = $('input[name="address"]').val();
+//     let url = $('#card-footer-btn').data('url');
+//     let orderId = $(this).data('id');
+
+//     let data = {
+//         item : carts,
+//         info : {
+//             fullname,
+//             phone,
+//             address
+//         }
+//     }
+
+//     fetch(url, {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify(data)
+//     }).then(res => {
+//         console.log(res)
+//         if(!res.ok) {
+//             toastr.error("mua that bai", "success");
+//         }else {
+//             carts = []
+//             localStorage.clear(carts)
+//             window.location.href = res.redirectUrl
+//         }
+//     })
+// });
+$('#card-footer-btn').click(function (e) {
+    e.preventDefault();
+    let fullname = $('input[name="fullname"]').val();
+    let phone = $('input[name="phone"]').val();
+    let address = $('input[name="address"]').val();
+    let url = $('#card-footer-btn').data('url');
+
+    let hasError = false;
+
+    // Validate each field and show specific error if empty
+    if (!fullname) {
+        toastr.error("Vui lòng nhập tên đầy đủ", "Error");
+        hasError = true;
+    }
+    if (!phone) {
+        toastr.error("Vui lòng nhập số điện thoại", "Error");
+        hasError = true;
+    }
+    if (!address) {
+        toastr.error("Vui lòng nhập địa chỉ", "Error");
+        hasError = true;
+    }
+
+    // Stop execution if there is any validation error
+    if (hasError) return;
+
+    let data = {
+        item: carts,
+        info: {
+            fullname,
+            phone,
+            address
+        }
+    };
+
     fetch(url, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(carts)
+        body: JSON.stringify(data)
     })
-    // localStorage.clear(carts)
-}
+    .then(res => res.json())
+    .then(response => {
+        if (response.redirectUrl) {
+            carts = [];
+            localStorage.clear();
+            window.location.href = response.redirectUrl;
+        } else {
+            toastr.error("mua that bai", "Error");
+        }
+    })
+});
 //End Send local to backend
 
 $(document).ready(function () {
