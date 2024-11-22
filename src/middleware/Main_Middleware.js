@@ -39,6 +39,7 @@ const SettingService = require('../services/setting_service')
             const brands = await BrandService.findBrandWithStatus()
             res.locals.brands = brands
 
+            
             const products = await ProductService.findProductWithStatus()
             res.locals.products = products
 

@@ -18,6 +18,10 @@ const userSchema = new Schema({
     enum: ['active', 'inactive'],
     default: 'active'
   },
+  isAdmin: {
+    type: Boolean,
+    default: 'false'
+  },
   deleted: {
     type: String,
     default: false

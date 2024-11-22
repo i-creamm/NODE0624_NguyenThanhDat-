@@ -135,6 +135,7 @@ const handleAddCart = (idProduct, priceAtTime, name, image) => {
     localStorage.setItem("carts", JSON.stringify(carts));
 
     updateCartTop()
+
 };
 //End Handle cart 
 
@@ -172,12 +173,38 @@ const updateCartTop = () => {
 
     });
 
+        let formHtml = `<form action="/checkout/order" method="post">
+            <div class="form-group required-field">
+                <label for="fullname">Fullname </label>
+                <input type="text" name="fullname" class="form-control" required="">
+            </div>
+
+            <div class="form-group required-field">
+                <label for="phone">Phone </label>
+                <input type="text" name="phone" class="form-control" required="">
+            </div>
+
+            <div class="form-group required-field">
+                <label for="address">Address </label>
+                <input type="text" name="address" class="form-control" required="">
+            </div>
+
+            <div class="card-footer">
+                <button id="card-footer-btn" class="btn btn-success btn-block" data-url="/checkout/order" ">Place Order</button>
+            </div>
+        </form>`
+        
 
     const formattedTotalPrice = totalPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
     $('.cart-count').html(carts.length);
     $('.dropdown-cart-products').html(xhtml);
     $('.cart-total-price').html(formattedTotalPrice);
     $('#total-price').html(formattedTotalPrice);
+    if(carts.length > 0){
+        $('.form-get-info').html(formHtml);
+    } else {
+        $('.form-get-info').html('');
+    }
 };
 //End Update cart
 
@@ -194,42 +221,6 @@ const updateQuantity = (idProduct, newQuantity) => {
 };
 // End Update quantity
 
-
-//Send local to backend
-// $('#card-footer-btn').click(function (e) { 
-//     e.preventDefault();
-//     let fullname = $('input[name="fullname"]').val();
-//     let phone = $('input[name="phone"]').val();
-//     let address = $('input[name="address"]').val();
-//     let url = $('#card-footer-btn').data('url');
-//     let orderId = $(this).data('id');
-
-//     let data = {
-//         item : carts,
-//         info : {
-//             fullname,
-//             phone,
-//             address
-//         }
-//     }
-
-//     fetch(url, {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json'
-//         },
-//         body: JSON.stringify(data)
-//     }).then(res => {
-//         console.log(res)
-//         if(!res.ok) {
-//             toastr.error("mua that bai", "success");
-//         }else {
-//             carts = []
-//             localStorage.clear(carts)
-//             window.location.href = res.redirectUrl
-//         }
-//     })
-// });
 $('#card-footer-btn').click(function (e) {
     e.preventDefault();
     let fullname = $('input[name="fullname"]').val();
@@ -288,6 +279,7 @@ $(document).ready(function () {
     carts = localStorage.getItem("carts") ? JSON.parse(localStorage.getItem("carts")) : []
     updateCartTop()
     showCart()
+
 
 });
 
