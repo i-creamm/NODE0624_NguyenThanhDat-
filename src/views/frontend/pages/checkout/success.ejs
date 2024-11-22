@@ -38,11 +38,11 @@
             <th class="text-center">Total Price</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody class="form-control-sm">
             <% if (orderDetail.products.length > 0) { %>
                 <% orderDetail.products.forEach(( item) => { %>
                     <tr >
-                        <td class="text-center"><img src="/uploads/products/<%= item.image %>" alt="iPhone 14 Pro" class="product-image-success"></td>
+                        <td class="text-center"><img src="/uploads/products/<%= item.image %>" alt="<%= item.name %>" class="product-image-success"></td>
                         <td class="text-center"><%= item.name %></td>
                         <td class="text-center"><%= item.priceAtTime.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) || 0 %></td>
                         <td class="text-center"><%= item.quantity %></td>

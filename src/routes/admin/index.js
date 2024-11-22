@@ -19,5 +19,6 @@ router.use('/slider',require('./slider_routers'))
 router.use('/setting',require('./setting_routers'))
 router.use('/brand',require('./brand_routers'))
 router.use('/subscribe',require('./subscribe_routers'))
+router.use('/order',require('./order_routers'))
 
 module.exports = router

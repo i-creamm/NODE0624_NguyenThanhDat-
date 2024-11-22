@@ -1,15 +1,12 @@
-<%- include('../../helpers/render_status.ejs') %>
+
 <%- include('../../helpers/render_pagination.ejs') %>
-<% const collection = 'category' ; const linkPrefix = `/admin/${collection}/`%>
 
 
-<% if(messages?.info) { %>
-	<h1><%= messages.info[0] %></h1>
-<% } %>
+<% const collection = 'order' ; const linkPrefix = `/admin/${collection}/` ; const folderImage = '/orders/'%>
 
 <div class="row mb-2">
     <div class="col-sm-6">
-        <h1 class="m-0">Danh mục sản phẩm</h1>
+        <h1 class="m-0">Danh sách <%= collection%></h1>
     </div>
 </div>
 
@@ -56,21 +53,12 @@
 	<div class="card card-info card-outline">
 		<div class="card-header">
 			<h4 class="card-title">List</h4>
-			<div class="card-tools">
-				<a href="<%= linkPrefix %>form" class="btn btn-warning" style="background-color: #F0AD4E; color: white; font-weight: 500;">Add New</a>
-			</div>
+
 			<input type="hidden" name="action" id="inputHiddenAll" value="" >
 		</div>
 
 	<div class="card-body">
-		<!-- Control -->
-		<!-- <form action="" method="get" class="table-responsive" id="zt-form"> -->
-
-			<!-- List Content -->
-		
-			
-
-			<table class="table table-bordered table-hover text-nowrap btn-table mb-0">
+			<table class="table table-sm table-striped table-hover text-nowrap btn-table mb-0 ">
 				<thead class="table-dark">
 					<tr>
 						<th class="text-center">
@@ -81,10 +69,10 @@
 						</th>
 
 						<th class="text-center">#</a></th>
-						<th class="text-center">Name</a></th>
+						<th class="text-center">Fullname</a></th>
 						<th class="text-center">Status</a></th>
-						<th class="text-center">Ordering</a></th>
-						<th class="text-center">GroupMenu</a></th>
+						<th class="text-center">CreatedAt</a></th>
+						<th class="text-center">Total</a></th>
 						<th class="text-center">Action</th>
 					</tr>
 				</thead>
@@ -97,28 +85,20 @@
 									<label for="check-<%= index + 1  %>" class="custom-control-label"></label>
 								</div>
 							</td>
+
 							<td class="text-center"><%= index + 1  %></td>
 
-							<td class="text-center"><span><%= row.name%></span></td>
+							<td class="text-center"><span><%= row.userInfo.fullname%></span></td>
 
-							<%- renderStatus(row._id, row.status, linkPrefix) %>
+							<td class="text-center"><span><%= row.status%></span></td>
 
-							<td class="text-center position-relative" >
-								<input data-link="<%= linkPrefix %>changeOrdering/<%= row._id %>" type="number" name="ordering" value="<%= row.ordering %>" class="text-center ordering">
-							</td>
+							<td class="text-center position-relative" ><%= row.createdAt.toLocaleString('vi-VN')%></td>
 
-							
-							<td class="text-center">
-								<% if (row.idMenu && row.idMenu.name) { %>
-								<span><%= row.idMenu.name %></span>
-								<% } else { %>
-								<span>No Menu</span>
-								<% } %>
-							</td>
+							<td class="text-center"><span><%= row.total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) || 0%></span></td>
 
 							<td class="text-center">
-								<a href="<%= linkPrefix %>form/<%= row._id%>" class="rounded-circle btn btn-sm btn-info " title="Edit">
-									<i class="fas fa-pencil-alt"></i>
+								<a href="<%= linkPrefix %>detail/<%= row._id%>" class="rounded-circle btn btn-sm btn-warning " title="Detail">
+									<i class="fas fa-eye"></i>
 								</a>
 			 
 								<a href="javascript:clickToDeleteId('<%= linkPrefix %>delete/<%= row._id%>')" class="rounded-circle btn btn-sm btn-danger">
@@ -162,6 +142,7 @@
             }
             btnCheck.prop('checked',isChecked);
             disableSubmit();
+
         })
     })
 </script>

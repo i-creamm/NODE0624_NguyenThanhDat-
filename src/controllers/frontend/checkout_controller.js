@@ -89,7 +89,6 @@ class CheckoutController {
         for (const product of item) {
             let piceProductNow = await ProductService.findId(product.productID)
             if(product.price != piceProductNow.price) {
-                console.log('error')
                 throw new Error('piceProductNow')
             }
 
@@ -114,7 +113,6 @@ class CheckoutController {
             total: total
         }
 
-        console.log(orderInfo)
 
         const order = new Order(orderInfo)
         await order.save()

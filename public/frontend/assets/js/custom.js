@@ -239,7 +239,6 @@ $('#card-footer-btn').click(function (e) {
 
     let hasError = false;
 
-    // Validate each field and show specific error if empty
     if (!fullname) {
         toastr.error("Vui lòng nhập tên đầy đủ", "Error");
         hasError = true;
@@ -253,7 +252,6 @@ $('#card-footer-btn').click(function (e) {
         hasError = true;
     }
 
-    // Stop execution if there is any validation error
     if (hasError) return;
 
     let data = {
@@ -292,3 +290,7 @@ $(document).ready(function () {
     showCart()
 
 });
+
+
+
+

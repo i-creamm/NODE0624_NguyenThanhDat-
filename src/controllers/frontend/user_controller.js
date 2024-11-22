@@ -20,7 +20,7 @@ class UserController {
     }
 
     registerPost = async (req, res, next) => {
-        console.log(req.body)
+
 
         const existEmail = await User.findOne({
             email: req.body.email
@@ -37,7 +37,6 @@ class UserController {
         const user = await User(req.body)
         await user.save()
 
-        console.log(user)
 
         res.cookie("tokenUser", user.tokenUser)
         res.redirect("/")

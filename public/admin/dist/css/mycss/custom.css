@@ -42,6 +42,19 @@
   object-fit: contain;
 }
 
+.order-summary {
+  text-align: right;
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.order-summary{
+  margin-top: 0rem;
+  padding: 0.5rem 5.0rem;
+  margin-bottom: 1rem;
+}
+
 
 
 

@@ -19,6 +19,11 @@ const orderSchema = new Schema({
         }
     ],
     total: Number,
+    status: {
+        type: String,
+        enum : ['Pending', 'Shipping'],
+        default: 'Pending'
+    },
     deleted: {
         type: Boolean,
         default: false
