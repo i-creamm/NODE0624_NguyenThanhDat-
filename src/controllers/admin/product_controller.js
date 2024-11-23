@@ -40,7 +40,7 @@ class ProductController {
     let items = await MainService.getAllItems(status, category, search, pagination.pageSkip, pagination.pageLimit);
     return res.render(`admin/pages/${nameController}/list`, {items, category, categories, countStatus, status, search, pagination, message: {}});
   };
-
+  
   //direct form put in
   getForm = async (req, res, next) => {
     let title = "Add - Form";
