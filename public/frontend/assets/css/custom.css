@@ -146,3 +146,80 @@ input {
 
 }
 /* End Register form */
+
+
+/*Filter price*/
+.price-filter {
+  width: 225px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.price-filter label {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.range-slider {
+  position: relative;
+  height: 40px;
+}
+
+input[type="range"] {
+  position: relative;
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  background: transparent;
+  z-index: 1;
+  pointer-events: none; /* Disable pointer events for stacking */
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  pointer-events: all; /* Re-enable pointer events for thumbs */
+  position: relative;
+  z-index: 2;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  background: #2196f3;
+  border: 2px solid #4caf50;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  background: linear-gradient(to right, #4caf50, #2196f3);
+  height: 6px;
+}
+
+.price-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #333;
+}
+
+.btn-filter {
+  padding: 5px 10px;
+  font-size: 14px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 20px;
+}
+

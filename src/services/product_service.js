@@ -93,6 +93,16 @@ class ProductService {
         return await MainModel.find(query)
     }
 
+    filterPrice = async (minPrice, maxPrice) => {
+        const results = await MainModel.find({
+            price: {
+                $gte: minPrice, // Giá >= minPrice
+                $lte: maxPrice  // Giá <= maxPrice
+            }
+        });
+        return results
+    }
+
 }
 
 module.exports = new ProductService()

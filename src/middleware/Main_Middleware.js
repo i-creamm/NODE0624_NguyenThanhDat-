@@ -41,7 +41,13 @@ const SettingService = require('../services/setting_service')
 
             
             const products = await ProductService.findProductWithStatus()
+            const prices = await products.map((product) => product.price)
+            const minPrice = Math.min(...prices)
+            const maxPrice = Math.max(...prices)
             res.locals.products = products
+            
+            res.locals.minPrice = minPrice
+            res.locals.maxPrice = maxPrice
 
             const setting = await SettingService.findIdAndChangeInfo()
             let stringParse = JSON.parse(setting.name)

@@ -100,12 +100,14 @@ const showCart = () => {
 }
 //End Show cart
 
+
 //Delete product
 const deleteProduct = (idProduct) => {
     carts = carts.filter(item => item.productID !== idProduct);
     localStorage.setItem("carts", JSON.stringify(carts));
     updateCartTop();
-    showCart(); 
+    showCart();
+    updateCheckoutForm()
     toastr.success("Đã xóa sản phẩm khỏi giỏ hàng", "success");
 };
 //End Delete product
@@ -142,7 +144,6 @@ const handleAddCart = (idProduct, priceAtTime, name, image) => {
 //Update cart
 const updateCartTop = () => {
     let xhtml = ''
-    let yhtml = ''
     let totalPrice = 0;
     carts.forEach(item => {
         const formattedPrice = item.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
@@ -173,26 +174,7 @@ const updateCartTop = () => {
 
     });
 
-        let formHtml = `<form action="/checkout/order" method="post">
-            <div class="form-group required-field">
-                <label for="fullname">Fullname </label>
-                <input type="text" name="fullname" class="form-control" required="">
-            </div>
-
-            <div class="form-group required-field">
-                <label for="phone">Phone </label>
-                <input type="text" name="phone" class="form-control" required="">
-            </div>
-
-            <div class="form-group required-field">
-                <label for="address">Address </label>
-                <input type="text" name="address" class="form-control" required="">
-            </div>
-
-            <div class="card-footer">
-                <button id="card-footer-btn" class="btn btn-success btn-block" data-url="/checkout/order" ">Place Order</button>
-            </div>
-        </form>`
+        
         
 
     const formattedTotalPrice = totalPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
@@ -200,11 +182,8 @@ const updateCartTop = () => {
     $('.dropdown-cart-products').html(xhtml);
     $('.cart-total-price').html(formattedTotalPrice);
     $('#total-price').html(formattedTotalPrice);
-    if(carts.length > 0){
-        $('.form-get-info').html(formHtml);
-    } else {
-        $('.form-get-info').html('');
-    }
+
+
 };
 //End Update cart
 
@@ -221,14 +200,20 @@ const updateQuantity = (idProduct, newQuantity) => {
 };
 // End Update quantity
 
-$('#card-footer-btn').click(function (e) {
+$('#card-footer-btn').click( async function (e)  {
     e.preventDefault();
     let fullname = $('input[name="fullname"]').val();
     let phone = $('input[name="phone"]').val();
     let address = $('input[name="address"]').val();
     let url = $('#card-footer-btn').data('url');
 
+    
     let hasError = false;
+
+    if(!carts.length) {
+        toastr.error("Chưa thêm sản phẩm trong giỏ hàng", "Error");
+        hasError = true;
+    }
 
     if (!fullname) {
         toastr.error("Vui lòng nhập tên đầy đủ", "Error");
@@ -257,7 +242,7 @@ $('#card-footer-btn').click(function (e) {
     fetch(url, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+           'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
     })
@@ -274,12 +259,35 @@ $('#card-footer-btn').click(function (e) {
 });
 //End Send local to backend
 
+
+const updateSlider = () => {
+    const minPrice = document.getElementById("minPrice");
+    const maxPrice = document.getElementById("maxPrice");
+    const minPriceLabel = document.getElementById("minPriceLabel");
+    const maxPriceLabel = document.getElementById("maxPriceLabel");
+  
+    // Đảm bảo giá trị của minPrice không vượt qua maxPrice
+    if (parseInt(minPrice.value) > parseInt(maxPrice.value)) {
+      minPrice.value = maxPrice.value;
+    }
+  
+    // Đảm bảo giá trị của maxPrice không nhỏ hơn minPrice
+    if (parseInt(maxPrice.value) < parseInt(minPrice.value)) {
+      maxPrice.value = minPrice.value;
+    }
+  
+    // Cập nhật nhãn hiển thị theo định dạng VND
+    const formatter = new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" });
+    minPriceLabel.textContent = formatter.format(minPrice.value);
+    maxPriceLabel.textContent = formatter.format(maxPrice.value);
+};
+  
+
 $(document).ready(function () {
 
     carts = localStorage.getItem("carts") ? JSON.parse(localStorage.getItem("carts")) : []
     updateCartTop()
     showCart()
-
 
 });
 

@@ -1,0 +1,36 @@
+<% const collection="contact" ; const linkPrefix=`/admin/${collection}/` ; const linkThumb='' ; const folderImage = '/products/' %>
+    <div class="card card-info card-outline">
+            <div class="card-body">
+                <h1>
+                    === Detail Contact ===
+                </h1>
+
+                <div class="form-group row align-items-center">
+                    <label for="fullname" class="col-sm-2 col-form-label text-sm-right required">Name:</label>
+                    <p class="col-sm-10 mb-0"><%= detailContact.name%></p>
+                </div>
+
+                <div class="form-group row align-items-center">
+                    <label for="phone" class="col-sm-2 col-form-label text-sm-right required">Email:</label>
+                    <p class="col-sm-10 mb-0"><%= detailContact.email %></p>
+                </div>
+
+                <div class="form-group row align-items-center">
+                    <label for="address" class="col-sm-2 col-form-label text-sm-right required">Phone:</label>
+                    <p class="col-sm-10 mb-0"><%= detailContact.phone %></p>
+                </div>
+
+                <div class="form-group row align-items-center">
+                    <label for="address" class="col-sm-2 col-form-label text-sm-right required">Content:</label>
+                    <p class="col-sm-10 mb-0"><%= detailContact.content %></p>
+                </div>
+           </div>
+
+            <div class="card-footer">
+                <div class="col-12 col-sm-8 offset-sm-2 text-right">
+                
+                    <a href="<%= linkPrefix %>" class="btn btn-md btn-danger mr-1">
+                        Back</a>
+                </div>
+            </div>
+    </div>

@@ -56,7 +56,7 @@
             </nav>
 
             <div class="row row-sm">
-                <% products.forEach(product => { %>
+                <% filterPrice.forEach(product => { %>
                     <div class="col-6 col-md-4">
                         <div class="product">
                             <figure class="product-image-container">
@@ -167,9 +167,9 @@
                                 <form id="priceFilterForm" action="/filter" method="get">
                                     <div class="range-slider">
                                         <input type="range" id="minPrice" name="minPrice" min="<%= minPrice %>" max="<%= maxPrice %>"
-                                            step="1" value="1" oninput="updateSlider()">
+                                            step="1000" value="1" oninput="updateSlider()">
                                         <input type="range" id="maxPrice" name="maxPrice" min="<%= minPrice %>" max="<%= maxPrice %>"
-                                            step="1" value="<%= maxPrice %>" oninput="updateSlider()">
+                                            step="1000" value="<%= maxPrice %>" oninput="updateSlider()">
                                     </div>
                                     <div class="price-labels">
                                         <span>Giá bắt đầu: <span id="minPriceLabel">

@@ -1,14 +1,14 @@
 var express = require('express');
 var router = express.Router();
 
-router.use((req, res, next) => {
-    let token = req.cookies.tokenUser
-    if(token){
-        next()
-    } else {
-        res.redirect("/login")
-    }
-})
+// router.use((req, res, next) => {
+//     let token = req.cookies.tokenUser
+//     if(token){
+//         next()
+//     } else {
+//         res.redirect("/login")
+//     }
+// })
 
 router.use('/item',require('./item_routers'))
 router.use('/',require('./dashboard_router'))
@@ -20,5 +20,6 @@ router.use('/setting',require('./setting_routers'))
 router.use('/brand',require('./brand_routers'))
 router.use('/subscribe',require('./subscribe_routers'))
 router.use('/order',require('./order_routers'))
+router.use('/contact',require('./contact_routers'))
 
 module.exports = router

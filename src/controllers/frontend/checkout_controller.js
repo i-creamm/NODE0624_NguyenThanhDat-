@@ -9,36 +9,35 @@ const ProductService = require('../../services/product_service')
 class CheckoutController {
 
     getCheckout = async (req, res, next) => {
-        const cartId = idCartPrefix
+        // const cartId = idCartPrefix
 
-        const cart = await Cart.findOne({
-            _id: cartId
-        })
+        // const cart = await Cart.findOne({
+        //     _id: cartId
+        // })
 
-        if(cart.products.length > 0){
-            for(const item of cart.products){
-                const productId = item.product_id
-                const productInfo = await ProductModel.findOne({
-                    _id: productId
-                }).select("name image slug price discount")
+        // if(cart.products.length > 0){
+        //     for(const item of cart.products){
+        //         const productId = item.product_id
+        //         const productInfo = await ProductModel.findOne({
+        //             _id: productId
+        //         }).select("name image slug price discount")
 
-                productInfo.priceNew = ((productInfo.price * (100 - productInfo.discount)) / 100)
+        //         productInfo.priceNew = ((productInfo.price * (100 - productInfo.discount)) / 100)
 
-                item.productInfo = productInfo
+        //         item.productInfo = productInfo
 
-                // item.totalPrice = productInfo.priceNew * item.quantity
+        //         // item.totalPrice = productInfo.priceNew * item.quantity
 
-                item.totalPrice = item.priceAtTime * item.quantity
-            }
-        }
+        //         item.totalPrice = item.priceAtTime * item.quantity
+        //     }
+        // }
 
-        cart.totalQuantity = cart.products.reduce((sum, item) => sum + item.quantity, 0)
+        // cart.totalQuantity = cart.products.reduce((sum, item) => sum + item.quantity, 0)
 
-        cart.totalPrice = cart.products.reduce((sum, item) => sum + item.totalPrice, 0)
+        // cart.totalPrice = cart.products.reduce((sum, item) => sum + item.totalPrice, 0)
 
         res.render('frontend/pages/checkout/index', {
-            layout: "frontend",
-            cartDetail: cart
+            layout: "frontend"
         })
     }
 
@@ -81,9 +80,9 @@ class CheckoutController {
 
     orderDetail = async (req, res, next) => {
         const { item , info } = req.body;
+
         const userInfo = info
 
-    
         const products = []
         let total = 0;
         for (const product of item) {
@@ -105,14 +104,11 @@ class CheckoutController {
             total += product.price * product.quantity;
         }
 
-        
-
         const orderInfo = {
             userInfo : userInfo,
             products : products,
             total: total
         }
-
 
         const order = new Order(orderInfo)
         await order.save()

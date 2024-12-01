@@ -1,6 +1,6 @@
 const MainModel = require('../models/brand_model')
 
-class SliderService {
+class BrandService {
 
     //Backend
     getAllItems = async (status , search, pageSkip, pageLimit) =>{
@@ -59,4 +59,4 @@ class SliderService {
 
 }
 
-module.exports = new SliderService()
+module.exports = new BrandService()

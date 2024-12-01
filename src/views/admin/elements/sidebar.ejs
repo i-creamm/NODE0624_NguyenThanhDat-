@@ -15,11 +15,6 @@
               "icon" : "fas fa-list",
               "link" : '/admin/item' ,
             },{
-              "name" : 'Menu' ,
-              "active" : 'menu',
-              "icon" : "fas fa-list",
-              "link" : '/admin/menu' ,
-            },{
               "name" : 'Category' ,
               "active" : 'category',
               "icon" : "fas fa-list",
@@ -29,42 +24,59 @@
               "active" : 'product',
               "icon" : "fas fa-list",
               "link" : '/admin/product' ,
+            },{
+              "name" : 'Discount' ,
+              "active" : 'discount',
+              "icon" : "fas fa-solid fa-percent",
+              "link" : '/admin/discount',
             }] 
 },
-{
-  "name": "Slider",
-  "active" : 'slider',
-  "icon": "fas fa-image",
-  "link": "/admin/slider",
-  "child": []
+{ 
+  "name": 'Manage Client' ,
+  "icon" : "fas fa-th" ,
+  "link" : '#' ,
+  "child" : [{
+              "name" : 'Menu' ,
+              "active" : 'menu',
+              "icon" : "fas fa-list",
+              "link" : '/admin/menu' ,
+            },{
+              "name": "Slider",
+              "active" : 'slider',
+              "icon": "fas fa-image",
+              "link": "/admin/slider"
+            },{
+              "name": "Brand",
+              "active" : 'brand',
+              "icon": "fas fa-image",
+              "link": "/admin/brand"
+            },{
+              "name": "Setting",
+              "active" : 'setting',
+              "icon": "far fa-plus-square",
+              "link": "/admin/setting"
+            },{
+              "name": "Contact",
+              "active": 'contact',
+              "icon": 'far fa-envelope',
+              "link": '/admin/contact'
+            }]
 },
-{
-  "name": "Brand",
-  "active" : 'brand',
-  "icon": "fas fa-image",
-  "link": "/admin/brand",
-  "child": []
-},
-{
-  "name": "Subscribe",
-  "active" : 'subscribe',
-  "icon": "fas fa-user",
-  "link": "/admin/subscribe",
-  "child": []
-},
-{
-  "name": "Setting",
-  "active" : 'setting',
-  "icon": "far fa-plus-square",
-  "link": "/admin/setting",
-  "child": []
-},
-{
-  "name": "Order",
-  "active": 'order',
-  "icon": 'fas fa-shopping-bag',
-  "link": '/admin/order',
-  "child": []
+{ 
+  "name": 'Manage User' ,
+  "icon" : "fas fa-th" ,
+  "link" : '#' ,
+  "child" : [{
+              "name": "Subscribe",
+              "active" : 'subscribe',
+              "icon": "fas fa-solid fa-users",
+              "link": "/admin/subscribe",
+            },{
+              "name": "Order",
+              "active": 'order',
+              "icon": 'fas fa-shopping-bag',
+              "link": '/admin/order',
+            }] 
 }
 ]%>
 

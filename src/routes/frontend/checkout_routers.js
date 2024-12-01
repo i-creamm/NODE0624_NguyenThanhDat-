@@ -3,11 +3,16 @@ var router = express.Router();
 const MainController = require('../../controllers/frontend/checkout_controller')
 const { asyncHandle } =  require('../../utils/asyncHandle')
 
-const {infoUserCheckout} = require('../../validation/frontend/user_validates')
+    router.use((req, res, next) => {
+        let token = req.cookies.tokenUser
+        if(token){
+            next()
+        } else {
+            res.redirect("/user/login")
+        }
+    })
 
     router.get('/info', asyncHandle(MainController.getCheckout))
-
-    // router.post('/info', asyncHandle(MainController.test))
 
     router.post('/order', asyncHandle(MainController.orderDetail))
 

@@ -77,7 +77,6 @@
                                     <span class="product-price"><%= products.price_discount.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) %></span>
                                 </div><!-- End .price-box -->
 
-                                <form action="/cart/add/<%= products.id %>" method="post">
                                     <div class="product-action product-all-icons">
                                         <div class="product-single-qty">
                                             <div class="input-group bootstrap-touchspin bootstrap-touchspin-injected">
@@ -86,6 +85,10 @@
                                             </div>
                                         </div><!-- End .product-single-qty -->
 
+                                        <a href="javascript:handleAddCart('<%= products._id%>','<%= products.price%>', '<%= products.name%>', '<%= products.image%>')" class="paction add-cart" title="Add to Cart">
+                                            <span>Add to Cart</span>
+                                        </a>
+
                                         <a href="#" class="paction add-wishlist" title="Add to Wishlist">
                                             <span>Add to Wishlist</span>
                                         </a>
@@ -93,10 +96,9 @@
                                             <span>Add to Compare</span>
                                         </a>
 
-                                        <button class="btn btn-success btn-block paction add-cart" type="submit"><span>Add to Cart</span></button>
+
                                         
                                     </div><!-- End .product-action -->
-                                </form>
 
                                 <div class="product-single-share">
                                     <label>Share:</label>

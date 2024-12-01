@@ -45,7 +45,7 @@
                         </div>
                     </form> -->
                     <div class="form-get-info">
-                        <!-- <form action="/checkout/order" method="post">
+                        <form action="/checkout/order" method="post">
                             <div class="form-group required-field">
                                 <label for="fullname">Fullname </label>
                                 <input type="text" name="fullname" class="form-control" required="">
@@ -64,7 +64,7 @@
                             <div class="card-footer">
                                 <button id="card-footer-btn" class="btn btn-success btn-block" data-url="/checkout/order" ">Place Order</button>
                             </div>
-                        </form> -->
+                        </form>
                     </div>
                 </li>
             </ul>
@@ -74,10 +74,7 @@
             <div class="order-summary">
                 <h3>Summary</h3>
 
-                <!-- <h4>
-                    <a data-toggle="collapse" href="#order-cart-section" class="collapsed" role="button"
-                        aria-expanded="true" aria-controls="order-cart-section"><%= cartDetail.totalQuantity ? cartDetail.totalQuantity : 0 %> products in Cart</a>
-                </h4> -->
+
 
                 <div class="collapse show" id="order-cart-section">
                     <table class="table table-mini-cart">
@@ -87,7 +84,7 @@
                     </table>
                     <div class="dropdown-cart-total">
                         <span>Total</span>
-                        <span class="cart-total-price"><%= cartDetail.totalPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) || 0%></span>
+                        <span class="cart-total-price">0</span>
                     </div><!-- End .dropdown-cart-total -->
                 </div>
                 <!-- End #order-cart-section -->
