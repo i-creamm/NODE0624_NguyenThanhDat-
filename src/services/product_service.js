@@ -65,9 +65,18 @@ class ProductService {
 
 
     //Frontend
-    findByParam = async (params) => {
-        return await MainModel.find(params)
+    findByParam = async (params, limitItems, pageSkip) => {
+        return await MainModel.find(params).limit(limitItems).skip(pageSkip)
     }
+
+    countProducts = async(idCategory) => {
+        return await MainModel.countDocuments({idCategory})
+    }
+
+    countProductsAll = async() => {
+        return await MainModel.countDocuments()
+    }
+
 
     findBySlug = async (slug) => {
         return await MainModel.findOne({slug}).populate('idCategory')
@@ -81,8 +90,8 @@ class ProductService {
         return await MainModel.find({status: 'active', newProduct: true}).sort({ordering: 1})
     }
 
-    findProductWithStatus = async () => {
-        return await MainModel.find({status: 'active'}).sort({ordering: 1})
+    findProductWithStatus = async (limitItems, pageSkip) => {
+        return await MainModel.find({status: 'active'}).limit(limitItems).skip(pageSkip).sort({ordering: 1})
     }
 
     searchProductWithKeyword = async (q) => {

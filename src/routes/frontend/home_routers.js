@@ -2,30 +2,50 @@ var express = require('express');
 var router = express.Router();
 const ProductService = require('../../services/product_service');
 const CategoryService = require('../../services/category_service');
+const {generatePaginationVer2} = require('../../utils/helper')
+const limitPage = 6
+const pageRanges = 4
 const {fetchSlider, fetchProductWithSpecial} = require('../../middleware/Main_Middleware')
-const {cartId} = require('../../middleware/frontend/cart_middleware')
 
 
 router.use(fetchSlider);
 router.use(fetchProductWithSpecial);
-router.use(cartId);
+
 
 router.get('/:slug', async (req , res , next) => {
     const { slug } = req.params
+    const {page} = req.query
 
     //for category
     const categoriesWithSlug = await CategoryService.findBySlug(slug)
     if(categoriesWithSlug) {
-        const products = await ProductService.findByParam({idCategory: categoriesWithSlug._id})
-        return res.render('frontend/pages/product', {category : categoriesWithSlug, products, layout: "frontend" })
+
+        const totalRecord = await ProductService.countProducts(categoriesWithSlug._id)
+
+        const objectPagination = await generatePaginationVer2(page, limitPage, pageRanges, totalRecord)
+
+        const products = await ProductService.findByParam({idCategory: categoriesWithSlug._id}, objectPagination.limitItems, objectPagination.pageSkip)
+        
+        return res.render('frontend/pages/product', {category : categoriesWithSlug, products, pagination: objectPagination, layout: "frontend" })
     }
 
-    //for product detail
+    // for product detail
     const productWithSlug = await ProductService.findBySlug(slug);
     if (productWithSlug) {
         return res.render('frontend/pages/detail', { products: productWithSlug, layout: "frontend" });
     }
+
+    // Không khớp với category hoặc product, chuyển đến middleware tiếp theo
     next()
+})
+
+router.get('/category', async (req, res, next) => {
+    const {page} = req.query
+    const totalRecord = await ProductService.countProductsAll()
+    const objectPagination = await generatePaginationVer2(page, limitPage, pageRanges, totalRecord)
+
+    const products = await ProductService.findProductWithStatus(objectPagination.limitItems, objectPagination.pageSkip)
+    res.render(`frontend/pages/category`, {layout: "frontend", products, pagination: objectPagination})
 })
 
 router.get('/search', async (req, res, next) => {
@@ -54,14 +74,11 @@ router.get('/:slug?', async (req , res , next) => {
         case 'blog':
             link = 'frontend/pages/blog'
             break;
-        case 'category':
-            link = 'frontend/pages/category'
-            break;
         default:  
             link = 'frontend/pages/home'
             break;
     }
-    res.render(link, {layout: "frontend" })
+    res.render(link, {layout: "frontend"})
 })
 
     

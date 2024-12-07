@@ -1,3 +1,4 @@
+<%- include('../../helpers/render_pagination.ejs') %>
 <nav aria-label="breadcrumb" class="breadcrumb-nav mb-0">
     <div class="container">
         <ol class="breadcrumb">
@@ -110,7 +111,7 @@
                 </div><!-- End .toolbox-item -->
 
                 <ul class="pagination">
-                    <li class="page-item disabled">
+                    <!-- <li class="page-item disabled">
                         <a class="page-link page-link-btn" href="#"><i class="icon-angle-left"></i></a>
                     </li>
                     <li class="page-item active">
@@ -123,7 +124,8 @@
                     <li class="page-item"><span class="page-link">...</span></li>
                     <li class="page-item">
                         <a class="page-link page-link-btn" href="#"><i class="icon-angle-right"></i></a>
-                    </li>
+                    </li> -->
+                    <%- renderPagination(pagination) %>
                 </ul>
             </nav>
         </div><!-- End .col-lg-9 -->
