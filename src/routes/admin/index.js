@@ -21,5 +21,7 @@ router.use('/brand',require('./brand_routers'))
 router.use('/subscribe',require('./subscribe_routers'))
 router.use('/order',require('./order_routers'))
 router.use('/contact',require('./contact_routers'))
+router.use('/user',require('./user_routers'))
+router.use('/discount',require('./discount_router'))
 
 module.exports = router

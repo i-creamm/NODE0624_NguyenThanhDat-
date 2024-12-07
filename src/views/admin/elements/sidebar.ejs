@@ -21,7 +21,7 @@
               "link" : '/admin/category' ,
             },{
               "name" : 'Product' ,
-              "active" : 'product',
+              "active": 'product',
               "icon" : "fas fa-list",
               "link" : '/admin/product' ,
             },{
@@ -29,6 +29,27 @@
               "active" : 'discount',
               "icon" : "fas fa-solid fa-percent",
               "link" : '/admin/discount',
+            }] 
+},
+{ 
+  "name": 'Manage User' ,
+  "icon" : "fas fa-th" ,
+  "link" : '#' ,
+  "child" : [{
+              "name": "User",
+              "active" : 'user',
+              "icon": "fas fa-user",
+              "link": "/admin/user",
+            },{
+              "name": "Subscribe",
+              "active": 'subscribe',
+              "icon": "fas fa-users",
+              "link": "/admin/subscribe",
+            },{
+              "name": "Order",
+              "active": 'order',
+              "icon": 'fas fa-shopping-bag',
+              "link": '/admin/order',
             }] 
 },
 { 
@@ -48,7 +69,7 @@
             },{
               "name": "Brand",
               "active" : 'brand',
-              "icon": "fas fa-image",
+              "icon": "fas fa-layer-group",
               "link": "/admin/brand"
             },{
               "name": "Setting",
@@ -61,22 +82,6 @@
               "icon": 'far fa-envelope',
               "link": '/admin/contact'
             }]
-},
-{ 
-  "name": 'Manage User' ,
-  "icon" : "fas fa-th" ,
-  "link" : '#' ,
-  "child" : [{
-              "name": "Subscribe",
-              "active" : 'subscribe',
-              "icon": "fas fa-solid fa-users",
-              "link": "/admin/subscribe",
-            },{
-              "name": "Order",
-              "active": 'order',
-              "icon": 'fas fa-shopping-bag',
-              "link": '/admin/order',
-            }] 
 }
 ]%>
 

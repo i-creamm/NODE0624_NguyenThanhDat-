@@ -61,9 +61,73 @@ const generatePagination = (totalItems, currentPage, pageLimit, pageRanges = 5) 
   };
 };
 
+const generateCountStatusOrder = async (allCount, pendingCount, shippingCount) => {
+  return [
+    {
+      name: "All",
+      status: "",
+      class: "default",
+      count: allCount
+    },
+    {
+      name: "Pending",
+      status: "pending",
+      class: "default",
+      count: pendingCount
+    },
+    {
+      name: "Shipping",
+      status: "shipping",
+      class: "default",
+      count: shippingCount
+    },
+  ];
+};
+
+const generateCountStatusUser = async (allCount, activeCount, inactiveCount) => {
+  return [
+    {
+      name: "All",
+      status: "",
+      class: "default",
+      count: allCount
+    },
+    {
+      name: "Active",
+      status: "active",
+      class: "default",
+      count: activeCount
+    },
+    {
+      name: "Inactive",
+      status: "inactive",
+      class: "default",
+      count: inactiveCount
+    },
+  ];
+};
+
+const generatePaginationVer2 = (page, limitItems, pageRanges, totalPage) => {
+  const currentPage = page ? parseInt(page) : 1;
+  const totalPages = Math.ceil(totalPage / limitItems);
+  const pageSkip = (currentPage - 1) * limitItems;
+
+  return {
+    limitItems,
+    totalPage,
+    totalPages,
+    currentPage,
+    pageRanges,
+    pageSkip,
+  };
+};
+
   module.exports = {
     readFile,
     writeFile,
     generateCountStatus,
-    generatePagination
+    generateCountStatusUser,
+    generatePagination,
+    generatePaginationVer2,
+    generateCountStatusOrder
   };

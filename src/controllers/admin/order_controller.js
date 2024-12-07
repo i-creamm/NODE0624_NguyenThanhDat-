@@ -1,41 +1,32 @@
 const MainService = require("../../services/order_service");
-const CategoryService = require("../../services/category_service");
-
-const {generateCountStatus, generatePagination} = require('../../utils/helper')
-
+const {generateCountStatusOrder, generatePaginationVer2} = require('../../utils/helper')
 const updateItem = require("../../utils/upload");
-const uploadFiles = updateItem.upload("products", [{ name: 'image', maxCount: 1 }, { name: 'images', maxCount: 5 }])
-
 const nameController = 'order'
 const linkPrefix = `/admin/${nameController}`
-const folderImage = '/products'
-const path = require('path')
-const fs = require('fs');
 
 
-class ProductController {
+
+class OrderController {
 
   getAll = async (req, res, next) => {
-    const { status, category, search, page = 1} = req.query;
+    const {status, search, page = 1} = req.query
 
-    //filter all, active, inactive
-    const [allCount, activeCount, inactiveCount] = await Promise.all([
+    //Filter
+    const [allCount, pendingCount, shippingCount] = await Promise.all([
       MainService.countItemWithStatus(),
-      MainService.countItemWithStatus("active"),
-      MainService.countItemWithStatus("inactive")
+      MainService.countItemWithStatus("pending"),
+      MainService.countItemWithStatus("shipping")
     ])
+    const countStatus = await generateCountStatusOrder(allCount, pendingCount, shippingCount)
+    //End Filter
 
-    const countStatus = await generateCountStatus(status, linkPrefix, allCount, activeCount, inactiveCount)
+    // Pagination
+    let countRecords = status == 'pending' ? pendingCount : status == 'shipping' ? shippingCount : allCount;
+    const objectPagination = await generatePaginationVer2(page, 4, 2, countRecords)
+    // End Pagination
 
-    //filter category
-    const categories = await CategoryService.getAllItems()
-
-    // pagination
-    let totalItems = status == 'active' ? activeCount : status == 'inactive' ? inactiveCount : allCount;
-    const pagination = generatePagination(totalItems, page, 5);
-
-    let items = await MainService.getAllItems(status, category, search, pagination.pageSkip, pagination.pageLimit);
-    return res.render(`admin/pages/${nameController}/list`, {items, category, categories, countStatus, status, search, pagination, message: {}});
+    let items = await MainService.getAllItems(status, search, countStatus, objectPagination.limitItems, objectPagination.pageSkip);
+    return res.render(`admin/pages/${nameController}/list`, {items, search, countStatus, pagination: objectPagination});
 
   };
 
@@ -51,25 +42,6 @@ class ProductController {
     res.redirect(`${linkPrefix}`);
   }
 
-  //delete item
-//   deleteItem = async (req, res, next) => {
-//     const {id} = req.params
-//     const item = await MainService.findId(id)
-
-//     if (item && item.image) {
-//       const imagePath = path.join(`public/uploads${folderImage}`+ "/" + `${id}`, item.image.replace(`/uploads`, ""))
-//       console.log(imagePath)
-//       fs.unlink(imagePath, (err) => {
-//         if (err) {
-//           console.error("Error deleting image:", err)
-//         }
-//       });
-//     }
-
-//     await MainService.deleteById(id)
-//     res.redirect(`${linkPrefix}`)
-//   }
-
 }
 
-module.exports = new ProductController();
+module.exports = new OrderController();

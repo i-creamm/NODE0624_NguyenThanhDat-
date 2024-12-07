@@ -5288,8 +5288,8 @@ a:focus {
 .home-slide {
   position: relative;
   width: 100%;
-  height: 538px;
-  background-color: #ccc
+  height: 496px;
+  background-color: #ccc;
 }
 
 .owl-carousel-lazy.owl-carousel {

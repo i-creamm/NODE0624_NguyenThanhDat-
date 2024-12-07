@@ -1,6 +1,6 @@
-const MainModel = require('../models/order_model')
+const MainModel = require('../models/user_model')
 
-class OrderService {
+class UserService {
 
     getAllItems = async (status, search, countStatus, limitItems, pageSkip) => {
         const query = {
@@ -10,10 +10,10 @@ class OrderService {
         if(status){
             query.status = status
             const index = countStatus.findIndex(item => item.status == status)
-            countStatus[index].class = 'info'
+            countStatus[index].class = 'success'
         } else {
             const index = countStatus.findIndex(item => item.status == '')
-            countStatus[index].class = 'info' 
+            countStatus[index].class = 'success' 
         }
 
         if(search){
@@ -38,6 +38,10 @@ class OrderService {
         return await MainModel.countDocuments(status)
     }
 
+    deleteById = async (id) => {
+        return await MainModel.findByIdAndDelete(id)
+    }
+
 }
 
-module.exports = new OrderService()
+module.exports = new UserService()

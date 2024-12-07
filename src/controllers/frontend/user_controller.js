@@ -1,5 +1,9 @@
 const User = require("../../models/user_model")
 const md5 = require("md5")
+const generateHelper = require('../../utils/generate')
+const forgotPasswordModel = require('../../models/forgot-password_model')
+
+
 class UserController {
 
     getRegisterForm = async (req, res, next) => {
@@ -20,7 +24,6 @@ class UserController {
     }
 
     registerPost = async (req, res, next) => {
-
 
         const existEmail = await User.findOne({
             email: req.body.email
@@ -44,8 +47,6 @@ class UserController {
 
     LoginPost = async (req, res, next) => {
         const {email, password} = req.body
-
-        //
 
         const user = await User.findOne({
             email: email,
@@ -71,7 +72,7 @@ class UserController {
         }
 
         res.cookie("tokenUser", user.tokenUser)
-        req.flash("success", `Login accout ${user.fullname} successfully`)
+        req.flash("success", `Login account ${user.fullname} successfully`)
         res.redirect("/")
     }
 
@@ -97,6 +98,18 @@ class UserController {
         }
 
         //ton tai thi gui OTP
+        const otp = generateHelper.generateRandomNumber(6)
+
+        const objectForgotPassword = {
+            email: email,
+            otp: otp,
+            expireAt: Date.now()
+        }
+
+        const forgotPassword = new forgotPasswordModel(objectForgotPassword)
+        await forgotPassword.save()
+
+        res.send('ok')
         
     }
 

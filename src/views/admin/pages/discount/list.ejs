@@ -1,7 +1,7 @@
 <%- include('../../helpers/render_pagination_ver2.ejs') %>
 <%- include('../../helpers/render_status.ejs') %>
 
-<% const collection = 'order' ; const linkPrefix = `/admin/${collection}/` ; const folderImage = '/orders/'%>
+<% const collection = 'discount' ; const linkPrefix = `/admin/${collection}/` ; const folderImage = '/orders/'%>
 
 <div class="row mb-2">
     <div class="col-sm-6">
@@ -54,6 +54,9 @@
 		<div class="card-header">
 			<h4 class="card-title">List</h4>
 
+			<div class="card-tools">
+				<a href="<%= linkPrefix %>form" class="btn btn-warning" style="background-color: #F0AD4E; color: white; font-weight: 500;">Add New</a>
+			</div>
 			<input type="hidden" name="action" id="inputHiddenAll" value="" >
 		</div>
 

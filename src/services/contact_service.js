@@ -6,7 +6,7 @@ class ContactService {
         return await MainModel.find()
     }
    
-    saveContact = async ({name, email, phone, content}) => {
+    saveContact = async (name, email, phone, content) => {
         return await MainModel.create({name, email, phone, content})
     }
 

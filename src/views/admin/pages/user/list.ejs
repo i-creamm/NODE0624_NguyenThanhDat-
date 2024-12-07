@@ -1,7 +1,7 @@
 <%- include('../../helpers/render_pagination_ver2.ejs') %>
 <%- include('../../helpers/render_status.ejs') %>
 
-<% const collection = 'order' ; const linkPrefix = `/admin/${collection}/` ; const folderImage = '/orders/'%>
+<% const collection = 'user' ; const linkPrefix = `/admin/${collection}/` ; const folderImage = '/orders/'%>
 
 <div class="row mb-2">
     <div class="col-sm-6">
@@ -69,11 +69,10 @@
 						</th>
 
 						<th class="text-center">#</a></th>
-						<th class="text-center">IDCustomer</a></th>
 						<th class="text-center">Fullname</a></th>
+						<th class="text-center">Email</a></th>
 						<th class="text-center">Status</a></th>
 						<th class="text-center">CreatedAt</a></th>
-						<th class="text-center">Total</a></th>
 						<th class="text-center">Action</th>
 					</tr>
 				</thead>
@@ -89,19 +88,20 @@
 
 							<td class="text-center"><%= index + 1  %></td>
 
-							<td class="text-center"><span><%= row.order_id %></span></td>
+							<td class="text-center"><span><%= row.fullname%></span></td>
 
-							<td class="text-center"><span><%= row.userInfo.fullname%></span></td>					
+							<td class="text-center"><span><%= row.email%></span></td>					
 
-							<%- renderStatusOrder(row._id, row.status, linkPrefix)%>
+							<%- renderStatus(row._id, row.status, linkPrefix)%>
 
 							<td class="text-center position-relative" ><%= row.createdAt.toLocaleString('vi-VN')%></td>
-
-							<td class="text-center"><span><%= row.total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) || 0%></span></td>
 
 							<td class="text-center">
 								<a href="<%= linkPrefix %>detail/<%= row._id%>" class="rounded-circle btn btn-sm btn-warning " title="View">
 									<i class="fas fa-eye"></i>
+								</a>
+								<a href="javascript:clickToDeleteId('<%= linkPrefix %>delete/<%= row._id%>')" class="rounded-circle btn btn-sm btn-danger">
+									<i class="fas fa-trash-alt"></i>
 								</a>
 							</td> 
 						</tr>

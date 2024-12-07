@@ -33,12 +33,13 @@ class ProductController {
     //filter category
     const categories = await CategoryService.getAllItems()
 
-    // pagination
+    // Pagination
     let totalItems = status == 'active' ? activeCount : status == 'inactive' ? inactiveCount : allCount;
-    const pagination = generatePagination(totalItems, page, 5);
+    const pagination = await generatePagination(totalItems, page, 5);
+    // End Pagination
 
     let items = await MainService.getAllItems(status, category, search, pagination.pageSkip, pagination.pageLimit);
-    return res.render(`admin/pages/${nameController}/list`, {items, category, categories, countStatus, status, search, pagination, message: {}});
+    return res.render(`admin/pages/${nameController}/list`, {items, category, categories, countStatus, status, search, pagination,});
   };
   
   //direct form put in

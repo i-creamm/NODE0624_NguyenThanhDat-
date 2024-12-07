@@ -154,44 +154,27 @@
                                 aria-controls="widget-body-2">Price</a>
                         </h3>
 
-                        <div class="collapse show" id="widget-body-2">
-                            <div class="widget-body">
-                                <form action="#">
-                                    <div class="price-slider-wrapper">
-                                        <div id="price-slider" class="noUi-target noUi-ltr noUi-horizontal">
-                                            <div class="noUi-base">
-                                                <div class="noUi-connects">
-                                                    <div class="noUi-connect"
-                                                        style="transform: translate(20%, 0px) scale(0.5, 1);"></div>
-                                                </div>
-                                                <div class="noUi-origin"
-                                                    style="transform: translate(-80%, 0px); z-index: 5;">
-                                                    <div class="noUi-handle noUi-handle-lower" data-handle="0"
-                                                        tabindex="0" role="slider" aria-orientation="horizontal"
-                                                        aria-valuemin="0.0" aria-valuemax="60.0" aria-valuenow="20.0"
-                                                        aria-valuetext="200.00"></div>
-                                                </div>
-                                                <div class="noUi-origin"
-                                                    style="transform: translate(-30%, 0px); z-index: 4;">
-                                                    <div class="noUi-handle noUi-handle-upper" data-handle="1"
-                                                        tabindex="0" role="slider" aria-orientation="horizontal"
-                                                        aria-valuemin="30.0" aria-valuemax="100.0" aria-valuenow="70.0"
-                                                        aria-valuetext="700.00"></div>
-                                                </div>
-                                            </div>
-                                        </div><!-- End #price-slider -->
-                                    </div><!-- End .price-slider-wrapper -->
-
-                                    <div class="filter-price-action">
-                                        <button type="submit" class="btn btn-dark">Filter</button>
-
-                                        <div class="filter-price-text">
-                                            <span id="filter-price-range">$200.00 - $700.00</span>
-                                        </div><!-- End .filter-price-text -->
-                                    </div><!-- End .filter-price-action -->
+                        <div class="collapse show" id="widget-body-2" style="">
+                            <div class="price-filter">
+                                <form id="priceFilterForm" action="/filter" method="get">
+                                    <div class="range-slider">
+                                        <input type="range" id="minPrice" name="minPrice" min="<%= minPrice %>" max="<%= maxPrice %>"
+                                            step="1" value="1" oninput="updateSlider()">
+                                        <input type="range" id="maxPrice" name="maxPrice" min="<%= minPrice %>" max="<%= maxPrice %>"
+                                            step="1" value="<%= maxPrice %>" oninput="updateSlider()">
+                                    </div>
+                                    <div class="price-labels">
+                                        <span>Giá bắt đầu: <span id="minPriceLabel">
+                                                <%= minPrice.toLocaleString('vi-VN', { style: 'currency' , currency: 'VND' }) %>
+                                            </span></span>
+                                        <span>Giá kết thúc: <span id="maxPriceLabel">
+                                                <%= maxPrice.toLocaleString('vi-VN', { style: 'currency' , currency: 'VND' }) %>
+                                            </span></span>
+                                    </div>
+                                    <button class="btn-filter" type="submit">Áp dụng</button>
                                 </form>
-                            </div><!-- End .widget-body -->
-                        </div><!-- End .collapse -->
+                            </div>
+                        </div>
                     </div><!-- End .widget -->
 
 

@@ -1,0 +1,34 @@
+<%- include('../../helpers/render_status.ejs') %>
+<% const collection="user" ; const linkPrefix=`/admin/${collection}/` ; const linkThumb='' ; const folderImage = '/products/' %>
+    <div class="card card-info card-outline">
+            <div class="card-body">
+                <h1>
+                    === <%= detailUser.fullname %> ===
+                </h1>
+
+                <div class="form-group row align-items-center">
+                    <label for="fullname" class="col-sm-2 col-form-label text-sm-right required">Email:</label>
+                    <p class="col-sm-10 mb-0"><%= detailUser.email %></p>
+                </div>
+
+                <div class="form-group row align-items-center">
+                    <label for="phone" class="col-sm-2 col-form-label text-sm-right required">Password:</label>
+                    <p class="col-sm-10 mb-0"><%= detailUser.password %></p>
+                </div>
+
+                <div class="form-group row align-items-center">
+                    <label for="address" class="col-sm-2 col-form-label text-sm-right required">Status:</label>
+                    <p class="col-sm-10 mb-0">
+                        <%- renderStatus(detailUser._id, detailUser.status, linkPrefix)%>
+                    </p>
+                </div>
+
+           </div>
+            <div class="card-footer">
+                <div class="col-12 col-sm-8 offset-sm-2 text-right">
+                
+                    <a href="<%= linkPrefix %>" class="btn btn-md btn-danger mr-1">
+                        Back</a>
+                </div>
+            </div>
+    </div>

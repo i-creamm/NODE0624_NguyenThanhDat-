@@ -1,5 +1,6 @@
 const MainService = require("../../services/subscribe_service");
 const {generateCountStatus, generatePagination} = require('../../utils/helper')
+const helperSendMail = require('../../utils/helperSendMail')
 
 const nameController = 'subscribe'
 const linkPrefix = `/admin/${nameController}`
@@ -36,8 +37,12 @@ class SubscribeClass {
 
   saveEmailAndSendIt = async (req, res, next) => {
     const {id} = req.params
+    const {email} = req.body
+    const subject = `Thanks For Subscribe`
+    const html = `<b>Thank you for Subscribe <3</b>`
     if(!id) {
-      await MainService.Email(req.body)
+      await MainService.saveEmail(email)
+      helperSendMail.sendEmail(email, subject, html)
       return res.redirect("/")
     } else {
       await MainService.sendEmailIsSaved(id, req.body)
@@ -50,7 +55,6 @@ class SubscribeClass {
     await MainService.deleteById(id)
     res.redirect(`${linkPrefix}`)
   }
-
 
 }
 

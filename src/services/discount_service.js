@@ -1,6 +1,6 @@
-const MainModel = require('../models/order_model')
+const MainModel = require('../models/discount_model')
 
-class OrderService {
+class DiscountService {
 
     getAllItems = async (status, search, countStatus, limitItems, pageSkip) => {
         const query = {
@@ -23,6 +23,9 @@ class OrderService {
         return await MainModel.find(query).limit(limitItems).skip(pageSkip).sort({'createdAt': -1})
     }
 
+    findId = async (id) => {
+        return await MainModel.findById(id)
+    }
 
     detailById = async (id) => {
         return await MainModel.findById(id)
@@ -40,4 +43,4 @@ class OrderService {
 
 }
 
-module.exports = new OrderService()
+module.exports = new DiscountService()

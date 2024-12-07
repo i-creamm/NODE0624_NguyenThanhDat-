@@ -1,4 +1,57 @@
 
+//Button Status
+const buttonsStatus = document.querySelectorAll("[button-status]")
+    if(buttonsStatus.length > 0) {
+        let url = new URL(window.location.href) 
+
+        buttonsStatus.forEach(button => {
+            button.addEventListener('click', () => {
+                const status = button.getAttribute("button-status")
+                if(status){
+                    url.searchParams.set('status', status)
+                } else {
+                    url.searchParams.delete('status')
+                }
+                window.location.href = url.href
+            })
+        })
+        
+}
+//End Button Status
+
+//Form Search
+const formSearch = document.querySelector('#form-search')
+if(formSearch){
+    let url = new URL(window.location.href)
+    formSearch.addEventListener('submit', (e) => {
+        e.preventDefault()
+        const search = e.target.elements.search.value
+        if(search){
+            url.searchParams.set('search', search)
+        } else {
+            url.searchParams.delete('search')
+        }
+        window.location.href = url.href
+    })
+}
+//End Form Search
+
+
+//Pagination
+const buttonPagination = document.querySelectorAll('[button-pagination]')
+if(buttonPagination){
+    let url = new URL(window.location.href) 
+    buttonPagination.forEach(button => {
+        button.addEventListener('click', () => {
+            const page = button.getAttribute('button-pagination')
+            url.searchParams.set('page', page)
+            window.location.href = url.href
+        })
+    })
+}
+//End Pagination
+
+
 const clickToDeleteId = (url) => {
     Swal.fire({
         title: "Are you sure?",
@@ -52,7 +105,7 @@ $(document).ready(function () {
 
     const url = window.location.href
     const arrUrl = url.split('/')
-    let activeName = arrUrl[4] ||  'dashboard'
+    let activeName = arrUrl[4].split('?')[0] ||  'dashboard'
     $(`#${activeName}`).parent().parent().parent().addClass('menu-open');
     $(`#${activeName}`).addClass('active');
 
