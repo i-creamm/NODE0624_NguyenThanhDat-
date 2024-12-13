@@ -1,5 +1,4 @@
 const fs = require("node:fs/promises")
-const MainService = require('../services/item_service')
 
 
 const readFile = async () => {
@@ -21,45 +20,32 @@ const writeFile = async (data) => {
   }
 };
 
-const generateCountStatus = async (status, linkPrefix, allCount, activeCount, inactiveCount) => {
-  return [
-    {
-      name: "All",
-      count: allCount,
-      value: "all",
-      link: `${linkPrefix}`,
-      active: status !== "inactive" && status !== "active",
-    },
-    {
-      name: "Active",
-      count: activeCount,
-      value: "active",
-      link: `${linkPrefix}?status=active`,
-      active: status === "active",
-    },
-    {
-      name: "Inactive",
-      count: inactiveCount,
-      value: "inactive",
-      link: `${linkPrefix}?status=inactive`,
-      active: status === "inactive",
-    },
-  ];
-};
+// const generateCountStatus = async (status, linkPrefix, allCount, activeCount, inactiveCount) => {
+//   return [
+//     {
+//       name: "All",
+//       count: allCount,
+//       value: "all",
+//       link: `${linkPrefix}`,
+//       active: status !== "inactive" && status !== "active",
+//     },
+//     {
+//       name: "Active",
+//       count: activeCount,
+//       value: "active",
+//       link: `${linkPrefix}?status=active`,
+//       active: status === "active",
+//     },
+//     {
+//       name: "Inactive",
+//       count: inactiveCount,
+//       value: "inactive",
+//       link: `${linkPrefix}?status=inactive`,
+//       active: status === "inactive",
+//     },
+//   ];
+// };
 
-const generatePagination = (totalItems, currentPage, pageLimit, pageRanges = 5) => {
-  const totalPages = Math.ceil(totalItems / pageLimit);
-  const pageSkip = (currentPage - 1) * pageLimit;
-
-  return {
-    pageLimit,
-    totalItems,
-    totalPages,
-    currentPage: parseInt(currentPage),
-    pageRanges,
-    pageSkip,
-  };
-};
 
 const generateCountStatusOrder = async (allCount, pendingCount, shippingCount) => {
   return [
@@ -122,10 +108,24 @@ const generatePaginationVer2 = (page, limitItems, pageRanges, totalPage) => {
   };
 };
 
+const generatePagination = (page, limitItems, pageRanges, totalPage) => {
+  const currentPage = page ? parseInt(page) : 1;
+  const totalPages = Math.ceil(totalPage / limitItems);
+  const pageSkip = (currentPage - 1) * limitItems;
+
+  return {
+    limitItems,
+    totalPage,
+    totalPages,
+    currentPage,
+    pageRanges,
+    pageSkip,
+  };
+};
+
   module.exports = {
     readFile,
     writeFile,
-    generateCountStatus,
     generateCountStatusUser,
     generatePagination,
     generatePaginationVer2,

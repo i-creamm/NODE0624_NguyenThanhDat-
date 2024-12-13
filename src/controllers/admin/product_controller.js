@@ -1,7 +1,7 @@
 const MainService = require("../../services/product_service");
 const CategoryService = require("../../services/category_service");
 
-const {generateCountStatus, generatePagination} = require('../../utils/helper')
+const {generateCountStatusUser, generatePagination} = require('../../utils/helper')
 const { ItemValidate } = require("../../validation/item_validates");
 const { validationResult } = require("express-validator");
 const { asyncHandle } =  require('../../utils/asyncHandle')
@@ -20,26 +20,25 @@ const fs = require('fs');
 class ProductController {
 
   getAll = async (req, res, next) => {
-    const { status, category, search, page = 1} = req.query;
+    const {status, search, page = 1} = req.query
 
-    //filter all, active, inactive
+    //Filter
     const [allCount, activeCount, inactiveCount] = await Promise.all([
       MainService.countItemWithStatus(),
       MainService.countItemWithStatus("active"),
       MainService.countItemWithStatus("inactive")
     ])
-    const countStatus = await generateCountStatus(status, linkPrefix, allCount, activeCount, inactiveCount)
-
-    //filter category
-    const categories = await CategoryService.getAllItems()
+    const countStatus = await generateCountStatusUser(allCount, activeCount, inactiveCount)
+    //End Filter
 
     // Pagination
-    let totalItems = status == 'active' ? activeCount : status == 'inactive' ? inactiveCount : allCount;
-    const pagination = await generatePagination(totalItems, page, 5);
+    let countRecords = status == 'active' ? activeCount : status == 'inactive' ? inactiveCount : allCount;
+    const objectPagination = await generatePagination(page, 5, 3, countRecords)
     // End Pagination
 
-    let items = await MainService.getAllItems(status, category, search, pagination.pageSkip, pagination.pageLimit);
-    return res.render(`admin/pages/${nameController}/list`, {items, category, categories, countStatus, status, search, pagination,});
+    let items = await MainService.getAllItems(status, search, countStatus, objectPagination.limitItems, objectPagination.pageSkip);
+    return res.render(`admin/pages/${nameController}/list`, {items, search, countStatus, pagination: objectPagination});
+
   };
   
   //direct form put in

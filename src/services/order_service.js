@@ -10,10 +10,10 @@ class OrderService {
         if(status){
             query.status = status
             const index = countStatus.findIndex(item => item.status == status)
-            countStatus[index].class = 'info'
+            countStatus[index].class = 'success'
         } else {
             const index = countStatus.findIndex(item => item.status == '')
-            countStatus[index].class = 'info' 
+            countStatus[index].class = 'success' 
         }
 
         if(search){

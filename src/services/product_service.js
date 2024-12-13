@@ -2,20 +2,26 @@ const MainModel = require('../models/product_model')
 
 class ProductService {
 
-    getAllItems = async (status, category, search, pageSkip, pageLimit) =>{
-        const query = {};
-        if (status) {
-            query.status = status;
+    getAllItems = async (status, search, countStatus, limitItems, pageSkip) => {
+        const query = {}
+        if(status){
+            query.status = status
+            const index = countStatus.findIndex(item => item.status == status)
+            countStatus[index].class = 'success'
+        } else {
+            const index = countStatus.findIndex(item => item.status == '')
+            countStatus[index].class = 'success' 
         }
+
         if (search) {
             query.name = new RegExp(search, 'ig');
         }
-        if (category) {
-            query.idCategory = category;
-        }
-        return await MainModel.find(query).skip(pageSkip).limit(pageLimit).sort({'createdAt': -1}).populate('idCategory')
+        return await MainModel.find(query)
+        .limit(limitItems)
+        .skip(pageSkip)
+        .sort({'createdAt': -1}).populate('idCategory')
     }
-
+    
     save = async ( { name, ordering, status, image, images, isSpecial, newProduct, price, discount, type_discount, price_discount, detail, idCategory}) => {
            
         const data = await MainModel.create({

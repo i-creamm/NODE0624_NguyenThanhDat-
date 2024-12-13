@@ -22,7 +22,8 @@ class OrderController {
 
     // Pagination
     let countRecords = status == 'pending' ? pendingCount : status == 'shipping' ? shippingCount : allCount;
-    const objectPagination = await generatePaginationVer2(page, 4, 2, countRecords)
+    const objectPagination = await generatePaginationVer2(page, 3, 2, countRecords)
+    console.log(objectPagination)
     // End Pagination
 
     let items = await MainService.getAllItems(status, search, countStatus, objectPagination.limitItems, objectPagination.pageSkip);

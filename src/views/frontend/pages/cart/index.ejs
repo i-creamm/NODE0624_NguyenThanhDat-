@@ -1,8 +1,8 @@
 <nav aria-label="breadcrumb" class="breadcrumb-nav mb-1">
     <div class="container">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html"><i class="icon-home"></i></a></li>
-            <li class="breadcrumb-item active" aria-current="page">Shopping Cart</li>
+            <li class="breadcrumb-item"><a href="/"><i class="icon-home"></i></a></li>
+            <li class="breadcrumb-item active" aria-current="page">Cart</li>
         </ol>
     </div><!-- End .container -->
 </nav>
@@ -22,56 +22,20 @@
                         </tr>
                     </thead>
                     <tbody id="body-cart">
-                        <% if (cartDetail.products.length > 0) { %>
-                            <% cartDetail.products.forEach((item) => { %>
-                                <tr class="product-row">
-                                    <td class="product-col">
-                                        <figure class="product-image-container">
-                                            <a href="/<%= item.productInfo.slug %>" class="product-image">
-                                                <img src="/uploads/products/<%= item.productInfo.image %>" alt="product">
-                                            </a>
-                                        </figure>
-                                        <h2 class="product-title">
-                                            <a href="/<%= item.productInfo.slug %>"><%= item.productInfo.name %></a>
-                                        </h2>
-                                    </td>
-                                    <td><%= item.priceAtTime.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) || 0 %></td>
-                                    <td>
-                                        <input class="text-center" type="number" name="quantity"  value="<%= item.quantity %>" item-id="<%= item.product_id %>" style="width: 60px;">
-                                    </td>
-                                    <td><%= item.totalPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) || 0%></td>
-                                </tr>
-                                <tr class="product-action-row">
-                                    <td colspan="4" class="clearfix">
-                                        <div class="float-left">
-                                            <a href="#" class="btn-move">Move to Wishlist</a>
-                                        </div><!-- End .float-left -->
-        
-                                        <div class="float-right">
-                                            <a href="#" title="Edit product" class="btn-edit"><span
-                                                    class="sr-only">Edit</span><i class="icon-pencil"></i></a>
-                                            <a href="/cart/delete/<%= item.product_id %>" title="Remove product" class="btn-remove"><span
-                                                    class="sr-only">Remove</span></a>
-                                        </div><!-- End .float-right -->
-                                    </td>
-                                </tr>
-                            <% }) %>
-                        <% } else { %>
-                            <p><span>No Product in Cart</span></p>
-                        <% } %>
+                        
                     </tbody>
 
                     <tfoot>
                         <tr>
                             <td colspan="4" class="clearfix">
                                 <div class="float-left">
-                                    <a href="category.html" class="btn btn-outline-secondary">Continue Shopping</a>
+                                    <a href="/" class="btn btn-outline-secondary">Continue Shopping</a>
                                 </div><!-- End .float-left -->
 
                                 <div class="float-right">
-                                    <a href="#" class="btn btn-outline-secondary btn-clear-cart">Clear Shopping Cart</a>
-                                    <a href="#" class="btn btn-outline-secondary btn-update-cart">Update Shopping
-                                        Cart</a>
+                                    <a href="javascript:clearProduct()" class="btn btn-outline-secondary btn-clear-cart">Clear Shopping Cart</a>
+                                    <!-- <a href="#" class="btn btn-outline-secondary btn-update-cart">Update Shopping
+                                        Cart</a> -->
                                 </div><!-- End .float-right -->
                             </td>
                         </tr>
@@ -103,7 +67,7 @@
                     <tfoot>
                         <tr>
                             <td>Order Total</td>
-                            <td id="total-price"><%= cartDetail.totalPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) || 0%></td>
+                            <td id="total-price"></td>
                         </tr>
                     </tfoot>
                 </table>

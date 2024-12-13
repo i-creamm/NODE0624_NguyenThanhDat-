@@ -1,4 +1,5 @@
 
+
 //Button Status
 const buttonsStatus = document.querySelectorAll("[button-status]")
     if(buttonsStatus.length > 0) {
@@ -12,12 +13,32 @@ const buttonsStatus = document.querySelectorAll("[button-status]")
                 } else {
                     url.searchParams.delete('status')
                 }
+                // Reset trang về 1 khi chuyển trạng thái
+                url.searchParams.delete('page');
                 window.location.href = url.href
             })
         })
         
 }
 //End Button Status
+
+//Pagination
+const buttonPagination = document.querySelectorAll('[button-pagination]')
+if(buttonPagination){
+    let url = new URL(window.location.href) 
+    buttonPagination.forEach(button => {
+        button.addEventListener('click', () => {
+            const page = button.getAttribute('button-pagination')
+            if(page){
+                url.searchParams.set('page', page)
+            } else {
+                url.searchParams.delete('page')
+            }
+            window.location.href = url.href
+        })
+    })
+}
+//End Pagination
 
 //Form Search
 const formSearch = document.querySelector('#form-search')
@@ -37,19 +58,7 @@ if(formSearch){
 //End Form Search
 
 
-//Pagination
-const buttonPagination = document.querySelectorAll('[button-pagination]')
-if(buttonPagination){
-    let url = new URL(window.location.href) 
-    buttonPagination.forEach(button => {
-        button.addEventListener('click', () => {
-            const page = button.getAttribute('button-pagination')
-            url.searchParams.set('page', page)
-            window.location.href = url.href
-        })
-    })
-}
-//End Pagination
+
 
 
 const clickToDeleteId = (url) => {
@@ -99,7 +108,18 @@ if(uploadImage){
 }
 // End preview image
 
-
+//Change Status Order
+const changeStatus = document.querySelectorAll('#change-status')
+if(changeStatus){
+    changeStatus.forEach(option => {
+        option.addEventListener('change', (e) => {
+            const val = e.target.value
+            const link = e.target.dataset.link + '/' + val
+            window.location.href = link
+        })
+    })
+}
+//End Change Status Order
 
 $(document).ready(function () {
 
@@ -108,7 +128,6 @@ $(document).ready(function () {
     let activeName = arrUrl[4].split('?')[0] ||  'dashboard'
     $(`#${activeName}`).parent().parent().parent().addClass('menu-open');
     $(`#${activeName}`).addClass('active');
-
 
     $('.ordering').change(function (e) { 
 
@@ -127,7 +146,6 @@ $(document).ready(function () {
         $.ajax({
             url: link,
             type: 'GET',
-            data: { ordering: val },
             success: function() {
                 toastr.success('Ordering updated successfully!', 'Success');
             }})

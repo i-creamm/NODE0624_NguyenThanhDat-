@@ -49,6 +49,15 @@ if(buttonPagination){
 }
 //End Pagination
 
+// Login
+$('#button-login').click(function (e) { 
+
+    updateCartTop()
+    showCart()
+
+});
+// End Login
+
 
 //Show cart
 const showCart = () => {
@@ -119,8 +128,18 @@ const deleteProduct = (idProduct) => {
     localStorage.setItem("carts", JSON.stringify(carts));
     updateCartTop();
     showCart();
-    updateCheckoutForm()
     toastr.success("Đã xóa sản phẩm khỏi giỏ hàng", "success");
+};
+//End Delete product
+
+
+//Delete product
+const clearProduct = () => {
+    carts = []
+    localStorage.setItem("carts", JSON.stringify(carts));
+    updateCartTop();
+    showCart();
+    toastr.success("Đã xoá tất cả khỏi giỏ hàng", "success");
 };
 //End Delete product
 
@@ -213,7 +232,7 @@ const updateQuantity = (idProduct, newQuantity) => {
 // End Update quantity
 
 $('#card-footer-btn').click( async function (e)  {
-    e.preventDefault();
+
     let fullname = $('input[name="fullname"]').val();
     let phone = $('input[name="phone"]').val();
     let address = $('input[name="address"]').val();
@@ -296,6 +315,14 @@ const updateSlider = () => {
   
 
 $(document).ready(function () {
+
+    toastr.options = {
+        "closeButton": true,
+        "timeOut": 2000, // Sử dụng time từ data-time, nếu không có thì mặc định là 2000ms
+        "extendedTimeOut": 1000,
+        "positionClass": "toast-top-right",
+        "progressBar": true,
+    };
 
     carts = localStorage.getItem("carts") ? JSON.parse(localStorage.getItem("carts")) : []
     updateCartTop()
