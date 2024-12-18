@@ -3,15 +3,21 @@ const Category = require('../models/category_model')
 
 class MenuService {
 
-    getAllItems = async (status , search, pageSkip, pageLimit) =>{
+    getAllItems = async (status, search, countStatus, limitItems, pageSkip) =>{
         const query = {};
-        if (status) {
-            query.status = status;
+        if(status){
+            query.status = status
+            const index = countStatus.findIndex(item => item.status == status)
+            countStatus[index].class = 'success'
+        } else {
+            const index = countStatus.findIndex(item => item.status == '')
+            countStatus[index].class = 'success' 
         }
+
         if (search) {
             query.name = new RegExp(search, 'ig');
         }
-        return (await MainModel.find(query).skip(pageSkip).limit(pageLimit).sort({'createdAt': -1}))
+        return (await MainModel.find(query).skip(pageSkip).limit(limitItems).sort({'createdAt': -1}))
     }
 
     save = async ({name, ordering, status, link}) => {

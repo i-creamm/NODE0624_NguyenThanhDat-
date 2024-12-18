@@ -55,7 +55,7 @@ class ProductController {
   changeStatus = async (req, res, next) => {
     let {id, status} = req.params
     await MainService.changeStatusById(id, status)
-    res.redirect(`${linkPrefix}`);
+    res.redirect('back');
   }
 
   changeOrdering = async (req, res, next) => {

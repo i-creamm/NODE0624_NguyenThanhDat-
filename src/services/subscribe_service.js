@@ -4,15 +4,21 @@ require('dotenv').config();
 
 class SubscribeService {
 
-  getAllItems = async (status , search, pageSkip, pageLimit) =>{
+  getAllItems = async (status, search, countStatus, limitItems, pageSkip) =>{
       const query = {};
-      if (status) {
-          query.status = status;
+      if(status){
+          query.status = status
+          const index = countStatus.findIndex(item => item.status == status)
+          countStatus[index].class = 'success'
+      } else {
+          const index = countStatus.findIndex(item => item.status == '')
+          countStatus[index].class = 'success' 
       }
+
       if (search) {
           query.name = new RegExp(search, 'ig');
       }
-      return await MainModel.find(query).skip(pageSkip).limit(pageLimit)
+      return await MainModel.find(query).skip(pageSkip).limit(limitItems)
   }
 
   countItemWithStatus = async(name = "") => {

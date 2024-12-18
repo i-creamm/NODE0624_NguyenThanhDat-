@@ -1,5 +1,5 @@
 const MainService = require("../../services/subscribe_service");
-const {generateCountStatus, generatePagination} = require('../../utils/helper')
+const {generateCountStatusUser, generatePagination} = require('../../utils/helper')
 const helperSendMail = require('../../utils/helperSendMail')
 
 const nameController = 'subscribe'
@@ -16,14 +16,16 @@ class SubscribeClass {
       MainService.countItemWithStatus("active"),
       MainService.countItemWithStatus("inactive")
     ])
-    const countStatus = await generateCountStatus(status, linkPrefix, allCount, activeCount, inactiveCount)
+    const countStatus = await generateCountStatusUser(allCount, activeCount, inactiveCount)
 
-    // pagination
-    let totalItems = status == 'active' ? activeCount : status == 'inactive' ? inactiveCount : allCount;
-    const pagination = generatePagination(totalItems, page, 5);
+    // Pagination
+    let countRecords = status == 'active' ? activeCount : status == 'inactive' ? inactiveCount : allCount;
+    const objectPagination = await generatePagination(page, 5, 3, countRecords)
+    // End Pagination
 
-    let items = await MainService.getAllItems(status, search, pagination.pageSkip, pagination.pageLimit);
-    return res.render(`admin/pages/${nameController}/list`, {items, countStatus, status, search, pagination, message: {}});
+    let items = await MainService.getAllItems(status, search, countStatus, objectPagination.limitItems, objectPagination.pageSkip);
+    return res.render(`admin/pages/${nameController}/list`, { items, search, countStatus, pagination: objectPagination });
+
   }
 
   getForm = async (req, res, next) => {
