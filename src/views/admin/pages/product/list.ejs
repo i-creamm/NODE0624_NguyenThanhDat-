@@ -84,13 +84,11 @@
 						<th class="text-center">#</th>
 						<th class="text-center">Image</th>
 						<th class="text-center">Name</th>
-						<th class="text-center">Status</th>
 						<th class="text-center">Ordering</th>
-						<th class="text-center">Price</th>
-						<th class="text-center">Percent</th>
-						<th class="text-center">Price_Discount</th>
 						<th class="text-center">GroupCategory</th>
+						<th class="text-center">GroupBrand</th>
 						<th class="text-center">Show To</th>
+						<th class="text-center">Status</th>
 						<th class="text-center">Action</th>
 					</tr>
 				</thead>
@@ -112,35 +110,42 @@
 	
 								<td class="text-center"><span><%= row.name  %></span></td>
 	
-								<%- renderStatus(row._id, row.status, linkPrefix) %>
-	
 								<td class="text-center position-relative" >
 									<input data-link="<%= linkPrefix %>changeOrdering/<%= row._id %>" type="number" name="ordering" value="<%= row.ordering %>" class="text-center ordering">
 								</td>
-								
-								<td class="text-center">
-									<span><%= row.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) %></span>
+
+								<td class="text-center position-relative">
+									<select id="change-status" name="idCategory" data-link="<%= linkPrefix %>changeCategory/<%= row._id %>"
+										class="custom-select custom-select-sm">
+										<% const activeCategories = categories.filter(category => category.status === 'active');
+										if (activeCategories.length > 0) {%>
+											<% activeCategories.forEach(category => { %>
+												<option class="text-center" value="<%= category._id %>" <%= <%= row.idCategory && row.idCategory.name === category.name ? 'selected' : '' %>>
+													<%= category.name %>
+												</option>
+											<% }); %>
+										<% } else { %>
+											<option class="text-center" value="" disabled selected>No Category</option>
+										<% } %>
+									</select>
 								</td>
-	
-								<td class="text-center">
-									<span><%= row.discount%>%</span>
+
+
+								<td class="text-center position-relative">
+									<select id="change-status" name="idBrand" data-link="<%= linkPrefix %>changeBrand/<%= row._id %>" class="custom-select custom-select-sm">
+										<% const activeBrands = brands.filter(brand => brand.status === 'active');
+										if (activeBrands.length > 0) {%>
+											<% brands.forEach(brand => { %>
+												<option class="text-center" value="<%= brand._id %>" <%= <%= row.idBrand && row.idBrand.name === brand.name ? 'selected' : '' %>>
+													<%= brand.name %>
+												</option>
+											<% }) %>
+										<% } else { %>
+											<option class="text-center" value="" disabled selected>No Brand</option>
+										<% } %>
+									</select>
 								</td>
-	
-								<td class="text-center">
-									<span>
-										<%= row.price_discount ? row.price_discount.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) : '0 ₫' %>
-									  </span>  
-								</td>
-	
-	
-								<td class="text-center">
-									<% if (row.idCategory && row.idCategory.name) { %>
-									<span><%= row.idCategory.name %></span>
-									<% } else { %>
-									<span>No Menu</span>
-									<% } %>
-								</td>
-	
+				
 								<td class="text-center">
 									<div class="form-check form-switch">
 										<input data-link="<%= linkPrefix %>changeIsSpecial/<%= row._id %>" class="form-check-input" type="checkbox" id="isSpecial" name="isSpecial" <%= row.isSpecial ? 'checked' : '' %>>
@@ -150,12 +155,18 @@
 										<label class="form-check-label" for="isSpecial"> New</label>
 									</div>
 								</td>
+
+								<%- renderStatus(row._id, row.status, linkPrefix) %>
 	
 								<td class="text-center">
+									<a href="<%= linkPrefix %>detail/<%= row._id%>" class="rounded-circle btn btn-sm btn-warning " title="View">
+										<i class="fas fa-eye"></i>
+									</a>
+
 									<a href="<%= linkPrefix %>form/<%= row._id%>" class="rounded-circle btn btn-sm btn-info " title="Edit">
 										<i class="fas fa-pencil-alt"></i>
 									</a>
-				 
+
 									<a href="javascript:clickToDeleteId('<%= linkPrefix %>delete/<%= row._id%>')" class="rounded-circle btn btn-sm btn-danger">
 										<i class="fas fa-trash-alt"></i>
 									</a>

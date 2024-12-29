@@ -17,14 +17,22 @@ class BrandService {
         if (search) {
             query.name = new RegExp(search, 'ig');
         }
-        return await MainModel.find(query).skip(pageSkip).limit(limitItems)
+        return await MainModel.find(query).skip(pageSkip).limit(limitItems).populate([{ path: 'idCategory' }])
     }
 
-    save = async ({ name, ordering, status, image }) => {     
+    findAllName = async () => {
+        return await MainModel.find({status: 'active'})
+    }
+
+    save = async ({ name, ordering, status, image, idCategory }) => {     
         const data = await MainModel.create({
-            name, ordering, status, image
+            name, ordering, status, image, idCategory
         })
         return data
+    }
+
+    changeCategory = async (id, idCategory) => {
+        return await MainModel.findByIdAndUpdate(id, {idCategory}).populate('idCategory')
     }
 
     changeStatusById = async (id, status) => {
@@ -36,7 +44,7 @@ class BrandService {
     }
 
     findId = async (id) => {
-        return await MainModel.findById(id)
+        return await MainModel.findById(id).populate('idCategory')
     }
 
     editById = async (id , updateItem) => {
@@ -62,6 +70,13 @@ class BrandService {
     findBrandWithStatus = async () => {
         return await MainModel.find({status: 'active'}).sort({ordering: 1})
     }
+
+    getBrandByIdCategory = async (idCategory) => {
+        return await MainModel.find({
+            idCategory: idCategory,
+            status: "active",
+        }).sort({ordering: 1})
+    };
 
 }
 

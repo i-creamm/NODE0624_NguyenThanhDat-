@@ -52,6 +52,10 @@ const productSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'category',
   },
+  idBrand : {
+    type: Schema.Types.ObjectId,
+    ref: 'brand',
+  },
   slug: String,
 
 

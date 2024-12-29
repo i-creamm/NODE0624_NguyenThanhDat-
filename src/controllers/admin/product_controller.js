@@ -1,15 +1,12 @@
 const MainService = require("../../services/product_service");
 const CategoryService = require("../../services/category_service");
-
+const BrandService = require('../../services/brand_service')
 const {generateCountStatusUser, generatePagination} = require('../../utils/helper')
 const { ItemValidate } = require("../../validation/item_validates");
 const { validationResult } = require("express-validator");
 const { asyncHandle } =  require('../../utils/asyncHandle')
-
 const updateItem = require("../../utils/upload");
-// const uploadImage = updateItem.upload("products","image");
 const uploadFiles = updateItem.upload("products", [{ name: 'image', maxCount: 1 }, { name: 'images', maxCount: 5 }])
-
 const nameController = 'product'
 const linkPrefix = `/admin/${nameController}`
 const folderImage = '/products'
@@ -21,6 +18,7 @@ class ProductController {
 
   getAll = async (req, res, next) => {
     const {status, search, page = 1} = req.query
+    console.log(status)
 
     //Filter
     const [allCount, activeCount, inactiveCount] = await Promise.all([
@@ -36,46 +34,76 @@ class ProductController {
     const objectPagination = await generatePagination(page, 5, 3, countRecords)
     // End Pagination
 
+    const categories = await CategoryService.findAllName()
+    const brands = await BrandService.findAllName()
+
+    
+
     let items = await MainService.getAllItems(status, search, countStatus, objectPagination.limitItems, objectPagination.pageSkip);
-    return res.render(`admin/pages/${nameController}/list`, {items, search, countStatus, pagination: objectPagination});
+    return res.render(`admin/pages/${nameController}/list`, {items,categories, brands, search, countStatus, pagination: objectPagination});
 
   };
   
-  //direct form put in
+  getDetail = async (req, res, next) => {
+    const {id} = req.params
+    const detailProduct = await MainService.findId(id)
+    res.render(`admin/pages/${nameController}/detail`, {detail: detailProduct});
+  }
+
   getForm = async (req, res, next) => {
     let title = "Add - Form";
     const {id} = req.params
-    const item = req.params.id ? await MainService.findId(id) : {};
-    
-    const categories = await CategoryService.getAllItems()
+
+    const item = id ? await MainService.findId(id) : { idCategory: null , idBrand: null };
+  
+    const categories = await CategoryService.findAllName()
+    const brands = await BrandService.findAllName()
+
     if (id) title = "Edit - Form";
-    res.render(`admin/pages/${nameController}/form`, { item, categories, title, alert: [] });
+    res.render(`admin/pages/${nameController}/form`, { item, categories, brands, title, alert: [] });
   };
 
-  changeStatus = async (req, res, next) => {
-    let {id, status} = req.params
-    await MainService.changeStatusById(id, status)
-    res.redirect('back');
+  changeStatusOrOrdering = async (req, res, next) => {
+    const {id, status, ordering} = req.params
+
+    if(status){
+      await MainService.changeStatusById(id, status)
+      return res.redirect('back');
+    }
+
+    if(ordering){
+      await MainService.changeOrderingById(id, parseInt(ordering))
+      return res.redirect(`${linkPrefix}`);
+    } 
   }
 
-  changeOrdering = async (req, res, next) => {
-    let {id, ordering} = req.params
-    await MainService.changeOrderingById(id, parseInt(ordering))
-    res.redirect(`${linkPrefix}`);
+  changeCategoryOrBrand = async (req, res, next) => {
+    const{id, idCategory, idBrand} = req.params
+    if(idCategory){
+      await MainService.changeCategory(id, idCategory)
+      return res.redirect(`back`); 
+    }
+
+    if(idBrand){
+      await MainService.changeBrand(id, idBrand)
+      return res.redirect(`back`); 
+    }
   }
 
-  changeSpecial = async (req, res, next) => {
-    let {id} = req.params
-    let {isSpecial} = req.query
-    await MainService.changeIsSpecial(id, isSpecial)
-    res.redirect(`${linkPrefix}`);
-  }
+  showDisplay = async (req, res, next) => {
+    const {id} = req.params
+    const {isSpecial, newProduct} = req.query
 
-  changeNew = async (req, res, next) => {
-    let {id} = req.params
-    let {newProduct} = req.query
-    await MainService.changeNewProduct(id, newProduct)
-    res.redirect(`${linkPrefix}`);
+    if(isSpecial){
+      await MainService.changeIsSpecial(id, isSpecial)
+      return res.redirect(`back`);
+    }
+
+    if(newProduct){
+      await MainService.changeNewProduct(id, newProduct)
+      return res.redirect(`back`);
+    }
+
   }
 
   saveForm = [uploadFiles,
@@ -128,8 +156,8 @@ class ProductController {
         dataAdd = await MainService.save(req.body);
         req.flash("success", "Added successfully")
       } else {
-        const {name, ordering, status, image, images, isSpecial, newProduct, price, discount, type_discount, price_discount, detail, idCategory } = req.body;
-        const updateItem = {name, ordering, status, image, images, isSpecial, newProduct, price, discount, type_discount, price_discount, detail, idCategory };
+        const {name, ordering, status, image, images, isSpecial, newProduct, price, discount, type_discount, price_discount, detail, idCategory, idBrand } = req.body;
+        const updateItem = {name, ordering, status, image, images, isSpecial, newProduct, price, discount, type_discount, price_discount, detail, idCategory, idBrand };
 
         if (req.files['image'] && item.image) {
           const imagePath = path.join(`public/uploads${folderImage}`, item.image.replace(`/uploads`, ""));

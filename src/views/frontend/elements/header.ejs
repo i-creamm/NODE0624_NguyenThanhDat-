@@ -113,7 +113,7 @@
                     <% menus.forEach(menu=> { %>
                         <% if (menu.categories && menu.categories.length> 0) { %>
                             <li>
-                                <a href="<%= menu.link%>" class="sf-with-ul">
+                                <a href="<%= menu.link%>" class="sf-with-ul" onclick="return false;">
                                     <%= menu.name%>
                                 </a>
                                 <div class="megamenu megamenu-fixed-width">
@@ -125,8 +125,9 @@
                                                         <% menu.categories.forEach(child=> { %>
                                                             <li><a href="/<%= child.slug%>">
                                                                     <%= child.name%>
-                                                                </a></li>
-                                                            <% })%>
+                                                                </a>
+                                                            </li>
+                                                        <% })%>
                                                     </ul>
                                                 </div><!-- End .col-lg-6 -->
                                             </div><!-- End .row -->

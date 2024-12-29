@@ -1,4 +1,5 @@
 const MainService = require("../../services/brand_service");
+const CategoryService = require("../../services/category_service");
 const {generateCountStatusUser, generatePagination} = require('../../utils/helper')
 
 const nameController = 'brand'
@@ -31,9 +32,10 @@ class BrandController {
     let countRecords = status == 'active' ? activeCount : status == 'inactive' ? inactiveCount : allCount;
     const objectPagination = await generatePagination(page, 5, 3, countRecords)
     // End Pagination
-    
+
+    const categories = await CategoryService.findAllName()
     let items = await MainService.getAllItems(status, search, countStatus, objectPagination.limitItems, objectPagination.pageSkip);
-    return res.render(`admin/pages/${nameController}/list`, {items, search, countStatus, pagination: objectPagination});
+    return res.render(`admin/pages/${nameController}/list`, {items, search, categories, countStatus, pagination: objectPagination});
     
   };
 
@@ -41,9 +43,10 @@ class BrandController {
   getForm = async (req, res, next) => {
     let title = "Add - Form";
     const {id} = req.params
-    const item = req.params.id ? await MainService.findId(id) : {}
+    const item = id ? await MainService.findId(id) : {idCategory: null}
+    const categories = await CategoryService.findAllName()
     if (id) title = "Edit - Form";
-    res.render(`admin/pages/${nameController}/form`, { item, title, alert: [] })
+    res.render(`admin/pages/${nameController}/form`, { item, categories, title, alert: [] })
   };
 
   changeStatus = async (req, res, next) => {
@@ -56,6 +59,12 @@ class BrandController {
     let {id, ordering} = req.params
     await MainService.changeOrderingById(id, parseInt(ordering))
     res.redirect(`${linkPrefix}`);
+  }
+
+  changeCategory = async (req, res, next) => {
+      const{id, idCategory, } = req.params
+      await MainService.changeCategory(id, idCategory)
+    return res.redirect(`back`);
   }
 
 
@@ -72,8 +81,8 @@ class BrandController {
     if (!id) {
       await MainService.save(req.body)
     } else {
-      const { name, ordering, status, image } = req.body;
-      const updateItem = { name, ordering, status, image };
+      const { name, ordering, status, image, idCategory } = req.body;
+      const updateItem = { name, ordering, status, image, idCategory };
 
       if (req.file && item.image) {
         const imagePath = path.join(`public/uploads${folderImage}`, item.image.replace(`/uploads`, ""))

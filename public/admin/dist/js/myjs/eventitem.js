@@ -1,3 +1,29 @@
+//Change Category or Brand
+
+//End Change Category or Brand
+
+
+//Change Status Order
+const changeStatus = document.querySelectorAll('#change-status')
+if(changeStatus){
+    changeStatus.forEach(option => {
+        option.addEventListener('change', (e) => {
+            const val = e.target.value
+            const link = e.target.dataset.link + '/' + val
+
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Status changed",
+                showConfirmButton: false,
+                timer: 1000
+              }).then(()=> {
+                window.location.href = link
+              })
+        })
+    })
+}
+//End Change Status Order
 
 
 //Button Status
@@ -17,9 +43,8 @@ const buttonsStatus = document.querySelectorAll("[button-status]")
                 url.searchParams.delete('page');
                 window.location.href = url.href
             })
-        })
-        
-}
+        })   
+    }
 //End Button Status
 
 //Pagination
@@ -56,8 +81,6 @@ if(formSearch){
     })
 }
 //End Form Search
-
-
 
 
 
@@ -108,19 +131,6 @@ if(uploadImage){
 }
 // End preview image
 
-//Change Status Order
-const changeStatus = document.querySelectorAll('#change-status')
-if(changeStatus){
-    changeStatus.forEach(option => {
-        option.addEventListener('change', (e) => {
-            const val = e.target.value
-            const link = e.target.dataset.link + '/' + val
-            window.location.href = link
-        })
-    })
-}
-//End Change Status Order
-
 $(document).ready(function () {
 
     const url = window.location.href
@@ -142,6 +152,7 @@ $(document).ready(function () {
 
         const val = $(this).val();
         const link = $(this).data('link') + '/' + val;
+        console.log(link)
         
         $.ajax({
             url: link,

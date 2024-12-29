@@ -1,0 +1,107 @@
+<% const collection="product" ; const linkPrefix=`/admin/${collection}/` ; const linkThumb='' ; const folderImage='/products/' %>
+    <div class="card card-info card-outline">
+        <div class="card-body">
+            <h1 style="color: red;">
+                === Detail Product ===
+            </h1>
+
+            <div class="form-group row justify-content-center">
+                <img src="/uploads<%= folderImage%><%= detail.image %>" alt="" class="img-preview" upload-image-preview />
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row align-items-center">
+                        <label for="fullname" class="col-sm-4 col-form-label text-sm-right required">Name:</label>
+                        <p class="col-sm-8 mb-0"><%= detail.name %></p>
+                    </div>
+                    <div class="form-group row align-items-center">
+                        <label for="address" class="col-sm-4 col-form-label text-sm-right required">Status:</label>
+                        <p class="col-sm-8 mb-0"><%= detail.status %></p>
+                    </div>
+                    <div class="form-group row align-items-center">
+                        <label for="address" class="col-sm-4 col-form-label text-sm-right required">Ordering:</label>
+                        <p class="col-sm-8 mb-0"><%= detail.ordering %></p>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group row align-items-center">
+                        <label for="address" class="col-sm-4 col-form-label text-sm-right required">Time:</label>
+                        <p class="col-sm-8 mb-0"><%= detail.createdAt.toLocaleString('vi-VN') %></p>
+                    </div>
+                    <div class="form-group row align-items-center">
+                        <label for="name" class="col-sm-4 col-form-label text-sm-right required">GroupCategory:</label>
+                        <p class="col-sm-8 mb-0"><%= detail.idCategory.name %></p>
+                    </div>
+                    <div class="form-group row align-items-center">
+                        <label for="name" class="col-sm-4 col-form-label text-sm-right required">GroupBrand:</label>
+                        <p class="col-sm-8 mb-0"><%= detail.idBrand.name %></p>
+                    </div>
+                </div>
+
+            </div>
+
+            
+        </div>
+
+        <div class="card-body">
+            <h4 style="color: blue;">=== Price information ===</h4>
+            <table class="table table-bordered table-sm table-striped text-nowrap btn-table mb-0">
+                <thead class="table-info">
+                    <tr>
+                        <th class="text-center">Price</th>
+                        <th class="text-center">Type_discount</th>
+                        <th class="text-center">Discount</th>
+                        <th class="text-center">Price_discount</th>
+                    </tr>
+                </thead>
+                <tbody class="form-control-sm ">
+                        <tr>
+                            <td class="text-center">
+                                <%= detail.price.toLocaleString('vi-VN', { style: 'currency' , currency: 'VND' }) %>
+                            </td>
+                            <td class="text-center">
+                                <%= detail.type_discount %>
+                            </td>
+                            <td class="text-center">
+                                <%= detail.discount%>%
+                            </td>
+                            <td class="text-center">
+                                <%= detail.price_discount.toLocaleString('vi-VN', { style: 'currency' , currency: 'VND' }) %>
+                            </td>
+                        </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card-body">
+            <h4 style="color: green;">=== Display Website ===</h4>
+            <table class="table table-bordered table-sm table-striped text-nowrap btn-table mb-0">
+                <thead class="table-success">
+                    <tr>
+                        <th class="text-center">Special</th>
+                        <th class="text-center">New</th>
+                    </tr>
+                </thead>
+                <tbody class="form-control-sm ">
+                    <tr>
+                        <td class="text-center">
+                            <%= detail.isSpecial %>
+                        </td>
+                        <td class="text-center">
+                            <%= detail.newProduct %>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card-footer">
+            <div class="col-12 col-sm-8 offset-sm-2 text-right">
+
+                <a href="<%= linkPrefix %>" class="btn btn-md btn-danger mr-1">
+                    Back</a>
+            </div>
+        </div>
+    </div>

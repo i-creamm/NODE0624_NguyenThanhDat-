@@ -1,6 +1,6 @@
 <% const collection="product" ; const linkPrefix=`/admin/${collection}/` ; const linkThumb='' ; const folderImage = '/products/' %>
     <div class="card card-info card-outline">
-        <form action="<%= linkPrefix %>form/<%= item._id %>" method="POST" class="mb-0" enctype="multipart/form-data">
+        <form action="<%= linkPrefix %>form/<%= item._id %>" method="POST" id="form-submit" class="mb-0" enctype="multipart/form-data">
             <div class="card-body">
                 <h1>
                     <%= title %>
@@ -88,10 +88,24 @@
                             <option value="novalue">Choose Group</option>
                             <% categories.forEach(e => { %>
                                 <% if (e.status == 'active') { %>
-                                    <option value="<%= e._id %>" <%= item.idCategory && item.idCategory.toString() === e._id.toString() ? "selected" : '' %>><%= e.name %></option>
+                                    <option value="<%= e._id %>" <%= item.idCategory && item.idCategory.name == e.name ? "selected" : '' %>><%= e.name %></option>
                                 <% } %>
                             <% }) %>
-                          </select>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="GroupCategory" class="col-sm-2 col-form-label text-sm-right">GroupBrand</label>
+                    <div class="col-xs-12 col-sm-8">
+                        <select class="custom-select custom-select-sm" name="idBrand" aria-label="Default select example">
+                            <option value="novalue">Choose Group</option>
+                            <% brands.forEach(e => { %>
+                                <% if (e.status == 'active') { %>
+                                    <option value="<%= e._id %>" <%= item.idBrand && item.idBrand.name == e.name ? "selected" : '' %>><%= e.name %></option>
+                                <% } %>
+                            <% }) %>
+                        </select>
                     </div>
                 </div>
 

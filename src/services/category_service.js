@@ -20,6 +20,10 @@ class CategoryService {
         return await MainModel.find(query).limit(limitItems).skip(pageSkip).sort({'createdAt': -1}).populate('idMenu')
     }
 
+    findAllName = async () => {
+        return await MainModel.find({status: 'active'})
+    }
+
     save = async ({name, ordering, status, idMenu}) => {
         return await MainModel.create({name, ordering, status, idMenu: idMenu || []})
     }

@@ -35,6 +35,22 @@ if (showError) {
 }
 // End Show Alert
 
+//Filter Brand By Category
+
+//End Filter Brand By Category
+
+//Filter brand
+const clickFilterBrand = (value) => {
+    let url = new URL(window.location.href)
+    let newValue = value.toLowerCase()
+    if(newValue){
+        url.searchParams.set('brand', newValue)
+    }
+    url.searchParams.delete('page');
+    window.location.href = url.href
+}
+//End Filter brand
+
 //Pagination
 const buttonPagination = document.querySelectorAll('[button-pagination]')
 if(buttonPagination){

@@ -20,6 +20,10 @@ class MenuService {
         return (await MainModel.find(query).skip(pageSkip).limit(limitItems).sort({'createdAt': -1}))
     }
 
+    findAllName = async () => {
+        return await MainModel.find({status: 'active'})
+    }
+
     save = async ({name, ordering, status, link}) => {
         return await MainModel.create({name, ordering, status, link})
     }

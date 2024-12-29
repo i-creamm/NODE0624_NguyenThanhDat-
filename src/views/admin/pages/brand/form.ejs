@@ -21,6 +21,7 @@
                             value="<%= item.ordering %>">
                     </div>
                 </div>
+                
                 <div class="form-group row">
                     <label for="status" class="col-sm-2 col-form-label text-sm-right">Status</label>
                     <div class="col-xs-12 col-sm-8">
@@ -30,6 +31,20 @@
                                 Active</option>
                             <option value="inactive" <%=item.status==='inactive' ? 'selected' : '' %>>
                                 Inactive</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="GroupCategory" class="col-sm-2 col-form-label text-sm-right">GroupCategory</label>
+                    <div class="col-xs-12 col-sm-8">
+                        <select class="custom-select custom-select-sm" name="idCategory" aria-label="Default select example">
+                            <option value="novalue">Choose Group</option>
+                            <% categories.forEach(e => { %>
+                                <% if (e.status == 'active') { %>
+                                    <option value="<%= e._id %>" <%= item.idCategory && item.idCategory.name == e.name ? "selected" : '' %>><%= e.name %></option>
+                                <% } %>
+                            <% }) %>
                         </select>
                     </div>
                 </div>

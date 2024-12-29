@@ -10,6 +10,8 @@ const { asyncHandle } =  require('../../utils/asyncHandle')
     router.get('/changeStatus/:id/:status', asyncHandle(MainController.changeStatus))
 
     router.get('/changeOrdering/:id/:ordering', asyncHandle(MainController.changeOrdering))
+
+    router.get('/changeCategory/:id/:idCategory', asyncHandle(MainController.changeCategory))
     
     router.post('/form/:id?', MainController.saveForm)
 

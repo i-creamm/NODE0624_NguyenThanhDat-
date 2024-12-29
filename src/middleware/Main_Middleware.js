@@ -52,6 +52,9 @@ const SettingService = require('../services/setting_service')
             res.locals.settings = stringParse
 
             const categories = await CategoryService.findCategoryWithStatus()
+            for (let category of categories) {
+                category.brands = await BrandService.getBrandByIdCategory(category._id);
+            }
             res.locals.categories = categories
 
             next()

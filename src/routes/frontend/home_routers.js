@@ -12,19 +12,20 @@ router.use(fetchSlider);
 router.use(fetchProductWithSpecial);
 
 
+
 router.get('/:slug', async (req , res , next) => {
     const { slug } = req.params
-    const {page} = req.query
+    const {page, brand} = req.query
 
     //for category
     const categoriesWithSlug = await CategoryService.findBySlug(slug)
     if(categoriesWithSlug) {
 
-        const totalRecord = await ProductService.countProducts(categoriesWithSlug._id)
+        const totalRecord = await ProductService.countProductsWithBrand(categoriesWithSlug._id, brand)
 
         const objectPagination = await generatePaginationVer2(page, limitPage, pageRanges, totalRecord)
 
-        const products = await ProductService.findByParam({idCategory: categoriesWithSlug._id}, objectPagination.limitItems, objectPagination.pageSkip)
+        const products = await ProductService.findByParam(categoriesWithSlug._id, objectPagination.limitItems, objectPagination.pageSkip, brand)
         
         return res.render('frontend/pages/product', {category : categoriesWithSlug, products, pagination: objectPagination, layout: "frontend" })
     }
@@ -37,15 +38,6 @@ router.get('/:slug', async (req , res , next) => {
 
     // Không khớp với category hoặc product, chuyển đến middleware tiếp theo
     next()
-})
-
-router.get('/category', async (req, res, next) => {
-    const {page} = req.query
-    const totalRecord = await ProductService.countProductsAll()
-    const objectPagination = await generatePaginationVer2(page, limitPage, pageRanges, totalRecord)
-
-    const products = await ProductService.findProductWithStatus(objectPagination.limitItems, objectPagination.pageSkip)
-    res.render(`frontend/pages/category`, {layout: "frontend", products, pagination: objectPagination})
 })
 
 router.get('/search', async (req, res, next) => {

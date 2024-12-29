@@ -1,4 +1,5 @@
 const MainModel = require('../models/product_model')
+const BrandModel = require('../models/brand_model')
 
 class ProductService {
 
@@ -19,16 +20,24 @@ class ProductService {
         return await MainModel.find(query)
         .limit(limitItems)
         .skip(pageSkip)
-        .sort({'createdAt': -1}).populate('idCategory')
+        .sort({ 'createdAt': -1 }).populate([{ path: 'idCategory' }, { path: 'idBrand' }]);
     }
     
-    save = async ( { name, ordering, status, image, images, isSpecial, newProduct, price, discount, type_discount, price_discount, detail, idCategory}) => {
+    save = async ({ name, ordering, status, image, images, isSpecial, newProduct, price, discount, type_discount, price_discount, detail, idCategory, idBrand}) => {
            
         const data = await MainModel.create({
-            name, ordering, status, image, images, isSpecial, newProduct,  price, discount, type_discount, price_discount, detail, idCategory: idCategory
+            name, ordering, status, image, images, isSpecial, newProduct,  price, discount, type_discount, price_discount, detail, idCategory: idCategory, idBrand: idBrand
         })
 
         return data
+    }
+
+    changeCategory = async (id, idCategory) => {
+        return await MainModel.findByIdAndUpdate(id, {idCategory}).populate('idCategory')
+    }
+
+    changeBrand = async (id, idBrand) => {
+        return await MainModel.findByIdAndUpdate(id, {idBrand}).populate('idBrand')
     }
 
     changeStatusById = async (id, status) => {
@@ -47,8 +56,12 @@ class ProductService {
         return await MainModel.findByIdAndUpdate(id, {newProduct})
     }
 
-    findId = async (id) => {
+    findIdGetForm = async (id) => {
         return await MainModel.findById(id)
+    }
+    
+    findId = async (id) => {
+        return await MainModel.findById(id).populate([{ path: 'idCategory' }, { path: 'idBrand' }]);
     }
 
     editById = async (id , updateItem) => {
@@ -71,16 +84,37 @@ class ProductService {
 
 
     //Frontend
-    findByParam = async (params, limitItems, pageSkip) => {
-        return await MainModel.find(params).limit(limitItems).skip(pageSkip)
+    findByParam = async (idCategory, limitItems, pageSkip, brand) => {
+        let params = {}
+        if(idCategory){
+            params.idCategory = idCategory
+        }
+
+        if (brand) {
+            const brandRecord = await BrandModel.findOne({ slug: brand })
+            if (brandRecord) {
+                params.idBrand = brandRecord._id
+            }
+        }
+        return await MainModel.find(params).limit(limitItems).skip(pageSkip).populate('idBrand')
     }
 
-    countProducts = async(idCategory) => {
+    countProductsWithCategory = async(idCategory) => {
         return await MainModel.countDocuments({idCategory})
     }
 
-    countProductsAll = async() => {
-        return await MainModel.countDocuments()
+    countProductsWithBrand = async (idCategory, brand) => {
+        let query = {}
+        if(brand){
+            const brandRecord = await BrandModel.findOne({slug: brand })
+            if(brandRecord){
+                query.idBrand = brandRecord._id
+            }
+        }
+        if(idCategory){
+            query.idCategory = idCategory 
+        }
+        return await MainModel.countDocuments(query)
     }
 
 

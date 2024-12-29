@@ -33,7 +33,7 @@ class CategoryController {
     let title = "Add - Form";
     const {id} = req.params
     const item = req.params.id ? await MainService.findId(id) : {};
-    const items = await MenuService.getAllItems()
+    const items = await MenuService.findAllName()
     if (id) title = "Edit - Form";
     res.render(`admin/pages/${nameController}/form`, { item, items, title, alert: [] });
   };
